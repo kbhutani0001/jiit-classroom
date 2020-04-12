@@ -35,7 +35,21 @@
 
   <div style="margin: 100px 100px">
     <h2>JIIT Classroom</h2>
-    <h4>Enter your webkiosk details to log in</h4>
+    <h4>Enter JIIT Classroom Number to join the class</h4>
+
+      <div class="form-group">
+        <label for="exampleInputEmail1">Class room Number</label>
+        <input type="number" class="form-control" name="classroomNumber" id="classroomNumber" aria-describedby="emailHelp" placeholder="Enter Classroom Number">
+      </div>
+      <script>
+        function redirectToClass() {
+          classroomNumber = document.getElementById('classroomNumber').value
+          window.location = '/join/' + classroomNumber
+        }
+
+
+      </script>
+      <button onclick="redirectToClass()" type="button" class="btn btn-primary">Submit</button>
 </div>
 
 </body>

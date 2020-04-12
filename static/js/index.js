@@ -20,15 +20,13 @@
     var API_SECRET = 'zslKUlVBF0sxlZ3LDsnbBo65HOoP8tlBXxYl';
 
     testTool = window.testTool;
-    document.getElementById('display_name').value = "CDN" + ZoomMtg.getJSSDKVersion()[0] + testTool.detectOS() + "#" + testTool.getBrowserInfo();
-
     document.getElementById('join_meeting').addEventListener('click', function(e){
         e.preventDefault();
 
-        if(!this.form.checkValidity()){
-            alert("Enter Name and Meeting Number");
-            return false;
-        }
+        // if(!this.form.checkValidity()){
+        //     alert("Enter Name and Meeting Number");
+        //     return false;
+        // }
 
         
         var meetConfig = {

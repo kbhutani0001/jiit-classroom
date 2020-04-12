@@ -31,11 +31,24 @@
   </nav>
 
 
-
-
   <div style="margin: 100px 100px">
     <h2>JIIT Classroom</h2>
     <h4>Enter your webkiosk details to log in</h4>
+  <form style="margin-top: 20px;" action="/join/{{classroomId}}" style="margin: auto;" method="POST">
+    <div class="form-group">
+      <label for="exampleInputEmail1">Enrollment No.</label>
+      <input type="number" class="form-control" name="rollNo" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Enrollment No">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Date of Birth (dd-mm-yyyy)</label>
+      <input type="text" class="form-control" name="dob" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Date of Birth">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Webkiosk Password</label>
+      <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Password">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
 </div>
 
 </body>
