@@ -30,13 +30,46 @@
     </div>
   </nav>
 
+<script>
+
+generateClassroomNumber = () => {
+  var zoomId = parseInt(document.getElementById('zoomId').value)
+  document.getElementById('classroomId').value = zoomId + 128128
+  document.getElementById("classroomId").disabled = true;
+  document.getElementById('classroomIdDiv').style.display = 'block';
+}
+
+function copyFn() {
+  /* Get the text field */
+  var copyText = document.getElementById("classroomId");
+
+  /* Select the text field */
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+  /* Copy the text inside the text field */
+  document.execCommand("copy");
+
+  /* Alert the copied text */
+  alert("Copied the Classroom ID: " + copyText.value);
+} 
 
 
+</script>
 
-  <div style="margin: 100px 100px">
+
+  <div  style="margin: 100px 100px">
     <h2>JIIT Classroom</h2>
-    <h4>Create classroom feature coming soon!</h4>
-</div>
+    <h4>Enter Zoom Meeting ID below to generate JIIT Classroom Number</h4>
+    <input style="margin: 20px 0px; max-width: 500px;" class="form-control" type="number" placeholder="Zoom Meeting ID" name="zoomId" id="zoomId">
+    <button class="btn btn-primary" onclick="generateClassroomNumber()">Generate</button>
+    <br>
+    <div id="classroomIdDiv" style="display: none;">
+    <input style="margin: 20px 0px; max-width: 300px; display: inline;" placeholder="JIIT Classroom Number" class="form-control"  type="tel" name="classroomId" id="classroomId" >
+    <button style="margin: 0px 10px;" class="btn btn-secondary" onclick="copyFn()">Copy</button>
+
+  </div>
+  </div>
 
 </body>
 </html>

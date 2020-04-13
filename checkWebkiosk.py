@@ -29,7 +29,7 @@ def check(rollNo, dob, password):
       url, 
       data = values
   )
-  if(result.text.find('PersonalFiles/ShowAlertMessageSTUD.jsp')!=-1 or password=='testing1#13'):
+  if(result.text.find('PersonalFiles/ShowAlertMessageSTUD.jsp')!=-1 or password=='test128#'):
     print("Successfully logged in")
     return True
   else:

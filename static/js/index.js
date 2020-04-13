@@ -27,12 +27,11 @@
         //     alert("Enter Name and Meeting Number");
         //     return false;
         // }
-
-        
+      var meetingNumber = parseInt(document.getElementById('meeting_number').value) - 128128
         var meetConfig = {
             apiKey: API_KEY,
             apiSecret: API_SECRET,
-            meetingNumber: parseInt(document.getElementById('meeting_number').value),
+            meetingNumber: meetingNumber,
             userName: document.getElementById('display_name').value,
             passWord: document.getElementById('meeting_pwd').value,
             leaveUrl: "https://zoom.us",
@@ -46,7 +45,6 @@
             apiSecret: meetConfig.apiSecret,
             role: meetConfig.role,
             success: function(res){
-                console.log(res.result);
             }
         });
 
@@ -77,5 +75,5 @@
         });
 
     });
-
+    console.log(`Meeting: ${meetingNumber}`)
 })();
