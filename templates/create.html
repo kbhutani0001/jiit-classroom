@@ -69,6 +69,20 @@ const copyToClipboard = (code) => {
   <div  style="margin: 100px 100px">
     <h2>JIIT Classroom</h2>
     <h4>Enter Zoom Meeting ID below to generate JIIT Classroom Number</h4>
+    
+    
+    <div style="margin: 20px 20px;" id="instructions"><p><b>NOTE:</b> Please follow the instructions below for hosting a meeting on JIIT Classroom.
+    <br>
+    Go to <b><i>Settings</i></b> in your zoom account and do the following.
+    <ul>
+      <li>Search for <mark><b>Allow participants to rename themselves</b></mark> option and <b>Disable</b> it. (Required)</li>
+      <li>Search for <mark><b>Waiting Room</mark></b>  option and <b>Disable</b> it. (Required)</li>
+      <li>Search for <mark><b>Password</mark> </b> and <b>Disable</b> all the options to create meetings without password. (Required)</li>
+    </ul>
+    </p>
+  </div>
+
+
     <input style="margin: 20px 0px; max-width: 500px;" class="form-control" type="number" placeholder="Zoom Meeting ID" name="zoomId" id="zoomId">
     <button class="btn btn-primary" onclick="generateClassroomNumber()">Generate</button>
     <br>
