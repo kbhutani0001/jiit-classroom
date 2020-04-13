@@ -28,6 +28,7 @@
         //     return false;
         // }
       var meetingNumber = parseInt(document.getElementById('meeting_number').value) - 128128
+        
         var meetConfig = {
             apiKey: API_KEY,
             apiSecret: API_SECRET,
@@ -45,6 +46,7 @@
             apiSecret: meetConfig.apiSecret,
             role: meetConfig.role,
             success: function(res){
+                console.log(res.result);
             }
         });
 
@@ -75,5 +77,5 @@
         });
 
     });
-    console.log(`Meeting: ${meetingNumber}`)
+
 })();
