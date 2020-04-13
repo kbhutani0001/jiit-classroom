@@ -14,6 +14,11 @@ def home():
 def join():
   return render_template('join.html')
 
+@app.route('/create', methods=['GET'])
+def create():
+  return render_template('create.html')
+
+
 @app.route('/join/<classroomId>', methods=['GET', 'POST'])
 def joinClass(classroomId):
   if request.method == 'GET':
