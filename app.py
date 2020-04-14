@@ -6,6 +6,20 @@ from checkWebkiosk import check
 app = Flask(__name__)
 app.secret_key = "jiit128sucks"
 
+
+
+def getAttendance(classroomId):
+  return {
+    9918102177 : "12:09",
+    9211223093 : "12:65"
+    }
+
+def checkFacultyLogin(facultyId, facultyPassword):
+  if(facultyId=='test@jiitclassroom.com' and facultyPassword=='test128'):
+    return True
+  return False
+
+
 @app.route('/', methods=['GET'])
 def home():
   return render_template('index.html')
@@ -35,19 +49,20 @@ def joinClass(classroomId):
       flash('Wrong DOB or Password, Please try again or reset it on webkiosk.')
       return render_template('login.html')
 
-@app.route('/attendance', methods = ['GET', 'POST'])
+@app.route('/attendance/', methods = ['GET', 'POST'])
 def attendance_login():
   if request.method == 'GET':
     return render_template("attendanceLogin.html")
-
-@app.route('/enroll', methods = ['GET', 'POST'])
-def attendance():
-  if request.method == 'GET':
-    attend = {
-    9918102177 : "12:09",
-    9211223093 : "12:65"
-    }
-    return render_template("attendance.html", attend=attend, classroomId=1234)
+  else: #req method post
+    facultyId = request.form['facultyId']
+    facultyPassword = request.form['facultyPassword']
+    classroomId = request.form['classroomId']
+    if(checkFacultyLogin(facultyId, facultyPassword)):
+      attendance = getAttendance(classroomId)
+      return render_template("attendance.html", attendance=attendance, classroomId=classroomId)
+    else:
+      flash('Wrong ID or Password, please try again.')
+      return render_template('attendanceLogin.html')
 
 
 if(__name__=='__main__'):
