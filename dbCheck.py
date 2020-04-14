@@ -1,11 +1,21 @@
+import pymongo
+import config
+
 def getAttendance(classroomId):
-  return {
-    9918102177 : "12:09",
-    9211223093 : "12:65"
-    }
+  print("Classroom ID  ", classroomId)
+  client = pymongo.MongoClient(config.mlabURI, connectTimeoutMS=30000)
+  db = client.jiitclassroom
+  col = db["attendance"]
+  meetingData = col.find_one({'classroomId': classroomId})
+  if(meetingData):
+    return [True, meetingData["attendance"]]
+  return [False]
 
 def checkFacultyLogin(facultyId, facultyPassword):
-  if(facultyId=='test@jiitclassroom.com' and facultyPassword=='test128'):
+  client = pymongo.MongoClient(config.mlabURI, connectTimeoutMS=30000)
+  db = client.jiitclassroom
+  col = db["facultyLogin"]
+  if(col.find_one({'id': facultyId, 'password': facultyPassword})):
     return True
   return False
 

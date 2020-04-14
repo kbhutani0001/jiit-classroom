@@ -1,12 +1,9 @@
 from flask import Flask, flash, Response, render_template,request,redirect,url_for,send_from_directory,jsonify,abort,send_file
 import os
-import pymongo
-import config
 from checkWebkiosk import check
 from dbCheck import getAttendance, checkFacultyLogin
 app = Flask(__name__)
 app.secret_key = "jiit128sucks"
-
 
 @app.route('/', methods=['GET'])
 def home():
@@ -30,6 +27,7 @@ def joinClass(classroomId):
     rollNo = request.form['rollNo']
     password = request.form['password']
     dob = request.form['dob']
+    loginTime = request.form['currentTime']
     dob = dob.split('-')[2] + '-' + dob.split('-')[1] + '-' + dob.split('-')[0]
     if(check(rollNo, dob, password)):
       return render_template('meeting.html', classroomId=classroomId, rollNo=rollNo)
@@ -46,8 +44,13 @@ def attendance_login():
     facultyPassword = request.form['facultyPassword']
     classroomId = request.form['classroomId']
     if(checkFacultyLogin(facultyId, facultyPassword)):
-      attendance = getAttendance(classroomId)
-      return render_template("attendance.html", attendance=attendance, classroomId=classroomId)
+      meetingData = getAttendance(classroomId)
+      print(meetingData)
+      if(meetingData[0]): #if attendance present
+        attendance = meetingData[1]
+        return render_template("attendance.html", attendance=attendance, classroomId=classroomId)
+      else:
+        return 'Some error occurred. Please try again.'
     else:
       flash('Wrong ID or Password, please try again.')
       return render_template('attendanceLogin.html')
