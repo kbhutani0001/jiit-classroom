@@ -36,11 +36,18 @@ def joinClass(classroomId):
       return render_template('login.html')
 
 @app.route('/attendance', methods = ['GET', 'POST'])
-
-def attendance():
+def attendance_login():
   if request.method == 'GET':
     return render_template("attendanceLogin.html")
 
+@app.route('/enroll', methods = ['GET', 'POST'])
+def attendance():
+  if request.method == 'GET':
+    attend = {
+    9918102177 : "12:09",
+    9211223093 : "12:65"
+    }
+    return render_template("attendance.html", attend=attend, classroomId=1234)
 
 
 if(__name__=='__main__'):
