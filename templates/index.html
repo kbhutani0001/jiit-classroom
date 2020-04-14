@@ -5,38 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>JIIT Classroom</title>
+  <link rel="stylesheet" href="E:\Web Development\jiit-classroom-master\static\Css\style.css">
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-  <style>
-
-    .mainDiv {
-      margin: 100px 100px;
-
-    }
-
-    @media screen and (max-width: 650px) {
-      .mainDiv{
-        margin: 50px 50px;
-      }
-  }
-
-  </style>
+  
 
 </head>
 
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="/">JIIT Classroom</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav ml-auto">
        
         <li class="nav-item">
           <a class="nav-link" href="/create">Create Class</a>
@@ -44,10 +32,6 @@
 
         <li class="nav-item active">
           <a class="nav-link" href="/join">Join Class</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="/attendance">Attendance</a>
         </li>
 
       </ul>
@@ -58,10 +42,15 @@
 
   <div class="mainDiv">
     <h2>JIIT Classroom</h2>
-    <h4>Online classes for JIIT-128 Students. </h4>
-    <a href="/create">Create Class</a>
-    <a href="/join" style="padding-left: 20px;">Join Class</a>
+    <h4>Online Classes made Easy </h4>
+    <a href="/create" class="myButton">Create Class</a>
+    <a href="/join" class="myButton" style="padding-left: 20px;">Join Class</a>
 </div>
+
+
+<!-- //Steps-Section  -->
+
+
 
 </body>
 </html>
