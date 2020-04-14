@@ -33,5 +33,4 @@ def check(rollNo, dob, password):
     print("Successfully logged in")
     return True
   else:
-    print(result.text)
     return False

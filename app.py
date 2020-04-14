@@ -11,7 +11,7 @@ def home():
   return render_template('index.html')
 
 
-@app.route('/join/', methods=['GET'])
+@app.route('/join/', methods=['GET', 'POST'])
 def join():
   return render_template('join.html')
 
@@ -28,6 +28,7 @@ def joinClass(classroomId):
     rollNo = request.form['rollNo']
     password = request.form['password']
     dob = request.form['dob']
+    dob = dob.split('-')[2] + '-' + dob.split('-')[1] + '-' + dob.split('-')[0]
     if(check(rollNo, dob, password)):
       return render_template('meeting.html', classroomId=classroomId, rollNo=rollNo)
     else:
