@@ -69,7 +69,7 @@
 
   <div class="mainDiv">
     <h2>JIIT Classroom</h2>
-    <h4>Enter your webkiosk details to log in</h4>
+    <h4>Enter your details below to check attendance of a meeting</h4>
     <div>
       
       
@@ -86,15 +86,15 @@
   <form style="margin-top: 20px;" action="/attendance/" style="margin: auto;" method="POST">
     <div class="form-group">
       <label for="facultyId">Faculty ID</label>
-      <input style="max-width: 500px;" type="email" class="form-control" name="facultyId" id="facultyId" aria-describedby="emailHelp" placeholder="Enter Faculty ID">
+      <input style="max-width: 500px;" type="email" class="form-control" required name="facultyId" id="facultyId" aria-describedby="emailHelp" placeholder="Enter Faculty ID">
     </div> 
     <div class="form-group">
       <label for="facultyPassword">Password</label>
-      <input style="max-width: 500px;" type="password" class="form-control" name="facultyPassword" id="facultyPassword" placeholder="Password">
+      <input style="max-width: 500px;" type="password" class="form-control" required name="facultyPassword" id="facultyPassword" placeholder="Password">
     </div>
     <div class="form-group">
       <label for="classroomId">JIIT Classroom ID (Attendance to be checked for)</label>
-      <input style="max-width: 500px;" type="number" class="form-control" name="classroomId" id="classroomId" placeholder="JIIT Classroom ID (ex. 74095326884)">
+      <input style="max-width: 500px;" type="number" class="form-control" required name="classroomId" id="classroomId" placeholder="JIIT Classroom ID (ex. 74095326884)">
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
