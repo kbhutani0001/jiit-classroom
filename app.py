@@ -1,20 +1,21 @@
-from flask import Flask, Response, render_template,request,redirect,url_for,send_from_directory,jsonify,abort,send_file
+from flask import Flask, flash, Response, render_template,request,redirect,url_for,send_from_directory,jsonify,abort,send_file
 import os
 import pymongo
 import config
 from checkWebkiosk import check
 app = Flask(__name__)
+app.secret_key = "jiit128sucks"
 
 @app.route('/', methods=['GET'])
 def home():
   return render_template('index.html')
 
 
-@app.route('/join', methods=['GET'])
+@app.route('/join/', methods=['GET'])
 def join():
   return render_template('join.html')
 
-@app.route('/create', methods=['GET'])
+@app.route('/create/', methods=['GET'])
 def create():
   return render_template('create.html')
 
@@ -30,9 +31,8 @@ def joinClass(classroomId):
     if(check(rollNo, dob, password)):
       return render_template('meeting.html', classroomId=classroomId, rollNo=rollNo)
     else:
-      return Response('''
-        <h1>Wrong Webkiosk Details, Try again!</h1>'''
-        )
+      flash('Wrong DOB or Password, Please try again or reset it on webkiosk.')
+      return render_template('login.html')
 
 
 
