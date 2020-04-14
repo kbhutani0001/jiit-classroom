@@ -1,5 +1,22 @@
+.brand-name{
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 4rem;
+    margin-bottom: 10px;
+
+
+}
+
+#infoline{
+
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 15px;
+}
+
+
+
 .mainDiv {
     margin: 100px 100px;
+    text-align: center;
 
   }
 
@@ -8,6 +25,19 @@
       margin: 50px 50px;
     }
 }
+
+ /* Chrome, Safari, Edge, Opera */
+ input::-webkit-outer-spin-button,
+ input::-webkit-inner-spin-button {
+   -webkit-appearance: none;
+   margin: 0;
+ }
+
+ /* Firefox */
+ input[type=number] {
+   -moz-appearance: textfield;
+ }
+
 
 
 /* Buttons */
@@ -27,6 +57,7 @@
 	text-decoration:none;
     text-shadow:0px 1px 0px #3d768a;
     margin-right: 10px;
+    margin-top: 15px;
 }
 .myButton:hover {
 	background:linear-gradient(to bottom, #408c99 5%, #1ea5d6 100%);
