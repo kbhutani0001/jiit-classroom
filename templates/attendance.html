@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,16 +51,17 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
        
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" href="/create">Create Class</a>
         </li>
 
         <li class="nav-item">
           <a class="nav-link" href="/join">Join Class</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/attendance">Attendance</a>
-        </li>
+
+        <li class="nav-item active">
+            <a class="nav-link" href="/attendance">Attendance</a>
+          </li>
 
       </ul>
     </div>
@@ -68,37 +70,32 @@
 
   <div class="mainDiv">
     <h2>JIIT Classroom</h2>
-    <h4>Enter your webkiosk details to log in</h4>
+    <br><br>
+    <h3>Attendance for meeting Id: {{ classroomId }} </h3>
+    <br><br>
     <div>
-      <h6>NOTE: Remember that your name in meeting is your enrollment number, any nuisance in meeting can result in strict action against you.</h6>
-      
-      
-      {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        {% for message in messages %}
-        <div class="alert alert-danger" role="alert">
-          {{ message }}
-        </div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-    </div>
-  <form style="margin-top: 20px;" action="/join/{{classroomId}}" style="margin: auto;" method="POST">
-    <div class="form-group">
-      <label for="exampleInputEmail1">Enrollment No.</label>
-      <input style="max-width: 500px;" type="number" class="form-control" name="rollNo" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Enrollment No">
-    </div> 
-    <div class="form-group">
-      <label for="exampleInputEmail1">Date of Birth (dd/mm/yyyy)</label>
-      <input style="max-width: 500px;" type="date" class="form-control" name="dob" id="dob" aria-describedby="emailHelp" placeholder="Enter Date of Birth" value="2000-01-01">
-    </div>
-    <div class="form-group">
-      <label for="exampleInputPassword1">Webkiosk Password</label>
-      <input style="max-width: 500px;" type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Password">
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
-</div>
+        <table class = "table table-striped table-dark" >
 
+            <thead>
+                <tr>
+                    <th scope = 'col'>Enrollment no.</th>
+                    <th scope = 'col'>Joining Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key in attend %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ attend[key] }}</td>
+                </tr>
+                {% endfor %} 
+            </tbody>
+           
+        </table>    
+
+
+
+
+    </div>
 </body>
 </html>
