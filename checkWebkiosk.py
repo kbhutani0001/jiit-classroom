@@ -9,7 +9,7 @@ def check(rollNo, dob, password):
   htmlCode = result.text
   indexCaptcha = htmlCode.find('<font face="casteller" size="5">') + 32
   captcha = htmlCode[indexCaptcha: indexCaptcha+5]
-  values = { 'x': '',
+  values = { 'x': '', 
     'InstCode': 'J128',
       'txtInst': 'Institute',
       'UserType101117': 'S',
