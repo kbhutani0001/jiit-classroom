@@ -16,7 +16,7 @@ def home():
   return render_template('index.html')
 
 
-@app.route('/join/', methods=['GET', 'POST'])
+@app.route('/join/', methods=['GET'])
 def join():
   return render_template('join.html') 
 
@@ -40,7 +40,7 @@ def joinClass(classroomId):
       return render_template('meeting.html', classroomId=classroomId, rollNo=rollNo)
     else:
       flash('Wrong DOB or Password, Please try again or reset it on webkiosk.')
-      return render_template('login.html')
+      return render_template('login.html', classroomId=classroomId)
 
 @app.route('/attendance/', methods = ['GET', 'POST'])
 def attendance_login():
