@@ -49,6 +49,10 @@ def attendance():
     }
     return render_template("attendance.html", attend=attend, classroomId=1234)
 
+@app.route('/faculty', methods = ['GET', 'POST'])
+def faculty():
+  if request.method == 'GET':
+    return render_template('faculty.html')
 
 if(__name__=='__main__'):
 	app.run(debug=True,use_reloader=True)

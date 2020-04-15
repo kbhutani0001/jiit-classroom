@@ -50,9 +50,9 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
 
-        <li class="nav-item">
-          <a class="nav-link" href="/faculty">Faculty <br> Login </a>
-        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/faculty">Faculty <br> Login </a>
+          </li>
        
         <li class="nav-item">
           <a class="nav-link" href="/create">Create Class</a>
@@ -62,16 +62,15 @@
           <a class="nav-link" href="/join">Join Class</a>
         </li>
 
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link" href="/attendance">Attendance</a>
           </li>
 
       </ul>
     </div>
   </nav>
-
-  <br>
-
+<br>
+  
   <div class = "container">
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
       Sign up
@@ -111,7 +110,6 @@
     </div>
   </div>
 
-
   <div class="mainDiv">
     <h2>JIIT Classroom</h2>
     <h4>Enter your webkiosk details to log in</h4>
@@ -128,6 +126,8 @@
       {% endif %}
     {% endwith %}
     </div>
+
+
   <form style="margin-top: 20px;" action="/join/{{classroomId}}" style="margin: auto;" method="POST">
     <div class="form-group">
       <label for="exampleInputEmail1">Employee Code</label>
@@ -137,12 +137,8 @@
       <label for="exampleInputPassword1">Webkiosk Password</label>
       <input style="max-width: 500px;" type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Password">
     </div>
-    <div class="form-group">
-      <label for="classroomId">JIIT Classroom ID (Attendance to be checked for)</label>
-      <input style="max-width: 500px;" type="number" class="form-control" required="" name="classroomId" id="classroomId" placeholder="JIIT Classroom ID (ex. 74095326884)">
-    </div>
     <button type="submit" class="btn btn-primary">Submit</button>
-  </form> 
+  </form>
 </div>
 
 </body>
