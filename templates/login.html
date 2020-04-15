@@ -13,11 +13,14 @@
   <link rel="stylesheet" href="..\static\Css\style.css">
 
 
+
   
 </head>
 <body>
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+
     <a class="navbar-brand" href="/">JIIT Classroom</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -73,6 +76,27 @@
       <label for="exampleInputPassword1">Webkiosk Password</label>
       <input style="max-width: 500px;" type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Password">
     </div>
+    <div style="display: none;" class="form-group">
+      <label for="currentTime">Time</label>
+      <input style="max-width: 500px;" type="text" class="form-control" name="currentTime" id="currentTime" aria-describedby="emailHelp">
+    </div>
+
+    <script>
+      console.log("CHECK  ")
+      d = new Date();
+      var hours = d.getHours();
+      str ='AM'
+      if(hours>=12){
+        str='PM'
+        if(hours>12){
+        hours = hours%12}
+      }
+      var min = d.getMinutes();
+      document.getElementById('currentTime').value = `${hours}: ${min} ${str}`
+      console.log("CHECK  ")
+  
+    </script>
+
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>
