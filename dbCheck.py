@@ -27,8 +27,9 @@ def markAttendance(client, classroomId, rollNo, loginTime):
         }
       }
       col.insert_one(data)
-  except:
+  except Exception as e:
     print("Could not mark attendance")
+    print(e)
     None
 
 
