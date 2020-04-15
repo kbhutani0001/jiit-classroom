@@ -78,6 +78,10 @@ def attendance_login():
       flash('Wrong ID or Password, please try again.')
       return render_template('attendanceLogin.html')
 
+@app.route('/faculty', methods = ['GET', 'POST'])
+def faculty():
+  if request.method == 'GET':
+    return render_template('faculty.html')
 
 if(__name__=='__main__'):
 	app.run(debug=True,use_reloader=True)
