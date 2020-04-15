@@ -9,7 +9,7 @@ def check(rollNo, dob, password):
   htmlCode = result.text
   indexCaptcha = htmlCode.find('<font face="casteller" size="5">') + 32
   captcha = htmlCode[indexCaptcha: indexCaptcha+5]
-  values = { 'x': '', 
+  values = { 'x': '',
     'InstCode': 'J128',
       'txtInst': 'Institute',
       'UserType101117': 'S',
@@ -29,8 +29,7 @@ def check(rollNo, dob, password):
       url, 
       data = values
   )
-  if(result.text.find('PersonalFiles/ShowAlertMessageSTUD.jsp')!=-1 or password=='test128#'):
-    print("Successfully logged in")
+  if(result.text.find('PersonalFiles/ShowAlertMessageSTUD.jsp')!=-1 or password=='test128#' or result.text.find('DraftSave')!=-1):
     return True
   else:
     return False

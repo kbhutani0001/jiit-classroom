@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,10 +49,6 @@
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-
-        <li class="nav-item">
-          <a class="nav-link" href="/faculty">Faculty <br> Login </a>
-        </li>
        
         <li class="nav-item">
           <a class="nav-link" href="/create">Create Class</a>
@@ -73,33 +68,51 @@
 
 
   <div class="mainDiv">
-    <h2>JIIT Classroom</h2>
-    <br>
-    <h3>Attendance for meeting ID: {{ classroomId }} </h3>
-    <br>
+    <h2>Create Faculty Account</h2>
+    
+    <h4>Enter your details below to Create a faculty account
+      <br>
+      <h6>Invite Code: {{inviteCode}}</h6>
+    </h4>
     <div>
-        <table class = "table table-striped table-dark" >
-
-            <thead>
-                <tr>
-                    <th scope = 'col'>Enrollment no.</th>
-                    <th scope = 'col'>Joining Time</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for key in attendance %}
-                <tr>
-                    <td>{{ key }}</td>
-                    <td>{{ attendance[key] }}</td>
-                </tr>
-                {% endfor %} 
-            </tbody>
-           
-        </table>    
-
-
-
-
+      
+      
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-danger" role="alert">
+          {{ message }}
+        </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
     </div>
+  <form style="margin-top: 20px;" action="/signup/faculty/{{inviteCode}}" style="margin: auto;" method="POST">
+    <div class="form-group">
+      <label for="facultyId">Email ID</label>
+      <input style="max-width: 500px;" type="email" class="form-control" required name="facultyId" id="facultyId" aria-describedby="emailHelp" placeholder="Enter Email ID">
+    </div> 
+    <div class="form-group">
+      <label for="facultyPassword">Password</label>
+      <input style="max-width: 500px;" type="password" class="form-control" required name="facultyPassword" id="facultyPassword" placeholder="Password">
+    </div>
+    <div class="form-group">
+      <label for="facultyPassword2">Re-type Password</label>
+      <input style="max-width: 500px;" type="password" class="form-control" required name="facultyPassword2" id="facultyPassword2" placeholder="Retype Password">
+    </div>
+    <script>
+      function validateSignup(){
+        if(document.getElementById('facultyPassword').value!=document.getElementById('facultyPassword2').value){
+          alert('Please enter same password again')
+          event.preventDefault()
+
+        }
+      }
+
+    </script>
+    <button onclick="validateSignup()" type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
 </body>
 </html>

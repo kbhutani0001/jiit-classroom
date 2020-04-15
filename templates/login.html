@@ -11,7 +11,6 @@
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
-
   <style>
 
     .mainDiv {
@@ -40,7 +39,7 @@
   </style>
 </head>
 <body>
-
+ 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/">JIIT Classroom</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,6 +99,27 @@
       <label for="exampleInputPassword1">Webkiosk Password</label>
       <input style="max-width: 500px;" type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Password">
     </div>
+    <div style="display: none;" class="form-group">
+      <label for="currentTime">Time</label>
+      <input style="max-width: 500px;" type="text" class="form-control" name="currentTime" id="currentTime" aria-describedby="emailHelp">
+    </div>
+
+    <script>
+      console.log("CHECK  ")
+      d = new Date();
+      var hours = d.getHours();
+      str ='AM'
+      if(hours>=12){
+        str='PM'
+        if(hours>12){
+        hours = hours%12}
+      }
+      var min = d.getMinutes();
+      document.getElementById('currentTime').value = `${hours}: ${min} ${str}`
+      console.log("CHECK  ")
+  
+    </script>
+
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>
