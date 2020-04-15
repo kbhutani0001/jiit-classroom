@@ -4,6 +4,7 @@ import config
 
 def markAttendance(client, classroomId, rollNo, loginTime):
   try:
+    print("Marking attendance for " + classroomId)
     db = client.jiitclassroom
     col = db["attendance"]
     data = col.find({'classroomId': classroomId})
@@ -19,6 +20,7 @@ def markAttendance(client, classroomId, rollNo, loginTime):
         }
         col.update_one(data[0],updatedData)
     else: #if class doesnt exists 
+      print("Creating class and marking attendance for " + classroomId)
       data = {"classroomId": classroomId,
         "attendance": {
         rollNo: loginTime
@@ -26,6 +28,7 @@ def markAttendance(client, classroomId, rollNo, loginTime):
       }
       col.insert_one(data)
   except:
+    print("Could not mark attendance")
     None
 
 
