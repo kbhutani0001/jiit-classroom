@@ -39,7 +39,7 @@ def joinClass(classroomId):
       markAttendance(client, classroomId, rollNo, loginTime)
       return render_template('meeting.html', classroomId=classroomId, rollNo=rollNo)
     else:
-      flash('Wrong DOB or Password, Please try again or reset it on webkiosk.')
+      flash('Wrong DOB or Password, Please try again or reset it on webkiosk. Trying more than 3 times might lock your webkiosk temporarily.')
       return render_template('login.html', classroomId=classroomId)
 
 @app.route('/attendance/', methods = ['GET', 'POST'])

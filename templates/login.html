@@ -107,7 +107,8 @@
       str ='AM'
       if(hours>=12){
         str='PM'
-        hours = hours%12
+        if(hours>12){
+        hours = hours%12}
       }
       var min = d.getMinutes();
       document.getElementById('currentTime').value = `${hours}: ${min} ${str}`
