@@ -11,34 +11,10 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="{{ url_for('static',filename='Css/style.css')}}">
 
 
-  <style>
-
-    .mainDiv {
-      margin: 100px 100px;
-
-    }
-
-    @media screen and (max-width: 650px) {
-      .mainDiv{
-        margin: 50px 50px;
-      }
-  }
-
-  /* Chrome, Safari, Edge, Opera */
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    /* Firefox */
-    input[type=number] {
-      -moz-appearance: textfield;
-    }
-
-  </style>
+  
 </head>
 <body>
 
@@ -79,6 +55,7 @@
             <thead>
                 <tr>
                     <th scope = 'col'>Enrollment no.</th>
+                    <th scope = 'col'>Name</th>
                     <th scope = 'col'>Joining Time</th>
                 </tr>
             </thead>
@@ -86,8 +63,14 @@
                 {% for key in attendance %}
                 <tr>
                     <td>{{ key }}</td>
+                    {% if key is iterable %}
+                    <td>{{ attendance[key][0] }}</td>
+                    <td>{{ attendance[key][1] }}</td>
+                    {% else %}
+                    <td>Couldn't retrieve name</td>
                     <td>{{ attendance[key] }}</td>
-                </tr>
+                    {% endif %}
+                  </tr>
                 {% endfor %} 
             </tbody>
            
