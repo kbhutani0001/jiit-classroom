@@ -79,6 +79,7 @@
             <thead>
                 <tr>
                     <th scope = 'col'>Enrollment no.</th>
+                    <th scope = 'col'>Name</th>
                     <th scope = 'col'>Joining Time</th>
                 </tr>
             </thead>
@@ -86,8 +87,14 @@
                 {% for key in attendance %}
                 <tr>
                     <td>{{ key }}</td>
+                    {% if key is iterable %}
+                    <td>{{ attendance[key][0] }}</td>
+                    <td>{{ attendance[key][1] }}</td>
+                    {% else %}
+                    <td>Couldn't retrieve name</td>
                     <td>{{ attendance[key] }}</td>
-                </tr>
+                    {% endif %}
+                  </tr>
                 {% endfor %} 
             </tbody>
            
