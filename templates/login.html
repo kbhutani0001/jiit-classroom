@@ -10,7 +10,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="..\static\Css\style.css">
+  <link rel="stylesheet" href="{{ url_for('static',filename='Css/style.css')}}">
 
 
 
@@ -50,7 +50,11 @@
     <h2>JIIT Classroom</h2>
     <h4>Enter your webkiosk details to log in</h4>
     <div>
+<<<<<<< HEAD
       <h6>NOTE: Remember that your name in meeting is your enrollement number, any nuisance in meeting can result in strict action against you.</h6>
+=======
+      <h6>NOTE: Remember that your meeting name is automatically set to <b><mark>EnrollmentNo_YourName</mark></b> and cannot be changed, any nuisance in meeting can result in strict action against you.</h6>
+>>>>>>> d4c6805aa0963093aeb23f2a4c3409bdc91de75b
       
       
       {% with messages = get_flashed_messages() %}
@@ -97,7 +101,7 @@
   
     </script>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Login</button>
   </form>
 </div>
 

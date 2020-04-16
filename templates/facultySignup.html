@@ -13,38 +13,7 @@
   <link rel="stylesheet" href="{{ url_for('static',filename='Css/style.css')}}">
 
 
-  <style>
-
-    #grayUrl {
-      display: inline; font-size: 14px; color: gray;
-      text-decoration: underline  ;
-    }
-
-    .mainDiv {
-      margin: 100px 100px;
-
-    }
-
-    @media screen and (max-width: 650px) {
-      .mainDiv{
-        margin: 50px 50px;
-      }
-  }
-
-  /* Chrome, Safari, Edge, Opera */
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    /* Firefox */
-    input[type=number] {
-      -moz-appearance: textfield;
-    }
-
-
-  </style>
+  
 </head>
 <body>
 
@@ -75,8 +44,12 @@
 
 
   <div class="mainDiv">
-    <h2>JIIT Classroom</h2>
-    <h4>Enter your details below to Login and check attendance of a meeting</h4>
+    <h2>Create Faculty Account</h2>
+    
+    <h4>Enter your details below to Create a faculty account
+      <br>
+      <h6>Invite Code: {{inviteCode}}</h6>
+    </h4>
     <div>
       
       
@@ -90,43 +63,30 @@
       {% endif %}
     {% endwith %}
     </div>
-  <form style="margin-top: 20px;" action="/attendance/" style="margin: auto;" method="POST">
+  <form style="margin-top: 20px;" action="/signup/faculty/{{inviteCode}}" style="margin: auto;" method="POST">
     <div class="form-group">
-      <label for="facultyId">Faculty ID</label>
-      <input style="max-width: 500px;" type="email" class="form-control" required name="facultyId" id="facultyId" aria-describedby="emailHelp" placeholder="Enter Faculty ID">
+      <label for="facultyId">Email ID</label>
+      <input style="max-width: 500px;" type="email" class="form-control" required name="facultyId" id="facultyId" aria-describedby="emailHelp" placeholder="Enter Email ID">
     </div> 
     <div class="form-group">
       <label for="facultyPassword">Password</label>
       <input style="max-width: 500px;" type="password" class="form-control" required name="facultyPassword" id="facultyPassword" placeholder="Password">
     </div>
     <div class="form-group">
-      <label for="classroomId">JIIT Classroom ID (Attendance to be checked for)</label>
-      <input style="max-width: 500px;" type="number" class="form-control" required name="classroomId" id="classroomId" placeholder="JIIT Classroom ID (ex. 74095326884)">
+      <label for="facultyPassword2">Re-type Password</label>
+      <input style="max-width: 500px;" type="password" class="form-control" required name="facultyPassword2" id="facultyPassword2" placeholder="Retype Password">
     </div>
-    <button type="submit" class="btn btn-primary">Sign in</button>
+    <script>
+      function validateSignup(){
+        if(document.getElementById('facultyPassword').value!=document.getElementById('facultyPassword2').value){
+          alert('Please enter same password again')
+          event.preventDefault()
 
-    <a id="grayUrl" type="button"  data-toggle="modal" data-target="#exampleModal" >Don't have a Faculty account?</a>
+        }
+      }
 
-
-    <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">JIIT Classroom Faculty Account</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        To get create an account on JIIT Classroom, please email your details <a href="mailto:kbhutani0001@gmail.com?Subject=JIIT%20Faculty%20Account%20Invite" target="_top">here</a> or drop a message on <a href="https://wa.me/918802999631?text=Hello%20Kartikay%2C%20I%20am%20Faculty%20of%20JIIT-129%20and%20I%20want%20invite%20link%20to%20Create%20an%20account%20on%20JIIT%20Classroom.%20Here%20are%20my%20details">Whatsapp</a>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+    </script>
+    <button onclick="validateSignup()" type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>
 
