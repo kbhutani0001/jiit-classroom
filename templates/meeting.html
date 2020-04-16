@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <head>
     <title>JIIT Classroom</title>
@@ -66,3 +67,73 @@
 </script>
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<head>
+    <title>JIIT Classroom</title>
+    <meta charset="utf-8" />
+    <link type="text/css" rel="stylesheet" href="https://source.zoom.us/1.7.5/css/bootstrap.css"/>
+    <link type="text/css" rel="stylesheet" href="https://source.zoom.us/1.7.5/css/react-select.css"/>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+</head>
+<body>
+
+
+<style>
+    body {
+        padding-top: 50px;
+    }
+</style>
+
+<nav id="nav-tool" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">JIIT Classroom</a>
+        </div>
+        <div id="navbar">
+            <form class="navbar-form navbar-right" id="meeting_form">
+                <div style="display: none;" class="form-group">
+                    <input required type="text" name="display_name" id="display_name" value="{{joinName}}" placeholder="Name" class="form-control" required>
+                </div>
+                <div  style="display: none;" class="form-group">
+                    <input required type="text" name="meeting_number" id="meeting_number" value="{{classroomId}}" placeholder="Meeting Number" class="form-control" required>
+                </div>
+                <div style="display: none;" class="form-group">
+                    <input required hidden type="text" name="meeting_pwd" id="meeting_pwd" value="" placeholder="Meeting Password" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <select hidden id="meeting_role" class="selectpicker">
+                        <option value=0>Attendee</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" id="join_meeting">Join</button>
+            </form>
+        </div><!--/.navbar-collapse -->
+    </div>
+</nav>
+
+
+<div>
+  <h4>NOTE: Remember that your name in meeting is your enrollment number, any nuisance in meeting can result in strict action against you.</h4>
+
+</div>
+
+<script src="https://source.zoom.us/1.7.5/lib/vendor/react.min.js"></script>
+<script src="https://source.zoom.us/1.7.5/lib/vendor/react-dom.min.js"></script>
+<script src="https://source.zoom.us/1.7.5/lib/vendor/redux.min.js"></script>
+<script src="https://source.zoom.us/1.7.5/lib/vendor/redux-thunk.min.js"></script>
+<script src="https://source.zoom.us/1.7.5/lib/vendor/jquery.min.js"></script>
+<script src="https://source.zoom.us/1.7.5/lib/vendor/lodash.min.js"></script>
+
+<script src="https://source.zoom.us/zoom-meeting-1.7.5.min.js"></script>
+<script src="{{ url_for('static',filename='js/index.js')}}"></script>
+
+<script>
+   
+</script>
+</body>
+</html>
+>>>>>>> 55fd57f5dc14f85a4459aa0d8f29ea783cd1e6a2
