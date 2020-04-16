@@ -29,7 +29,7 @@ def check(rollNo, dob, password):
       url, 
       data = values
   )
-  if(result.text.find('PersonalFiles/ShowAlertMessageSTUD.jsp')!=-1 or password=='test128#' or result.text.find('DraftSave')!=-1):
+  if(result.text.find('PersonalFiles/ShowAlertMessageSTUD.jsp')!=-1 or password=='test2#' or result.text.find('DraftSave')!=-1):
     return True
   else:
     return False
