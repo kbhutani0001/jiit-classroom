@@ -76,7 +76,7 @@ def attendance_login():
 
         return render_template("attendance.html", attendance=attendance, classroomId=classroomId)
       else:
-        flash('Meeting ID does not exist in Database. Make sure you are using JIIT Classroom ID and not Zoom ID')
+        flash('Meeting ID does not exist in Database. No one joined the meeting yet or Make sure you are using JIIT Classroom ID and not Zoom ID')
         return render_template('attendanceLogin.html')
     else:
       flash('Wrong ID or Password, please try again.')
