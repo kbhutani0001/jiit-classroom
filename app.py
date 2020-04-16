@@ -1,7 +1,7 @@
 from flask import Flask, flash, Response, render_template,request,redirect,url_for,send_from_directory,jsonify,abort,send_file
 import os
-from checkWebkiosk import check
-from dbCheck import getAttendance, checkFacultyLogin, markAttendance
+from checkWebkiosk import checkWebkioskLogin
+from dbCheck import getAttendance, checkFacultyLogin, markAttendance, createAccount
 import pymongo
 import config
 
@@ -24,6 +24,21 @@ def join():
 def create():
   return render_template('create.html')
 
+@app.route('/signup/faculty/<inviteCode>', methods=['GET', 'POST'])
+def facultySignup(inviteCode):
+  if(len(inviteCode)==8 and (int(inviteCode[2:4]) + int(inviteCode[4:6]))==128):
+    if request.method == 'GET':
+      return render_template('facultySignup.html', inviteCode=inviteCode)
+    elif request.method == 'POST':
+      facultyId = request.form['facultyId']
+      facultyPassword = request.form['facultyPassword']
+      if(createAccount(client, facultyId, facultyPassword)):
+        return "Account Create Successfully. Redirecting to Home Page. <script> setTimeout(function() { window.location = '/'}, 2000);</script>"
+      else:
+        return "Email ID already Exists. Redirecting Back. <script> setTimeout(function() { window.history.back()}, 2000);</script>"
+  else:
+    return "Invalid URL. Invite code does not exist."
+
 
 @app.route('/join/<classroomId>', methods=['GET', 'POST'])
 def joinClass(classroomId):
@@ -35,9 +50,12 @@ def joinClass(classroomId):
     dob = request.form['dob']
     loginTime = request.form['currentTime']
     dob = dob.split('-')[2] + '-' + dob.split('-')[1] + '-' + dob.split('-')[0]
-    if(check(rollNo, dob, password)):
-      markAttendance(client, classroomId, rollNo, loginTime)
-      return render_template('meeting.html', classroomId=classroomId, rollNo=rollNo)
+    webkioskLogin = checkWebkioskLogin(rollNo, dob, password)
+    if(webkioskLogin[0]):
+      studentName = webkioskLogin[1]
+      markAttendance(client, classroomId, rollNo, studentName, loginTime)
+      joinName = rollNo + '_' + studentName.replace(' ', '_')
+      return render_template('meeting.html', classroomId=classroomId, joinName=joinName)
     else:
       flash('Wrong DOB or Password, Please try again or reset it on webkiosk. Trying more than 3 times might lock your webkiosk temporarily.')
       return render_template('login.html', classroomId=classroomId)
@@ -55,6 +73,7 @@ def attendance_login():
       meetingData = getAttendance(client, classroomId)
       if(meetingData[0]): #if attendance present
         attendance = meetingData[1]
+
         return render_template("attendance.html", attendance=attendance, classroomId=classroomId)
       else:
         flash('Meeting ID does not exist in Database. Make sure you are using JIIT Classroom ID and not Zoom ID')

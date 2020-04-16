@@ -2,7 +2,7 @@ import pymongo
 import config
 
 
-def markAttendance(client, classroomId, rollNo, loginTime):
+def markAttendance(client, classroomId, rollNo, studentName, loginTime):
   try:
     print("Marking attendance for " + classroomId)
     db = client.jiitclassroom
@@ -12,7 +12,7 @@ def markAttendance(client, classroomId, rollNo, loginTime):
       currentAttendance = data[0]["attendance"].copy()
       if(not rollNo in currentAttendance.keys()): #if logging in first time
         print("Updating Attendance")
-        currentAttendance[rollNo] = loginTime
+        currentAttendance[rollNo] = [studentName,loginTime]
         updatedData = { "$set": {
           "classroomId": classroomId,
           "attendance": currentAttendance
@@ -23,7 +23,7 @@ def markAttendance(client, classroomId, rollNo, loginTime):
       print("Creating class and marking attendance for " + classroomId)
       data = {"classroomId": classroomId,
         "attendance": {
-        rollNo: loginTime
+        rollNo: [studentName,loginTime]
         }
       }
       col.insert_one(data)
@@ -48,3 +48,15 @@ def checkFacultyLogin(client, facultyId, facultyPassword):
     return True
   return False
 
+def createAccount(client, facultyId, facultyPassword):
+  db = client.jiitclassroom
+  col = db["facultyLogin"]
+  if(col.find_one({'id': facultyId})):
+    print("Exists")
+    return False
+  else:
+    data = {"id": facultyId,
+        "password": facultyPassword
+      }
+    col.insert_one(data)
+    return True
