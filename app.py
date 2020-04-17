@@ -55,7 +55,9 @@ def joinClass(classroomId):
       studentName = webkioskLogin[1]
       markAttendance(client, classroomId, rollNo, studentName, loginTime)
       joinName = rollNo + '_' + studentName.replace(' ', '_')
-      return render_template('meeting.html', classroomId=classroomId, joinName=joinName)
+      API_KEY = 'bbggBIchTf2B67Oue2QgFg'
+      convertedClassroomId = int(classroomId) - 128128
+      return render_template('meeting.html', API_KEY=API_KEY, convertedClassroomId=convertedClassroomId, joinName=joinName)
     else:
       flash('Wrong DOB or Password, Please try again or reset it on webkiosk. Trying more than 3 times might lock your webkiosk temporarily.')
       return render_template('login.html', classroomId=classroomId)
