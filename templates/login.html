@@ -10,7 +10,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
+  <script type="text/javascript" src="http://services.iperfect.net/js/IP_generalLib.js"></script>
   <style>
 
     .mainDiv {
@@ -89,8 +89,12 @@
     </div> 
     <div class="form-group">
       <label for="exampleInputEmail1">Date of Birth (dd/mm/yyyy)</label>
-      <input style="max-width: 500px;" type="date" class="form-control" name="dob" id="dob" aria-describedby="emailHelp" placeholder="Enter Date of Birth" value="2000-01-01">
+      <input style="max-width: 500px;" type="text" class="form-control IP_calendar" name="dob" id="dob" aria-describedby="emailHelp" title="d/m/Y" placeholder="Enter Date of Birth (DD/MM/YYYY)" value="01-01-2000">
     </div>
+    
+
+
+
     <div class="form-group">
       <label for="exampleInputPassword1">Webkiosk Password</label>
       <input style="max-width: 500px;" type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Password">
@@ -101,7 +105,6 @@
     </div>
 
     <script>
-      console.log("CHECK  ")
       d = new Date();
       var hours = d.getHours();
       str ='AM'
@@ -110,9 +113,7 @@
       }
       hours = ((hours + 11) % 12 + 1);
       var min = d.getMinutes();
-      document.getElementById('currentTime').value = `${hours}: ${min} ${str}`
-      console.log("CHECK  ")
-  
+      document.getElementById('currentTime').value = `${hours}: ${min} ${str}`  
     </script>
 
     <button type="submit" class="btn btn-primary">Login</button>
