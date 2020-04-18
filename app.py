@@ -1,13 +1,31 @@
-from flask import Flask, flash, Response, render_template,request,redirect,url_for,send_from_directory,jsonify,abort,send_file
+from flask import (
+  Flask,
+  flash,
+  Response,
+  render_template,
+  request,
+  redirect,
+  url_for,
+  send_from_directory,
+  jsonify,
+  abort,
+  session,
+  g
+  )
 import os
 from checkWebkiosk import checkWebkioskLogin
-from dbCheck import getAttendance, checkFacultyLogin, markAttendance, createAccount
+from dbCheck import (
+  getAttendance,
+  checkFacultyLogin,
+  markAttendance,
+  createAccount
+  )
 import pymongo
 import config
 
 
 app = Flask(__name__)
-app.secret_key = "jiit128sucks"
+app.secret_key = "jiit128jiitclassroomforonlineclasses"
 
 client = pymongo.MongoClient(config.mlabURI, connectTimeoutMS=50000)
 
