@@ -1,13 +1,31 @@
-from flask import Flask, flash, Response, render_template,request,redirect,url_for,send_from_directory,jsonify,abort,send_file
+from flask import (
+  Flask,
+  flash,
+  Response,
+  render_template,
+  request,
+  redirect,
+  url_for,
+  send_from_directory,
+  jsonify,
+  abort,
+  session,
+  g
+  )
 import os
 from checkWebkiosk import checkWebkioskLogin
-from dbCheck import getAttendance, checkFacultyLogin, markAttendance, createAccount
+from dbCheck import (
+  getAttendance,
+  checkFacultyLogin,
+  markAttendance,
+  createAccount
+  )
 import pymongo
 import config
 
 
 app = Flask(__name__)
-app.secret_key = "jiit128sucks"
+app.secret_key = "jiit128jiitclassroomforonlineclasses"
 
 client = pymongo.MongoClient(config.mlabURI, connectTimeoutMS=50000)
 
@@ -40,9 +58,10 @@ def facultySignup(inviteCode):
     if request.method == 'GET':
       return render_template('facultySignup.html', inviteCode=inviteCode)
     elif request.method == 'POST':
+      facultyName = request.form['facultyName']
       facultyId = request.form['facultyId']
       facultyPassword = request.form['facultyPassword']
-      if(createAccount(client, facultyId, facultyPassword)):
+      if(createAccount(client, facultyName, facultyId, facultyPassword)):
         return "Account Create Successfully. Redirecting to Home Page. <script> setTimeout(function() { window.location = '/'}, 2000);</script>"
       else:
         return "Email ID already Exists. Redirecting Back. <script> setTimeout(function() { window.history.back()}, 2000);</script>"

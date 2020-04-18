@@ -1,114 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>JIIT Classroom</title>
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  
-  <style>
+{% extends 'base.html' %}
 
-    .mainDiv {
-      margin: 100px 100px;
-
-    }
-
-    @media screen and (max-width: 650px) {
-      .mainDiv{
-        margin: 50px 50px;
-      }
-  }
-
-
-  /* Chrome, Safari, Edge, Opera */
-  input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    /* Firefox */
-    input[type=number] {
-      -moz-appearance: textfield;
-    }
-
-
-  </style>
-
-</head>
-<body>
-
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">JIIT Classroom</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-       
-        <li class="nav-item active">
-          <a class="nav-link" href="/create">Create Class</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="/join">Join Class</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="/attendance">Attendance</a>
-        </li>
-
-      </ul>
-    </div>
-  </nav>
-
-<script>
-
-generateClassroomNumber = () => {
-  var zoomId = parseInt(document.getElementById('zoomId').value)
-  document.getElementById('classroomId').value = zoomId + 620128
-  var classroomId = document.getElementById('classroomId').value
-  document.getElementById("classroomId").disabled = true;
-  document.getElementById('meetingUrl').value = `https://jiitclassroom.herokuapp.com/join/${classroomId}`
-  document.getElementById("meetingUrl").disabled = true;
-
-  document.getElementById('classroomIdDiv').style.display = 'block';
-}
-
-
-const copyToClipboard = (code) => {
-  if(code==1){
-    var str = document.getElementById('classroomId').value 
-  }
-  else{
-    var str = document.getElementById('meetingUrl').value 
-  }
-
-  const el = document.createElement('textarea');
-  el.value = str;
-  document.body.appendChild(el);
-  el.select();
-  document.execCommand('copy');
-  document.body.removeChild(el);
-
-
-};
-
-
-</script>
-
-
+{% block body %}
+<body>  
   <div  class="mainDiv">
     <h2>JIIT Classroom</h2>
     <h4>Enter Zoom Meeting ID below to generate JIIT Classroom Number. It is advised to create a <mark><b>New Zoom ID</b></mark> everytime.</h4>
-    
-    
     <div style="margin: 20px 20px;" id="instructions"><p><b>NOTE:</b> Please follow the instructions below for hosting a meeting on JIIT Classroom.
     <br>
     Go to <b><i>Settings</i></b> in your zoom account and do the following.
@@ -120,8 +16,6 @@ const copyToClipboard = (code) => {
     </p>
     After the meeting You can also check the attendance <a href="/attendance">here.</a>
   </div>
-
-
     <input style="margin: 20px 0px; max-width: 500px;" class="form-control" type="number" placeholder="Zoom Meeting ID" name="zoomId" id="zoomId">
     <button class="btn btn-primary" onclick="generateClassroomNumber()">Generate</button>
     <br>
@@ -133,9 +27,7 @@ const copyToClipboard = (code) => {
     <h6 style="margin-top: 20px;">Meeting URL</h6>
     <input style="margin: 10px 0px; max-width: 300px; display: inline;" placeholder="JIIT Classroom URL" class="form-control"  type="text" name="meetingUrl" id="meetingUrl" >
     <button style="margin: 0px 10px;" class="btn btn-secondary" onclick="copyToClipboard(2)">Copy</button>
-
   </div>
   </div>
-
 </body>
-</html>
+{% endblock %}

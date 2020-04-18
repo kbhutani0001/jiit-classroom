@@ -1,73 +1,7 @@
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>JIIT Classroom</title>
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-
-  <style>
-
-    .mainDiv {
-      margin: 100px 100px;
-
-    }
-
-    @media screen and (max-width: 650px) {
-      .mainDiv{
-        margin: 50px 50px;
-      }
-  }
-
-  /* Chrome, Safari, Edge, Opera */
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    /* Firefox */
-    input[type=number] {
-      -moz-appearance: textfield;
-    }
-
-  </style>
-</head>
+{% block body %}
 <body>
-
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">JIIT Classroom</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-       
-        <li class="nav-item">
-          <a class="nav-link" href="/create">Create Class</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="/join">Join Class</a>
-        </li>
-
-        <li class="nav-item active">
-            <a class="nav-link" href="/attendance">Attendance</a>
-          </li>
-
-      </ul>
-    </div>
-  </nav>
-
-
   <div class="mainDiv">
     <h2>JIIT Classroom</h2>
     <br>
@@ -99,10 +33,6 @@
             </tbody>
            
         </table>    
-
-
-
-
     </div>
 </body>
-</html>
+{% endblock %}
