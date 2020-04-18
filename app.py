@@ -40,9 +40,10 @@ def facultySignup(inviteCode):
     if request.method == 'GET':
       return render_template('facultySignup.html', inviteCode=inviteCode)
     elif request.method == 'POST':
+      facultyName = request.form['facultyName']
       facultyId = request.form['facultyId']
       facultyPassword = request.form['facultyPassword']
-      if(createAccount(client, facultyId, facultyPassword)):
+      if(createAccount(client, facultyName, facultyId, facultyPassword)):
         return "Account Create Successfully. Redirecting to Home Page. <script> setTimeout(function() { window.location = '/'}, 2000);</script>"
       else:
         return "Email ID already Exists. Redirecting Back. <script> setTimeout(function() { window.history.back()}, 2000);</script>"
