@@ -28,8 +28,13 @@ const copyToClipboard = (code) => {
 };
 
 const redirectToClass = () => {
-  classroomNumber = document.getElementById('classroomNumber').value
-  window.location = '/join/' + classroomNumber
+  classroomId = document.getElementById('classroomNumber').value
+  if(classroomId.length >= 9){
+    window.location = '/join/' + classroomNumber
+  }
+  else {
+    window.alert("Please enter a valid Classroom ID")
+  }
 }
 
 const validateSignup = () => {

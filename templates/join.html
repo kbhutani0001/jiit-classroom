@@ -3,11 +3,12 @@
 {% block body %}
 <body>
   <div class="mainDiv">
-    <h2>JIIT Classroom</h2>
-    <h4>Enter JIIT Classroom Number to join the class</h4>
-    <div class="form-group">
+    <h2>Join Class</h2>
+    <h4 style="margin: 20px 0px 12px 0px;">Enter JIIT Classroom Number provided by your teacher to join the meeting.</h4>
+    <h6 style="color: gray;">JIIT Classroom number is different from Zoom meeting number. Either use Classroom number or Invite link to join the meeting.</h6>
+    <div style="margin-top: 20px;" class="form-group">
       <label for="exampleInputEmail1">Class room Number</label>
-      <input type="number" class="form-control" name="classroomNumber" id="classroomNumber" aria-describedby="emailHelp" placeholder="Enter Classroom Number">
+      <input required style="max-width: 500px;" type="number" class="form-control" name="classroomNumber" id="classroomNumber" aria-describedby="emailHelp" placeholder="Enter Classroom Number (Example 8788953661)">
     </div>
     <button onclick="redirectToClass()" type="button" class="btn btn-primary">Join Class</button>
   </div>
