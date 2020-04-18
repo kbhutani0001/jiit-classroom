@@ -1,86 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>JIIT Classroom</title>
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="http://services.iperfect.net/js/IP_generalLib.js"></script>
-  <style>
+{% extends 'base.html' %}
 
-    .mainDiv {
-      margin: 100px 100px;
-
-    }
-
-    @media screen and (max-width: 650px) {
-      .mainDiv{
-        margin: 50px 50px;
-      }
-  }
-
-  /* Chrome, Safari, Edge, Opera */
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    /* Firefox */
-    input[type=number] {
-      -moz-appearance: textfield;
-    }
-
-  </style>
-</head>
+{% block body %}
 <body>
- 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">JIIT Classroom</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-       
-        <li class="nav-item ">
-          <a class="nav-link" href="/create">Create Class</a>
-        </li>
-
-        <li class="nav-item active">
-          <a class="nav-link " href="/join">Join Class</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/attendance">Attendance</a>
-        </li>
-
-      </ul>
-    </div>
-  </nav>
-
-
   <div class="mainDiv">
     <h2>JIIT Classroom</h2>
     <h4>Enter your webkiosk details to log in</h4>
     <div>
       <h6>NOTE: Remember that your meeting name is automatically set to <b><mark>EnrollmentNo_YourName</mark></b> and cannot be changed, any nuisance in meeting can result in strict action against you.</h6>
-      
-      
       {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        {% for message in messages %}
-        <div class="alert alert-danger" role="alert">
-          {{ message }}
-        </div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-danger" role="alert">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
     </div>
   <form style="margin-top: 20px;" action="/join/{{classroomId}}" style="margin: auto;" method="POST">
     <div class="form-group">
@@ -91,34 +26,30 @@
       <label for="exampleInputEmail1">Date of Birth (dd/mm/yyyy)</label>
       <input style="max-width: 500px;" type="text" class="form-control IP_calendar" name="dob" id="dob" aria-describedby="emailHelp" title="d/m/Y" placeholder="Enter Date of Birth (DD/MM/YYYY)" value="01-01-2000">
     </div>
-    
-
-
 
     <div class="form-group">
       <label for="exampleInputPassword1">Webkiosk Password</label>
       <input style="max-width: 500px;" type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Password">
     </div>
+    
     <div style="display: none;" class="form-group">
       <label for="currentTime">Time</label>
       <input style="max-width: 500px;" type="text" class="form-control" name="currentTime" id="currentTime" aria-describedby="emailHelp">
     </div>
-
-    <script>
-      d = new Date();
-      var hours = d.getHours();
-      str ='AM'
-      if(hours>=12){
-        str='PM'
-      }
-      hours = ((hours + 11) % 12 + 1);
-      var min = d.getMinutes();
-      document.getElementById('currentTime').value = `${hours}: ${min} ${str}`  
-    </script>
-
     <button type="submit" class="btn btn-primary">Login</button>
   </form>
 </div>
-
+<script>
+  d = new Date();
+  var hours = d.getHours();
+  str ='AM'
+  if(hours>=12){
+    str='PM'
+  }
+  hours = ((hours + 11) % 12 + 1);
+  var min = d.getMinutes();
+  document.getElementById('currentTime').value = `${hours}: ${min} ${str}`  
+</script>
 </body>
-</html>
+
+{% endblock %}
