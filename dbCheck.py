@@ -54,6 +54,15 @@ def addMeeting(client, facultyId, classroomId):
   else:
     return [False, "Some error occurred. Couldn't create meeting."]
 
+def getAllMeetingsOfFaculty(client, facultyId):
+  db = client.jiitclassroom
+  col = db["facultyLogin"]
+  data = col.find_one({'id': facultyId})
+  if(data):
+    return data["meetings"]
+  else:
+    return False
+
 def getAttendance(client, classroomId):
   db = client.jiitclassroom
   col = db["attendance"]

@@ -19,6 +19,7 @@ from dbCheck import (
   checkFacultyLogin,
   markAttendance,
   createAccount,
+  getAllMeetingsOfFaculty,
   addMeeting
   )
 from datetime import timedelta
@@ -55,6 +56,7 @@ def facultyLogout():
   g.facultyName = None
   flash('Successfully Logged you out!')
   return render_template('index.html', flashType="success")
+
 @app.route('/faculty/login/', methods=['GET', 'POST'])
 def facultyLogin():
   if request.method == 'GET':
@@ -109,7 +111,7 @@ def facultySignup(inviteCode):
       facultyId = request.form['facultyId']
       facultyPassword = request.form['facultyPassword']
       if(createAccount(client, facultyName, facultyId, facultyPassword)):
-        return "Account Create Successfully. Redirecting to Home Page. <script> setTimeout(function() { window.location = '/'}, 2000);</script>"
+        return "Account Successfully Created. Redirecting to Login Page. <script> setTimeout(function() { window.location = '/faculty/login/'}, 2000);</script>"
       else:
         return "Email ID already Exists. Redirecting Back. <script> setTimeout(function() { window.history.back()}, 2000);</script>"
   else:
@@ -145,7 +147,9 @@ def attendanceLogin():
     flash("You need to Log In to view this page")
     return render_template('facultyLogin.html', flashType='warning')
   else:
-    return render_template("attendance.html")
+    # get meeting list and reverse (latest first)
+    meetings = getAllMeetingsOfFaculty(client, g.facultyId)[::-1]
+    return render_template("attendance.html", meetings=meetings)
 
 @app.route('/attendance/check/', methods = ['POST'])
 def attendanceCheck():
@@ -161,7 +165,8 @@ def attendanceCheck():
       return render_template("meetingAttendance.html", attendance=attendance, classroomId=classroomId, studentCount=studentCount)
     else: #meeting doesnt exists
       flash('Meeting ID does not exist in Database. No one joined the meeting yet or Make sure you are using JIIT Classroom ID and not Zoom ID')
-      return render_template('attendance.html', flashType="warning")
+      meetings = getAllMeetingsOfFaculty(client, g.facultyId)[::-1]
+      return render_template("attendance.html", meetings=meetings, flashType='warning')
     return render_template("meetingAttendance.html")
 
 if(__name__=='__main__'):
