@@ -32,6 +32,8 @@ def markAttendance(client, classroomId, rollNo, studentName, loginTime):
     print(e)
     None
 
+def addMeeting(client, facultyId, classroomId):
+  None
 
 def getAttendance(client, classroomId):
   db = client.jiitclassroom

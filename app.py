@@ -18,7 +18,8 @@ from dbCheck import (
   getAttendance,
   checkFacultyLogin,
   markAttendance,
-  createAccount
+  createAccount,
+  addMeeting
   )
 from datetime import timedelta
 import pymongo
@@ -75,14 +76,23 @@ def facultyLogin():
       flash('Wrong ID or Password, Please try again.')
       return render_template('facultyLogin.html', flashType="danger")
 
-@app.route('/create/', methods=['GET'])
+@app.route('/create/', methods=['GET', 'POST'])
 def create():
-  if not g.facultyName:
+  if not g.facultyId:
     flash("You need to Log In to view this page")
     return render_template('facultyLogin.html', flashType='warning')
   else:
-    return render_template('create.html')
-
+    if request.method == 'GET':
+      return render_template('create.html', classroomId = None)
+    else:
+      zoomId = request.form['zoomId']
+      if(len(zoomId)<8):
+        flash("Invalid Zoom ID")
+        return render_template('create.html', classroomId = None, flashType='warning')
+      classroomId = int(zoomId) + 620128
+      facultyId = session['facultyId']
+      addMeeting(client, facultyId, classroomId)
+      return render_template('create.html', classroomId = classroomId)
 
 @app.route('/signup/faculty/<inviteCode>', methods=['GET', 'POST'])
 def facultySignup(inviteCode):
