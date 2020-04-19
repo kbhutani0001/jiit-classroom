@@ -38,6 +38,20 @@ def home():
 def join():
   return render_template('join.html') 
 
+@app.route('/faculty/login/', methods=['GET', 'POST'])
+def facultyLogin():
+  if request.method == 'GET':
+    return render_template('facultyLogin.html')
+  else:
+    facultyId = request.form['facultyId']
+    facultyPassword = request.form['facultyPassword']
+    if(checkFacultyLogin(client, facultyId, facultyPassword)):
+      flash("Successfully Logged in!")
+      return render_template('index.html', flashType="success")
+    else:
+      flash('Wrong ID or Password, Please try again.')
+      return render_template('facultyLogin.html', flashType="danger")
+
 @app.route('/create/', methods=['GET', 'POST'])
 def create():
   if request.method == 'GET':
