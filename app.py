@@ -128,7 +128,6 @@ def joinClass(classroomId):
     password = request.form['password']
     dob = request.form['dob']
     loginTime = request.form['currentTime']
-    dob = dob.split('-')[2] + '-' + dob.split('-')[1] + '-' + dob.split('-')[0]
     webkioskLogin = checkWebkioskLogin(rollNo, dob, password)
     if(webkioskLogin[0]):
       studentName = webkioskLogin[1]
