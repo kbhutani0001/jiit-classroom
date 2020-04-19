@@ -89,13 +89,14 @@ def create():
       if(len(zoomId)<8):
         flash("Invalid Zoom ID")
         return render_template('create.html', classroomId = None, flashType='warning')
-      classroomId = int(zoomId) + 620128
+      classroomId = int(zoomId) + 6201280
       facultyId = session['facultyId']
       addMeetingRes = addMeeting(client, facultyId, classroomId)
-      if(addMeetingRes):
+      if(addMeetingRes[0]):
         return render_template('create.html', classroomId = classroomId)
       else:
-        flash("Some error occurred. Couldn't create meeting.")
+        error = addMeetingRes[1]
+        flash(error)
         return render_template('create.html', classroomId = None, flashType="warning")
 
 @app.route('/signup/faculty/<inviteCode>', methods=['GET', 'POST'])
@@ -132,7 +133,7 @@ def joinClass(classroomId):
       markAttendance(client, classroomId, rollNo, studentName, loginTime)
       joinName = rollNo + '_' + studentName.replace(' ', '_')
       API_KEY = 'bbggBIchTf2B67Oue2QgFg'
-      convertedClassroomId = int(classroomId) - 620128
+      convertedClassroomId = int(classroomId) - 6201280
       return render_template('meeting.html', API_KEY=API_KEY, convertedClassroomId=convertedClassroomId, joinName=joinName)
     else:
       flash('Wrong DOB or Password, Please try again or reset it on webkiosk. Trying more than 3 times might lock your webkiosk temporarily.')

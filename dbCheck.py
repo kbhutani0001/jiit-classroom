@@ -39,7 +39,9 @@ def addMeeting(client, facultyId, classroomId):
   if(data):
     if "meetings" in data:
       meetings = data["meetings"].copy()
-      meetings.append(classroomId)
+      if(str(classroomId) in meetings):
+        return [False, "Meeting with same ID already Exists"]
+      meetings.append(str(classroomId))
       updatedData = { "$set": {
           "id": data["id"],
           "meetings": meetings,
@@ -48,9 +50,9 @@ def addMeeting(client, facultyId, classroomId):
         }
       }
       col.update_one(data,updatedData)
-    return True
+    return [True]
   else:
-    return False
+    return [False, "Some error occurred. Couldn't create meeting."]
 
 def getAttendance(client, classroomId):
   db = client.jiitclassroom
