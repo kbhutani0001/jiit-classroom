@@ -44,9 +44,10 @@ def getAttendance(client, classroomId):
 def checkFacultyLogin(client, facultyId, facultyPassword):
   db = client.jiitclassroom
   col = db["facultyLogin"]
-  if(col.find_one({'id': facultyId, 'password': facultyPassword})):
-    return True
-  return False
+  data = col.find_one({'id': facultyId, 'password': facultyPassword})
+  if(data):
+    return [True, data]
+  return [False]
 
 def createAccount(client, facultyName, facultyId, facultyPassword):
   db = client.jiitclassroom

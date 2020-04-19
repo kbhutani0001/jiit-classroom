@@ -23,12 +23,19 @@ from dbCheck import (
 import pymongo
 import config
 
-
 app = Flask(__name__)
 app.secret_key = "jiit128jiitclassroomforonlineclasses"
 
 client = pymongo.MongoClient(config.mlabURI, connectTimeoutMS=50000)
 
+@app.before_request
+def before_request():
+  g.facultyId = None
+  g.facultyName = None
+  if 'facultyId' in session and 'facultyName' in session:
+    g.facultyId = session['facultyId']
+    g.facultyName = session['facultyName']
+  
 @app.route('/', methods=['GET'])
 def home():
   return render_template('index.html')
@@ -43,27 +50,27 @@ def facultyLogin():
   if request.method == 'GET':
     return render_template('facultyLogin.html')
   else:
+    session.pop('facultyId', None)
+    session.pop('facultyName', None)
     facultyId = request.form['facultyId']
     facultyPassword = request.form['facultyPassword']
-    if(checkFacultyLogin(client, facultyId, facultyPassword)):
-      flash("Successfully Logged in!")
+    facultyDetails = checkFacultyLogin(client, facultyId, facultyPassword)
+    # response -> [True/False , data]
+    if(facultyDetails[0]):
+      session['facultyId'] = facultyDetails[1]["id"]
+      session['facultyName'] = facultyDetails[1]["name"]
+      flash("Successfully Logged in as " + facultyDetails[1]["name"] + "!")
       return render_template('index.html', flashType="success")
     else:
       flash('Wrong ID or Password, Please try again.')
       return render_template('facultyLogin.html', flashType="danger")
 
-@app.route('/create/', methods=['GET', 'POST'])
+@app.route('/create/', methods=['GET'])
 def create():
-  if request.method == 'GET':
+  if not g.facultyName:
     return render_template('facultyLogin.html')
   else:
-    facultyId = request.form['facultyId']
-    facultyPassword = request.form['facultyPassword']
-    if(checkFacultyLogin(client, facultyId, facultyPassword)):
-      return render_template('create.html')
-    else:
-      flash('Wrong ID or Password, please try again.')
-      return render_template('facultyLogin.html', flashType="danger")
+    return render_template('create.html')
 
 
 @app.route('/signup/faculty/<inviteCode>', methods=['GET', 'POST'])
@@ -109,6 +116,7 @@ def joinClass(classroomId):
 @app.route('/attendance/', methods = ['GET', 'POST'])
 def attendance_login():
   if request.method == 'GET':
+
     return render_template("facultyLogin.html")
   else: #req method post
     facultyId = request.form['facultyId']
