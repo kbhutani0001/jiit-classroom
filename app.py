@@ -111,7 +111,7 @@ def facultySignup(inviteCode):
       facultyId = request.form['facultyId']
       facultyPassword = request.form['facultyPassword']
       if(createAccount(client, facultyName, facultyId, facultyPassword)):
-        return "Account Create Successfully. Redirecting to Home Page. <script> setTimeout(function() { window.location = '/'}, 2000);</script>"
+        return "Account Successfully Created. Redirecting to Login Page. <script> setTimeout(function() { window.location = '/faculty/login/'}, 2000);</script>"
       else:
         return "Email ID already Exists. Redirecting Back. <script> setTimeout(function() { window.history.back()}, 2000);</script>"
   else:
