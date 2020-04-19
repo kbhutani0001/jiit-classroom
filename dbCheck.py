@@ -32,6 +32,27 @@ def markAttendance(client, classroomId, rollNo, studentName, loginTime):
     print(e)
     None
 
+def addMeeting(client, facultyId, classroomId):
+  db = client.jiitclassroom
+  col = db["facultyLogin"]
+  data = col.find_one({'id': facultyId})
+  if(data):
+    if "meetings" in data:
+      meetings = data["meetings"].copy()
+      if(str(classroomId) in meetings):
+        return [False, "Meeting with same ID already Exists"]
+      meetings.append(str(classroomId))
+      updatedData = { "$set": {
+          "id": data["id"],
+          "meetings": meetings,
+          "name": data["name"],
+          "password": data["password"]
+        }
+      }
+      col.update_one(data,updatedData)
+    return [True]
+  else:
+    return [False, "Some error occurred. Couldn't create meeting."]
 
 def getAttendance(client, classroomId):
   db = client.jiitclassroom
@@ -44,9 +65,10 @@ def getAttendance(client, classroomId):
 def checkFacultyLogin(client, facultyId, facultyPassword):
   db = client.jiitclassroom
   col = db["facultyLogin"]
-  if(col.find_one({'id': facultyId, 'password': facultyPassword})):
-    return True
-  return False
+  data = col.find_one({'id': facultyId, 'password': facultyPassword})
+  if(data):
+    return [True, data]
+  return [False]
 
 def createAccount(client, facultyName, facultyId, facultyPassword):
   db = client.jiitclassroom
@@ -55,8 +77,9 @@ def createAccount(client, facultyName, facultyId, facultyPassword):
     return False
   else:
     data = {"id": facultyId,
+            "meetings": [],
             "name": facultyName,
-        "password": facultyPassword
+            "password": facultyPassword
       }
     col.insert_one(data)
     return True

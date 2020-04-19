@@ -11,6 +11,10 @@ else if(loc.includes("attendance")){
   var temp = document.getElementById('attendanceNav')
   temp.classList.add('active')
 }
+else if(loc.includes("faculty")){
+  var temp = document.getElementById('facultyLoginNav')
+  temp.classList.add('active')
+}
 
 $('.carousel').carousel({
   interval: 2000

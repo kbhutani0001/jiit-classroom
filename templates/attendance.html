@@ -3,36 +3,17 @@
 {% block body %}
 <body>
   <div class="mainDiv">
-    <h2>JIIT Classroom</h2>
-    <br>
-    <h3>Attendance for meeting ID: {{ classroomId }} </h3>
-    <br>
-    <div>
-        <table class = "table table-striped table-dark" >
-
-            <thead>
-                <tr>
-                    <th scope = 'col'>Enrollment no.</th>
-                    <th scope = 'col'>Name</th>
-                    <th scope = 'col'>Joining Time</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for key in attendance %}
-                <tr>
-                    <td>{{ key }}</td>
-                    {% if key is iterable %}
-                    <td>{{ attendance[key][0] }}</td>
-                    <td>{{ attendance[key][1] }}</td>
-                    {% else %}
-                    <td>Couldn't retrieve name</td>
-                    <td>{{ attendance[key] }}</td>
-                    {% endif %}
-                  </tr>
-                {% endfor %} 
-            </tbody>
-           
-        </table>    
+    <h2>Class Attendance</h2>
+    <h4>Enter Classroom ID or choose from previous meetings to check their attendance.</h4>
+    {% include 'components/flashMessage.html' %}
+    <form style="margin-top: 20px;" action="/attendance/check/" style="margin: auto;" method="POST">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Classroom ID</label>
+        <input style="max-width: 500px;" type="number" class="form-control" name="classroomId" id="classroomId" aria-describedby="emailHelp" placeholder="Enter Enrollment No">
+      </div> 
+      <button type="submit" class="btn btn-primary">Check</button>
+    </form>
+    
     </div>
 </body>
 {% endblock %}

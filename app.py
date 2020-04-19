@@ -18,17 +18,26 @@ from dbCheck import (
   getAttendance,
   checkFacultyLogin,
   markAttendance,
-  createAccount
+  createAccount,
+  addMeeting
   )
+from datetime import timedelta
 import pymongo
 import config
 
-
 app = Flask(__name__)
 app.secret_key = "jiit128jiitclassroomforonlineclasses"
-
+app.permanent_session_lifetime = timedelta(days=5)
 client = pymongo.MongoClient(config.mlabURI, connectTimeoutMS=50000)
 
+@app.before_request
+def before_request():
+  g.facultyId = None
+  g.facultyName = None
+  if 'facultyId' in session and 'facultyName' in session:
+    g.facultyId = session['facultyId']
+    g.facultyName = session['facultyName']
+  
 @app.route('/', methods=['GET'])
 def home():
   return render_template('index.html')
@@ -38,19 +47,57 @@ def home():
 def join():
   return render_template('join.html') 
 
-@app.route('/create/', methods=['GET', 'POST'])
-def create():
+@app.route('/faculty/login/logout/', methods=['GET'] )
+def facultyLogout():
+  session.pop('facultyId', None)
+  session.pop('facultyName', None)
+  g.facultyId = None
+  g.facultyName = None
+  flash('Successfully Logged you out!')
+  return render_template('index.html', flashType="success")
+@app.route('/faculty/login/', methods=['GET', 'POST'])
+def facultyLogin():
   if request.method == 'GET':
     return render_template('facultyLogin.html')
   else:
+    session.pop('facultyId', None)
+    session.pop('facultyName', None)
     facultyId = request.form['facultyId']
     facultyPassword = request.form['facultyPassword']
-    if(checkFacultyLogin(client, facultyId, facultyPassword)):
-      return render_template('create.html')
+    facultyDetails = checkFacultyLogin(client, facultyId, facultyPassword)
+    # response -> [True/False , data]
+    if(facultyDetails[0]):
+      session.permanent =True
+      session['facultyId'] = g.facultyId = facultyDetails[1]["id"]
+      session['facultyName'] = g.facultyName = facultyDetails[1]["name"]
+      flash("Successfully Logged in as " + facultyDetails[1]["name"] + "!")
+      return render_template('index.html', flashType="success")
     else:
-      flash('Wrong ID or Password, please try again.')
+      flash('Wrong ID or Password, Please try again.')
       return render_template('facultyLogin.html', flashType="danger")
 
+@app.route('/create/', methods=['GET', 'POST'])
+def create():
+  if not g.facultyId:
+    flash("You need to Log In to view this page")
+    return render_template('facultyLogin.html', flashType='warning')
+  else:
+    if request.method == 'GET':
+      return render_template('create.html', classroomId = None)
+    else:
+      zoomId = request.form['zoomId']
+      if(len(zoomId)<8):
+        flash("Invalid Zoom ID")
+        return render_template('create.html', classroomId = None, flashType='warning')
+      classroomId = int(zoomId) + 6201280
+      facultyId = session['facultyId']
+      addMeetingRes = addMeeting(client, facultyId, classroomId)
+      if(addMeetingRes[0]):
+        return render_template('create.html', classroomId = classroomId)
+      else:
+        error = addMeetingRes[1]
+        flash(error)
+        return render_template('create.html', classroomId = None, flashType="warning")
 
 @app.route('/signup/faculty/<inviteCode>', methods=['GET', 'POST'])
 def facultySignup(inviteCode):
@@ -86,34 +133,36 @@ def joinClass(classroomId):
       markAttendance(client, classroomId, rollNo, studentName, loginTime)
       joinName = rollNo + '_' + studentName.replace(' ', '_')
       API_KEY = 'bbggBIchTf2B67Oue2QgFg'
-      convertedClassroomId = int(classroomId) - 620128
+      convertedClassroomId = int(classroomId) - 6201280
       return render_template('meeting.html', API_KEY=API_KEY, convertedClassroomId=convertedClassroomId, joinName=joinName)
     else:
       flash('Wrong DOB or Password, Please try again or reset it on webkiosk. Trying more than 3 times might lock your webkiosk temporarily.')
       return render_template('studentLogin.html', classroomId=classroomId, flashType="danger")
 
-@app.route('/attendance/', methods = ['GET', 'POST'])
-def attendance_login():
-  if request.method == 'GET':
-    return render_template("facultyLogin.html")
-  else: #req method post
-    facultyId = request.form['facultyId']
-    facultyPassword = request.form['facultyPassword']
+@app.route('/attendance/', methods = ['GET'])
+def attendanceLogin():
+  if not g.facultyId:
+    flash("You need to Log In to view this page")
+    return render_template('facultyLogin.html', flashType='warning')
+  else:
+    return render_template("attendance.html")
+
+@app.route('/attendance/check/', methods = ['POST'])
+def attendanceCheck():
+  if not g.facultyId:
+    flash("You need to Log In to view this page")
+    return render_template('facultyLogin.html', flashType='warning')
+  else:
     classroomId = request.form['classroomId']
-
-    if(checkFacultyLogin(client, facultyId, facultyPassword)):
-      meetingData = getAttendance(client, classroomId)
-      if(meetingData[0]): #if attendance present
-        attendance = meetingData[1]
-
-        return render_template("attendance.html", attendance=attendance, classroomId=classroomId)
-      else:
-        flash('Meeting ID does not exist in Database. No one joined the meeting yet or Make sure you are using JIIT Classroom ID and not Zoom ID')
-        return render_template('facultyLogin.html', flashType="danger")
-    else:
-      flash('Wrong ID or Password, please try again.')
-      return render_template('facultyLogin.html', flashType="danger")
-
+    meetingData = getAttendance(client, classroomId)
+    if(meetingData[0]): #if attendance present
+      attendance = meetingData[1]
+      studentCount = len(attendance)
+      return render_template("meetingAttendance.html", attendance=attendance, classroomId=classroomId, studentCount=studentCount)
+    else: #meeting doesnt exists
+      flash('Meeting ID does not exist in Database. No one joined the meeting yet or Make sure you are using JIIT Classroom ID and not Zoom ID')
+      return render_template('attendance.html', flashType="warning")
+    return render_template("meetingAttendance.html")
 
 if(__name__=='__main__'):
 	app.run(debug=True,use_reloader=True)
