@@ -33,7 +33,24 @@ def markAttendance(client, classroomId, rollNo, studentName, loginTime):
     None
 
 def addMeeting(client, facultyId, classroomId):
-  None
+  db = client.jiitclassroom
+  col = db["facultyLogin"]
+  data = col.find_one({'id': facultyId})
+  if(data):
+    if "meetings" in data:
+      meetings = data["meetings"].copy()
+      meetings.append(classroomId)
+      updatedData = { "$set": {
+          "id": data["id"],
+          "meetings": meetings,
+          "name": data["name"],
+          "password": data["password"]
+        }
+      }
+      col.update_one(data,updatedData)
+    return True
+  else:
+    return False
 
 def getAttendance(client, classroomId):
   db = client.jiitclassroom
@@ -58,8 +75,9 @@ def createAccount(client, facultyName, facultyId, facultyPassword):
     return False
   else:
     data = {"id": facultyId,
+            "meetings": [],
             "name": facultyName,
-        "password": facultyPassword
+            "password": facultyPassword
       }
     col.insert_one(data)
     return True

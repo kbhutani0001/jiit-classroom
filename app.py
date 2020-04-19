@@ -91,8 +91,12 @@ def create():
         return render_template('create.html', classroomId = None, flashType='warning')
       classroomId = int(zoomId) + 620128
       facultyId = session['facultyId']
-      addMeeting(client, facultyId, classroomId)
-      return render_template('create.html', classroomId = classroomId)
+      addMeetingRes = addMeeting(client, facultyId, classroomId)
+      if(addMeetingRes):
+        return render_template('create.html', classroomId = classroomId)
+      else:
+        flash("Some error occurred. Couldn't create meeting.")
+        return render_template('create.html', classroomId = None, flashType="warning")
 
 @app.route('/signup/faculty/<inviteCode>', methods=['GET', 'POST'])
 def facultySignup(inviteCode):
