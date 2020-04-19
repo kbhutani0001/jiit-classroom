@@ -19,7 +19,7 @@ const copyToClipboard = (code) => {
 const redirectToClass = () => {
   classroomId = document.getElementById('classroomNumber').value
   if(classroomId.length >= 9){
-    window.location = '/join/' + classroomNumber
+    window.location = '/join/' + classroomId
   }
   else {
     window.alert("Please enter a valid Classroom ID")

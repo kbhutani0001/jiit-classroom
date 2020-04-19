@@ -5,15 +5,35 @@
   <div class="mainDiv">
     <h2>Class Attendance</h2>
     <h4>Enter Classroom ID or choose from previous meetings to check their attendance.</h4>
+    <br>
+    <h6>Check attendance by Entering Classroom ID</h6>
     {% include 'components/flashMessage.html' %}
-    <form style="margin-top: 20px;" action="/attendance/check/" style="margin: auto;" method="POST">
+    <form style="margin-top: 10px;" action="/attendance/check/" style="margin: auto;" method="POST">
       <div class="form-group">
         <label for="exampleInputEmail1">Classroom ID</label>
         <input style="max-width: 500px;" type="number" class="form-control" name="classroomId" id="classroomId" aria-describedby="emailHelp" placeholder="Enter Enrollment No">
       </div> 
       <button type="submit" class="btn btn-primary">Check</button>
     </form>
-    
+    <br>
+    {% if not meetings == [] %}
+    <br>
+    <h6>Check attendance by selecting any previous meeting (Sorted by: Latest First)</h6>
+    <form style="margin-top: 10px;" action="/attendance/check/" style="margin: auto;" method="POST">
+      <div class="form-group">
+        <label for="exampleFormControlSelect1">Select Classroom ID</label>
+        <select class="form-control" style="max-width: 500px;" name="classroomId" id="classroomId"  >
+          {% for classroomId in meetings %}
+          <option>{{classroomId}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Check</button>
+    </form>
+    {% else %}
+    <h4>Looks like you haven't hosted any meeting yet</h4>
+    {% endif %}
+
     </div>
 </body>
 {% endblock %}
