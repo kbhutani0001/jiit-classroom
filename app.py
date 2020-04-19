@@ -78,7 +78,8 @@ def facultyLogin():
 @app.route('/create/', methods=['GET'])
 def create():
   if not g.facultyName:
-    return render_template('facultyLogin.html')
+    flash("You need to Log In to view this page")
+    return render_template('facultyLogin.html', flashType='warning')
   else:
     return render_template('create.html')
 
@@ -126,7 +127,8 @@ def joinClass(classroomId):
 @app.route('/attendance/', methods = ['GET'])
 def attendanceLogin():
   if not g.facultyId:
-    return render_template('facultyLogin.html')
+    flash("You need to Log In to view this page")
+    return render_template('facultyLogin.html', flashType='warning')
   else:
     return render_template("attendance.html")
 
