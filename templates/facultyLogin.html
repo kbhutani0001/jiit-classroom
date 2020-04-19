@@ -1,21 +1,13 @@
-{% extends 'base.html' %}
+{% extends 'components/base.html' %}
 
 {% block body %}
 <body>
 <div class="mainDiv">
-  <h2>JIIT Classroom</h2>
-  <h4>Enter your details below to Login and Create a meeting</h4>
-  <div>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      {% for message in messages %}
-      <div class="alert alert-danger" role="alert">
-        {{ message }}
-      </div>
-      {% endfor %}
-    {% endif %}
-  {% endwith %}
-  </div>
+  <h2>Faculty Login</h2>
+  <h4>Enter your details below to access the dashboard.</h4>
+  
+  {% include 'components/flashMessage.html' %}
+  
   <form style="margin-top: 20px;" action="/create/" style="margin: auto;" method="POST">
     <div class="form-group">
       <label for="facultyId">Faculty ID</label>

@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'components/base.html' %}
 
 {% block body %}
 <body>
@@ -9,19 +9,9 @@
       <br>
       <h6>Invite Code: {{inviteCode}}</h6>
     </h4>
-    <div>
-      
-      
-      {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        {% for message in messages %}
-        <div class="alert alert-danger" role="alert">
-          {{ message }}
-        </div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-    </div>
+  
+  {% include 'components/flashMessage.html' %}
+  
   <form style="margin-top: 20px;" action="/signup/faculty/{{inviteCode}}" style="margin: auto;" method="POST">
     <div class="form-group">
       <label for="facultyId">Name</label>

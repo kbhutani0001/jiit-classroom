@@ -41,7 +41,7 @@ def join():
 @app.route('/create/', methods=['GET', 'POST'])
 def create():
   if request.method == 'GET':
-    return render_template('createLogin.html')
+    return render_template('facultyLogin.html')
   else:
     facultyId = request.form['facultyId']
     facultyPassword = request.form['facultyPassword']
@@ -49,7 +49,7 @@ def create():
       return render_template('create.html')
     else:
       flash('Wrong ID or Password, please try again.')
-      return render_template('createLogin.html')
+      return render_template('facultyLogin.html', flashType="danger")
 
 
 @app.route('/signup/faculty/<inviteCode>', methods=['GET', 'POST'])
@@ -69,10 +69,11 @@ def facultySignup(inviteCode):
     return "Invalid URL. Invite code does not exist."
 
 
+
 @app.route('/join/<classroomId>', methods=['GET', 'POST'])
 def joinClass(classroomId):
   if request.method == 'GET':
-    return render_template("login.html", classroomId=classroomId)
+    return render_template("studentLogin.html", classroomId=classroomId)
   else:
     rollNo = request.form['rollNo']
     password = request.form['password']
@@ -89,12 +90,12 @@ def joinClass(classroomId):
       return render_template('meeting.html', API_KEY=API_KEY, convertedClassroomId=convertedClassroomId, joinName=joinName)
     else:
       flash('Wrong DOB or Password, Please try again or reset it on webkiosk. Trying more than 3 times might lock your webkiosk temporarily.')
-      return render_template('login.html', classroomId=classroomId)
+      return render_template('studentLogin.html', classroomId=classroomId, flashType="danger")
 
 @app.route('/attendance/', methods = ['GET', 'POST'])
 def attendance_login():
   if request.method == 'GET':
-    return render_template("attendanceLogin.html")
+    return render_template("facultyLogin.html")
   else: #req method post
     facultyId = request.form['facultyId']
     facultyPassword = request.form['facultyPassword']
@@ -108,10 +109,10 @@ def attendance_login():
         return render_template("attendance.html", attendance=attendance, classroomId=classroomId)
       else:
         flash('Meeting ID does not exist in Database. No one joined the meeting yet or Make sure you are using JIIT Classroom ID and not Zoom ID')
-        return render_template('attendanceLogin.html')
+        return render_template('facultyLogin.html', flashType="danger")
     else:
       flash('Wrong ID or Password, please try again.')
-      return render_template('attendanceLogin.html')
+      return render_template('facultyLogin.html', flashType="danger")
 
 
 if(__name__=='__main__'):
