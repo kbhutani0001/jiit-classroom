@@ -20,12 +20,13 @@ from dbCheck import (
   markAttendance,
   createAccount
   )
+from datetime import timedelta
 import pymongo
 import config
 
 app = Flask(__name__)
 app.secret_key = "jiit128jiitclassroomforonlineclasses"
-
+app.permanent_session_lifetime = timedelta(days=5)
 client = pymongo.MongoClient(config.mlabURI, connectTimeoutMS=50000)
 
 @app.before_request
@@ -57,6 +58,7 @@ def facultyLogin():
     facultyDetails = checkFacultyLogin(client, facultyId, facultyPassword)
     # response -> [True/False , data]
     if(facultyDetails[0]):
+      session.permanent =True
       session['facultyId'] = facultyDetails[1]["id"]
       session['facultyName'] = facultyDetails[1]["name"]
       flash("Successfully Logged in as " + facultyDetails[1]["name"] + "!")
@@ -136,25 +138,6 @@ def attendanceCheck():
       flash('Meeting ID does not exist in Database. No one joined the meeting yet or Make sure you are using JIIT Classroom ID and not Zoom ID')
       return render_template('attendance.html', flashType="warning")
     return render_template("meetingAttendance.html")
-
-
-    # facultyId = request.form['facultyId']
-    # facultyPassword = request.form['facultyPassword']
-    # classroomId = request.form['classroomId']
-
-    # if(checkFacultyLogin(client, facultyId, facultyPassword)):
-    #   meetingData = getAttendance(client, classroomId)
-    #   if(meetingData[0]): #if attendance present
-    #     attendance = meetingData[1]
-
-    #     return render_template("attendance.html", attendance=attendance, classroomId=classroomId)
-    #   else:
-    #     flash('Meeting ID does not exist in Database. No one joined the meeting yet or Make sure you are using JIIT Classroom ID and not Zoom ID')
-    #     return render_template('facultyLogin.html', flashType="danger")
-    # else:
-    #   flash('Wrong ID or Password, please try again.')
-    #   return render_template('facultyLogin.html', flashType="danger")
-
 
 if(__name__=='__main__'):
 	app.run(debug=True,use_reloader=True)
