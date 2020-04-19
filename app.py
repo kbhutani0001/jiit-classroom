@@ -46,6 +46,14 @@ def home():
 def join():
   return render_template('join.html') 
 
+@app.route('/faculty/login/logout/', methods=['GET'] )
+def facultyLogout():
+  session.pop('facultyId', None)
+  session.pop('facultyName', None)
+  g.facultyId = None
+  g.facultyName = None
+  flash('Successfully Logged you out!')
+  return render_template('index.html', flashType="success")
 @app.route('/faculty/login/', methods=['GET', 'POST'])
 def facultyLogin():
   if request.method == 'GET':
@@ -59,8 +67,8 @@ def facultyLogin():
     # response -> [True/False , data]
     if(facultyDetails[0]):
       session.permanent =True
-      session['facultyId'] = facultyDetails[1]["id"]
-      session['facultyName'] = facultyDetails[1]["name"]
+      session['facultyId'] = g.facultyId = facultyDetails[1]["id"]
+      session['facultyName'] = g.facultyName = facultyDetails[1]["name"]
       flash("Successfully Logged in as " + facultyDetails[1]["name"] + "!")
       return render_template('index.html', flashType="success")
     else:
