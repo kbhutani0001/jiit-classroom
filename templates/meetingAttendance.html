@@ -1,0 +1,39 @@
+{% extends 'components/base.html' %}
+
+{% block body %}
+<body>
+  <div class="mainDiv">
+    <h2>JIIT Classroom</h2>
+    <br>
+    <h3>Attendance for meeting ID: {{ classroomId }} </h3>
+    <h5>Attended by {{studentCount}} students</h5>
+    <br>
+    <div>
+        <table class = "table table-striped table-dark" >
+
+            <thead>
+                <tr>
+                    <th scope = 'col'>Enrollment no.</th>
+                    <th scope = 'col'>Name</th>
+                    <th scope = 'col'>Joining Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key in attendance %}
+                <tr>
+                    <td>{{ key }}</td>
+                    {% if key is iterable %}
+                    <td>{{ attendance[key][0] }}</td>
+                    <td>{{ attendance[key][1] }}</td>
+                    {% else %}
+                    <td>Couldn't retrieve name</td>
+                    <td>{{ attendance[key] }}</td>
+                    {% endif %}
+                  </tr>
+                {% endfor %} 
+            </tbody>
+           
+        </table>    
+    </div>
+</body>
+{% endblock %}
