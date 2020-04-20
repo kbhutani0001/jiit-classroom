@@ -92,3 +92,12 @@ def createAccount(client, facultyName, facultyId, facultyPassword):
       }
     col.insert_one(data)
     return True
+
+def checkIfFacultyExists(client, facultyId):
+  db = client.jiitclassroom
+  col = db["facultyLogin"]
+  data = col.find_one({'id': facultyId})
+  if(data):
+    return True
+  else:
+    return False
