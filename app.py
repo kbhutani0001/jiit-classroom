@@ -19,6 +19,7 @@ from dbCheck import (
   checkFacultyLogin,
   markAttendance,
   createAccount,
+  checkIfFacultyExists,
   getAllMeetingsOfFaculty,
   addMeeting
   )
@@ -31,13 +32,19 @@ app.secret_key = "jiit128jiitclassroomforonlineclasses"
 app.permanent_session_lifetime = timedelta(days=5)
 client = pymongo.MongoClient(config.mlabURI, connectTimeoutMS=50000)
 
+
 @app.before_request
 def before_request():
   g.facultyId = None
   g.facultyName = None
   if 'facultyId' in session and 'facultyName' in session:
-    g.facultyId = session['facultyId']
-    g.facultyName = session['facultyName']
+    if(not checkIfFacultyExists(client, session['facultyId'])):
+      #check if faculty exists in db
+      session.pop('facultyId', None)
+      session.pop('facultyName', None)
+    else:
+      g.facultyId = session['facultyId']
+      g.facultyName = session['facultyName']
   
 @app.route('/', methods=['GET'])
 def home():
