@@ -39,6 +39,9 @@
     startMeeting('{{API_KEY}}', '{{convertedClassroomId}}' , '{{joinName}}')
     document.getElementById("backgroundColor").remove()
     checkAndRemove()
+    $.getJSON('https://api.ipify.org?format=json', function(data){
+        window.alert(`Roll Number: {{rollNo}}\nName: {{studentName}}\nipv4 address: ${data.ip}\n\nAny nuisance in meeting can result in strict action against you.`)
+});
   </script>
 </div>
 </body>
