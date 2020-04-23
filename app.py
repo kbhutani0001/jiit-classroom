@@ -142,7 +142,7 @@ def joinClass(classroomId):
       joinName = rollNo + '_' + studentName.replace(' ', '_')
       API_KEY = 'bbggBIchTf2B67Oue2QgFg'
       convertedClassroomId = int(classroomId) - 6201280
-      return render_template('meeting.html', API_KEY=API_KEY, convertedClassroomId=convertedClassroomId, joinName=joinName)
+      return render_template('meeting.html', API_KEY=API_KEY, convertedClassroomId=convertedClassroomId, rollNo=rollNo, studentName=studentName, joinName=joinName)
     else:
       flash('Wrong DOB or Password, Please try again or reset it on webkiosk. Trying more than 3 times might lock your webkiosk temporarily.')
       return render_template('studentLogin.html', classroomId=classroomId, flashType="danger")

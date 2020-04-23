@@ -41,7 +41,7 @@ const checkAndRemove = () => {
       checkAndRemove()
     }, 500);
   }
-  removeBtn()
+  removeBtn() 
   return;
 }
 
