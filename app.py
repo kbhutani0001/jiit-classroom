@@ -48,6 +48,8 @@ def before_request():
   
 @app.route('/', methods=['GET'])
 def home():
+  ip_address = request.remote_addr
+  print(ip_address)
   return render_template('index.html')
 
 
