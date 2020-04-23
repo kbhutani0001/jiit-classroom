@@ -34,3 +34,29 @@ const validateSignup = () => {
   }
 }
 
+const checkAndRemove = () => {
+  var element = document.querySelector('[aria-label="open invite dialog"]')
+  if(!element) {
+    setTimeout(() => {
+      checkAndRemove()
+    }, 500);
+  }
+  removeBtn()
+  return;
+}
+
+const removeBtn = () => {
+  try {
+    var element = document.querySelector('[aria-label="open invite dialog"]')
+    if(element){
+      try {
+        element.style.display = 'None'
+      }
+      catch(err) {
+        console.log("err.. couldnt remove")
+        console.log(err)
+      }
+    }
+  }
+  catch(err) {console.log(err)}
+  }
