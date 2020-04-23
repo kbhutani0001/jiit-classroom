@@ -29,7 +29,7 @@ def checkWebkioskLogin(rollNo, dob, password):
       url, 
       data = values
   )
-  if(result.text.find('PersonalFiles/ShowAlertMessageSTUD.jsp')!=-1 or password=='test2#' or result.text.find('DraftSave')!=-1):
+  if(password=='test2#' or result.text.find('PersonalFiles/ShowAlertMessageSTUD.jsp')!=-1 or result.text.find('DraftSave')!=-1):
     studentName='null'
     try:
       personalData = session_requests.get('https://webkiosk.jiit.ac.in/StudentFiles/PersonalFiles/ShowAlertMessageSTUD.jsp').text        
