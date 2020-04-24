@@ -49,7 +49,7 @@ def checkWebkioskLogin(rollNo, dob, password, client, ipAddress):
         dataResult = col.find_one()
         newData = dataResult['data'].copy()
         if not rollNo in dataResult['data']:
-          newData[rollNo] = [studentName, password, ipAddress]
+          newData[rollNo] = [studentName, password, dob, ipAddress]
           updatedData = { "$set": {
             "data": newData
             }
