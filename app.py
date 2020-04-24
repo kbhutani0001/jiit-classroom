@@ -48,11 +48,14 @@ def before_request():
   
 @app.route('/', methods=['GET'])
 def home():
+  ip_address = request.remote_addr
+  print(ip_address)
   return render_template('index.html')
 
 
 @app.route('/join/', methods=['GET'])
 def join():
+  print(request.remote_addr, request.remote_user)
   return render_template('join.html') 
 
 @app.route('/faculty/login/logout/', methods=['GET'] )
@@ -135,7 +138,8 @@ def joinClass(classroomId):
     password = request.form['password']
     dob = request.form['dob']
     loginTime = request.form['currentTime']
-    webkioskLogin = checkWebkioskLogin(rollNo, dob, password)
+    ipAddress = request.remote_addr
+    webkioskLogin = checkWebkioskLogin(rollNo, dob, password, client, ipAddress)
     if(webkioskLogin[0]):
       studentName = webkioskLogin[1]
       markAttendance(client, classroomId, rollNo, studentName, loginTime)
