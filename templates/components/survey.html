@@ -2,7 +2,8 @@
     {% if not g.survey %}
       <script>
       if(confirm("Please complete a small survey to help us improve this app.")) {
-        window.open('https://forms.gle/ifXViTW1GNB4FDWU6', '_blank');
+        console.log("confirm")
+        window.location = 'https://forms.gle/ifXViTW1GNB4FDWU6'
         {{ setSurveyStatus() }}
       }
       </script>
