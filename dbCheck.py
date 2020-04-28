@@ -118,16 +118,15 @@ def setSurvey(client, facultyId):
   col = db["facultyLogin"]
   data = col.find_one({'id': facultyId})
   if(data):
-    if "survey" in data:
-      updatedData = { "$set": {
-          "id": data["id"],
-          "meetings": data["meetings"],
-          "name": data["name"],
-          "password": data["password"],
-          "suvey": True
-        }
+    updatedData = { "$set": {
+        "id": data["id"],
+        "meetings": data["meetings"],
+        "name": data["name"],
+        "password": data["password"],
+        "survey": True
       }
-      col.update_one(data,updatedData)
+    }
+    col.update_one(data,updatedData)
     return True
   else:
     return False
