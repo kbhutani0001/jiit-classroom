@@ -101,3 +101,32 @@ def checkIfFacultyExists(client, facultyId):
     return True
   else:
     return False
+
+def getSurvey(client, facultyId):
+  db = client.jiitclassroom
+  col = db["facultyLogin"]
+  data = col.find_one({'id': facultyId})
+  if 'survey' in data:
+    if(data['survey'] == False):
+      return False
+    else:
+      return True
+  return False
+
+def setSurvey(client, facultyId):
+  db = client.jiitclassroom
+  col = db["facultyLogin"]
+  data = col.find_one({'id': facultyId})
+  if(data):
+    updatedData = { "$set": {
+        "id": data["id"],
+        "meetings": data["meetings"],
+        "name": data["name"],
+        "password": data["password"],
+        "survey": True
+      }
+    }
+    col.update_one(data,updatedData)
+    return True
+  else:
+    return False

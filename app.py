@@ -21,6 +21,8 @@ from dbCheck import (
   createAccount,
   checkIfFacultyExists,
   getAllMeetingsOfFaculty,
+  getSurvey,
+  setSurvey,
   addMeeting
   )
 from datetime import timedelta
@@ -35,8 +37,10 @@ client = pymongo.MongoClient(config.mlabURI, connectTimeoutMS=50000)
 
 @app.before_request
 def before_request():
+  session.permanent =True
   g.facultyId = None
   g.facultyName = None
+  g.survey = None
   if 'facultyId' in session and 'facultyName' in session:
     if(not checkIfFacultyExists(client, session['facultyId'])):
       #check if faculty exists in db
@@ -45,7 +49,16 @@ def before_request():
     else:
       g.facultyId = session['facultyId']
       g.facultyName = session['facultyName']
-  
+      g.survey = getSurvey(client, g.facultyId)
+
+@app.context_processor
+def my_utility_processor():
+  def setSurveyStatus():
+    setSurvey(client, g.facultyId)
+    session['survey'] = True
+    g.survey = True
+  return dict(setSurveyStatus=setSurveyStatus)
+
 @app.route('/', methods=['GET'])
 def home():
   ip_address = request.remote_addr
@@ -79,7 +92,6 @@ def facultyLogin():
     facultyDetails = checkFacultyLogin(client, facultyId, facultyPassword)
     # response -> [True/False , data]
     if(facultyDetails[0]):
-      session.permanent =True
       session['facultyId'] = g.facultyId = facultyDetails[1]["id"]
       session['facultyName'] = g.facultyName = facultyDetails[1]["name"]
       flash("Successfully Logged in as " + facultyDetails[1]["name"] + "!")
