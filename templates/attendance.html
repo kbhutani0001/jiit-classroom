@@ -33,7 +33,14 @@
     {% else %}
     <h4>Looks like you haven't hosted any meeting yet</h4>
     {% endif %}
-
     </div>
+    {% if meetings|length > 1 %}
+    {% if not g.survey %}
+      <script>
+        window.alert("Please complete a small survey to help us improve this app.")
+        window.open('https://forms.gle/ifXViTW1GNB4FDWU6', '_blank');
+      </script>
+    {% endif %}
+  {% endif %}
 </body>
 {% endblock %}

@@ -37,6 +37,7 @@ client = pymongo.MongoClient(config.mlabURI, connectTimeoutMS=50000)
 def before_request():
   g.facultyId = None
   g.facultyName = None
+  g.survey = None
   if 'facultyId' in session and 'facultyName' in session:
     if(not checkIfFacultyExists(client, session['facultyId'])):
       #check if faculty exists in db
@@ -45,6 +46,8 @@ def before_request():
     else:
       g.facultyId = session['facultyId']
       g.facultyName = session['facultyName']
+      if 'survey' in session:
+        g.survey = getSurvey(client, g.facultyId)
   
 @app.route('/', methods=['GET'])
 def home():
