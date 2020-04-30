@@ -130,6 +130,8 @@ def createTest():
     setFeatureOpen(client, session['facultyName'])
   elif 'studentName' in session:
     setFeatureOpen(client, session['studentName'])
+  else:
+    setFeatureOpen(client, request.remote_addr)
   if not g.facultyId:
     flash("You need to Log In to view this page")
     return render_template('facultyLogin.html', flashType='warning')

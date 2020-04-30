@@ -136,5 +136,4 @@ def setFeatureOpen(client, name):
   col = db["featureOpen"]
   data = col.find_one({"name" : name})
   if not data:
-    print(name)
     col.insert_one({"name": name})
