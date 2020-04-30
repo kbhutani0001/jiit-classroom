@@ -130,3 +130,6 @@ def setSurvey(client, facultyId):
     return True
   else:
     return False
+
+def setFeatureOpen(client, name):
+  pass

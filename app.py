@@ -23,7 +23,8 @@ from dbCheck import (
   getAllMeetingsOfFaculty,
   getSurvey,
   setSurvey,
-  addMeeting
+  addMeeting,
+  setFeatureOpen
   )
 from datetime import timedelta
 import pymongo
@@ -125,6 +126,10 @@ def create():
 
 @app.route('/create/test/', methods=['GET'] )
 def createTest():
+  if 'facultyName' in session:
+    setFeatureOpen(client, session['facultyName'])
+  elif 'studentName' in session:
+    setFeatureOpen(client, session['studentName'])
   if not g.facultyId:
     flash("You need to Log In to view this page")
     return render_template('facultyLogin.html', flashType='warning')
