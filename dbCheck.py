@@ -132,4 +132,9 @@ def setSurvey(client, facultyId):
     return False
 
 def setFeatureOpen(client, name):
-  pass
+  db = client.jiitclassroom
+  col = db["featureOpen"]
+  data = col.find_one({"name" : name})
+  if not data:
+    print(name)
+    col.insert_one({"name": name})
