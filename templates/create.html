@@ -3,7 +3,44 @@
 {% block body %}
 <body>  
   <div  class="mainDiv">
-    <h2>Create Test</h2>
+    {% include 'components/flashMessage.html' %}
+    {% if not classroomId %}
+    <div id="zoomDiv">
+      <h2>Create Classroom</h2>
+      <h4 style="margin: 15px 0px;">Enter Zoom Meeting ID below to generate JIIT Classroom Number. It is advised to create a <mark><b>New Zoom ID</b></mark> everytime and <mark><b>don't share it with students.</mark></b></h4>
+      <div style="margin: 20px 0px" id="instructions"><p><b>NOTE:</b> Please follow the instructions below for hosting a meeting on JIIT Classroom.
+      <br>
+      Go to <b><i>Settings</i></b> in your zoom account and do the following.
+      <ul>
+        <li>Search for <mark><b>Allow participants to rename themselves</b></mark> option and <b>Disable</b> it. (Required)</li>
+        <li>Search for <mark><b>Waiting Room</mark></b>  option and <b>Disable</b> it. (Required)</li>
+        <li>Search for <mark><b>Password</mark> </b> and <b>Disable</b> all the options to create meetings without password. (Required)</li>
+      </ul>
+      </p>
+    </div>
+    <form action="/create/" method="POST">
+      <input style="margin: 20px 0px; max-width: 500px;" class="form-control" type="number" placeholder="Zoom Meeting ID" name="zoomId" id="zoomId">
+      <button type="submit" class="btn btn-primary">Generate</button>
+    </form>
+    <br>
   </div>
+  {% endif %}
+  {% if classroomId %}
+    <div id="classroomIdDiv">
+      <h2>Share the following Classroom ID or Meeting Invite link to students</h2>
+      <h6>After the meeting is done, You can also check the attendance <a href="/attendance">here.</a></h6>
+      <div>
+        <h6 style="margin-top: 20px;">JIIT Classroom ID</h6>
+        <input value="{{classroomId}}"  style="margin: 10px 0px; max-width: 300px; display: inline;" placeholder="JIIT Classroom Number" class="form-control"  type="tel" name="classroomId" id="classroomId" >
+        <button style="margin: 0px 10px;" class="btn btn-secondary" onclick="copyToClipboard(1)">Copy</button>
+      </div>
+      <div>
+        <h6 style="margin-top: 20px;">Meeting Invite Link</h6>
+        <input value="https://jiitclassroom.herokuapp.com/join/{{classroomId}}"  style="margin: 10px 0px; max-width: 300px; display: inline;" placeholder="JIIT Classroom URL" class="form-control"  type="text" name="meetingUrl" id="meetingUrl" >
+        <button style="margin: 0px 10px;" class="btn btn-secondary" onclick="copyToClipboard(2)">Copy</button>
+      </div>
+  </div>
+  </div>
+  {% endif %}
 </body>
 {% endblock %}

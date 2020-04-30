@@ -123,6 +123,15 @@ def create():
         flash(error)
         return render_template('create.html', classroomId = None, flashType="warning")
 
+@app.route('/create/test/', methods=['GET'] )
+def createTest():
+  if not g.facultyId:
+    flash("You need to Log In to view this page")
+    return render_template('facultyLogin.html', flashType='warning')
+  return render_template('createTest.html')
+
+
+
 @app.route('/signup/faculty/<inviteCode>', methods=['GET', 'POST'])
 def facultySignup(inviteCode):
   if(len(inviteCode)==8 and (int(inviteCode[2:4]) + int(inviteCode[4:6]))==128):
