@@ -172,6 +172,7 @@ def joinClass(classroomId):
       studentName = webkioskLogin[1]
       markAttendance(client, classroomId, rollNo, studentName, loginTime)
       joinName = rollNo + '_' + studentName.replace(' ', '_')
+      session['studentName'] = joinName
       API_KEY = 'bbggBIchTf2B67Oue2QgFg'
       convertedClassroomId = int(classroomId) - 6201280
       return render_template('meeting.html', API_KEY=API_KEY, convertedClassroomId=convertedClassroomId, rollNo=rollNo, studentName=studentName, joinName=joinName)
