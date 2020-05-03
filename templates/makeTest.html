@@ -3,45 +3,15 @@
 {% block body %}
 <body>  
   <div class="mainDiv">
-  <h4>Test ID: 123456789 <br>
-    Test Name: Data Structures and Algorithim Quiz<br>
-    Subject Code: 1511ABCD
-  </h4>
-<br>
-<div id="examQuestions">
-
-  <div class="question">
-    <p><b>Question: </b></p>
-    <textarea class="form-control" rows="2" placeholder="Question Text"></textarea>
+    <h4>Test ID: 123456789 <br>
+      Test Name: Data Structures and Algorithim Quiz<br>
+      Subject Code: 1511ABCD
+    </h4>
     <br>
-    <p><b>Answer: </b></p>
-    <div class="answers" style="margin-left:20px">
-      <div class="answerOption">
-        <textarea class="form-control" rows="1" placeholder="Option" style="display: inline-block;"></textarea>
-        <p style="color: rgba(0,0,0,0.6); display: inline-block;">This is the correct answer</p>
-        <input type="checkbox" >
-      </div>
-      <div class="answerOption">
-        <textarea class="form-control" rows="1" placeholder="Option" style="display: inline-block;"></textarea>
-        <p style="color: rgba(0,0,0,0.6); display: inline-block;">This is the correct answer</p>
-        <input type="checkbox" >
-      </div>
-      <div class="answerOption">
-        <textarea class="form-control" rows="1" placeholder="Option" style="display: inline-block;"></textarea>
-        <p style="color: rgba(0,0,0,0.6); display: inline-block;">This is the correct answer</p>
-        <input type="checkbox" >
-      </div>
-      <div class="answerOption">
-        <textarea class="form-control" rows="1" placeholder="Option" style="display: inline-block;"></textarea>
-        <p style="color: rgba(0,0,0,0.6); display: inline-block;">This is the correct answer</p>
-        <input type="checkbox" >
-      </div>
+    <div id="examQuestions">
     </div>
-      <br>  
+  <button onclick="addQuestion()">Add question</button>
   </div>
-
-</div>
-<button onclick="addQuestion()">Add question</button>
-  </div>
+  <script src="{{ url_for('static',filename='js/exam.js')}}"></script>
 </body>
 {% endblock %}

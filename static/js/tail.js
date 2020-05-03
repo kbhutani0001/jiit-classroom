@@ -23,3 +23,4 @@ else if(loc.includes("create")){
 $('.carousel').carousel({
   interval: 2000
 })
+

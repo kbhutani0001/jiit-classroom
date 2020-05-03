@@ -45,3 +45,15 @@ input[type=number] {
   text-align: center;
   margin-bottom: 50px;
 }
+
+.inlineBlock {
+  display: inline-block;
+}
+
+.grayText {
+  color: rgba(0,0,0,0.6)
+}
+
+.answerDiv {
+  margin-left:20px;
+}
