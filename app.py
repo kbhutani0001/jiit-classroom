@@ -137,6 +137,9 @@ def createTest():
     return render_template('facultyLogin.html', flashType='warning')
   return render_template('createTest.html')
 
+@app.route('/create/test/make/')
+def makeTest():
+  return render_template('makeTest.html')
 
 
 @app.route('/signup/faculty/<inviteCode>', methods=['GET', 'POST'])
