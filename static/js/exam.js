@@ -1,10 +1,10 @@
 
 class questionElement {
 
-  constructor(){
+  constructor(questionCount){
     this.questionDiv = `
     <div class="questionDiv">
-    <p><b>Question: </b></p>
+    <p><b>${questionCount}. Question: </b></p>
     <textarea class="form-control" rows="2" placeholder="Question Text"></textarea>
     <br>
     <p><b>Answer: </b></p>
@@ -31,6 +31,7 @@ class questionElement {
     }
     this.questionElement.innerHTML = this.questionDiv
     this.questionElement.append(this.answerDiv)
+    this.questionElement.append(document.createElement("br"))
     return this.questionElement
 
   }
@@ -39,8 +40,9 @@ class questionElement {
 }
 
 addQuestion = () => {
+  let questionCount = $('.question').length
   var el = document.getElementById('examQuestions')
-  questionEl = new questionElement()
+  questionEl = new questionElement(questionCount+1)
   final = questionEl.generateElement()
   el.append(final)
   window.scroll(0, window.scrollY + 50)
