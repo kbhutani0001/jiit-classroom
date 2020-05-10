@@ -1,6 +1,7 @@
 {% extends 'components/base.html' %}
 
 {% block body %}
+<script src="{{ url_for('static',filename='js/exam.js')}}"></script>
 <body>  
   <div class="mainDiv">
     <h4>Test ID: 123456789 <br>
@@ -10,8 +11,8 @@
     <br>
     <div id="examQuestions">
     </div>
-  <button onclick="addQuestion()">Add question</button>
+  <button class="btn btn-secondary" onclick="addQuestion()">Add question</button>
+  <button style="display: none;" id="createTestBtn" class="btn btn-primary" onclick="createTest()">Create Test</button>
   </div>
-  <script src="{{ url_for('static',filename='js/exam.js')}}"></script>
 </body>
 {% endblock %}
