@@ -5,7 +5,7 @@ class questionElement {
     this.questionDiv = `
     <div class="questionDiv">
     <p><b>${questionCount}. Question: </b></p>
-    <textarea class="form-control" rows="2" placeholder="Add Question text here"></textarea>
+    <textarea required class="form-control" rows="2" placeholder="Add Question text here"></textarea>
     <br>
     <p><b>Answer: </b></p>
     </div>`
@@ -22,7 +22,7 @@ class questionElement {
   }
   createAnswerElement = (answerNumber) => {
     return `<div class="answerOption">
-    <b class="inlineBlock">${answerNumber}. </b> <textarea class="form-control inlineBlock" rows="1" placeholder="Add answer option ${answerNumber}"></textarea>
+    <b class="inlineBlock">${answerNumber}. </b> <textarea required class="form-control inlineBlock" rows="1" placeholder="Add answer option ${answerNumber}"></textarea>
     <p class="inlineBlock grayText">This is the correct answer</p>
     <input type="checkbox">
     </div>`
@@ -47,47 +47,73 @@ addQuestion = () => {
   final = questionEl.generateAnswerElement()
   el.append(final)
   window.scroll(0, window.scrollY + 50)
-  if(questionCount > 0 ){
-    document.getElementById('createTestBtn').style.display = `inline`
+  document.getElementById('createTestBtn').style.display = `inline`
+}
+apiRequest = (examData) => {
+  // $.ajax(
+  //   { url: `/create/test/make/${examData.testId}`,
+  //     data: {examData: examData},
+  //     contentType: 'application/json',
+  //     type: 'POST',
+  //     success: function(data, status){
+  //     window.alert('succesfully created test')
+  //     return
+  //     }
+  //     });
+  //     window.alert('Some error occurred while creating Test')
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+      console.log('Connection Successful')
+      xhttp.open("POST", `/create/test/make/${examData.testId}/`, true)
+      xhttp.setRequestHeader("Content-type", "application/json")
+      xhttp.send(JSON.stringify(examData))
+    }
+  else {
+    window.alert(`Some error occurred while creating Test`)
   }
+  }
+  
+
 }
 
 createTest = () => {
-    examData = {
-      "testId": "12345678910",
-      "testName": "ABC QUIZ",
-      "subjectCode": "12ABC34",
-      "testDescription": "Any description",
-      "testDate": "dd/mm/yyyy",
-      "testStartTime": "12345678910",
-      "testEndTime": "12345678910",
-      "facultyId": "test@test.com",
-      "exam": {
-        "question1": {
-          "question": "question text here",
-          "answers": [ ["optionValue", false], ["optionValue", false], ["optionValue", true], ["optionValue", false] ]
-        },
-        "question2": {
-          "question": "question text here",
-          "answers": [ ["optionValue", false], ["optionValue", false], ["optionValue", true], ["optionValue", false] ]
-        },
-        "question3": {
-          "question": "question text here",
-          "answers": [ ["optionValue", false], ["optionValue", false], ["optionValue", true], ["optionValue", false] ]
-        },
-        "question4": {
-          "question": "question text here",
-          "answers": [ ["optionValue", false], ["optionValue", false], ["optionValue", true], ["optionValue", false] ]
-        },
-        "question5": {
-          "question": "question text here",
-          "answers": [ ["optionValue", false], ["optionValue", false], ["optionValue", true], ["optionValue", false] ]
-        }
-      }
+  examData = {
+    "testId": "12345678910",
+    "testName": "ABC QUIZ",
+    "subjectCode": "12ABC34",
+    "testDescription": "Any description",
+    "testDate": "dd/mm/yyyy",
+    "testStartTime": "12345678910",
+    "testEndTime": "12345678910",
+    "facultyId": "test@test.com",
+    "exam": {
+
     }
-  examQuestions = $('.question')
-  for (i=0; i<examQuestions.length; i++){
-    let question = examQuestions[i].getElementsByClassName('questionDiv')[0].getElementsByTagName('textarea')[0].value
   }
-  return
+  examData.formHtml = document.getElementsByClassName(`mainDiv`)[0].innerHTML
+  examQuestions = $('.question')
+  for (let i=0; i<examQuestions.length; i++){
+    let question = examQuestions[i].getElementsByClassName('questionDiv')[0].getElementsByTagName('textarea')[0].value
+    let answersDiv = examQuestions[i].getElementsByClassName('answerDiv')[0]
+    answerOptions = answersDiv.getElementsByClassName(`answerOption`)
+    answers = []
+    for( let j =0 ; j< answerOptions.length ; j++){
+      let answerText = answerOptions[i].getElementsByTagName('textarea').value
+      let flag = answerOptions[i].getElementsByTagName('input')[0].checked //check if answer right or wrong
+      answers.push([answerText, flag])
+    }
+    examData.exam[`question${i+1}`] = { question: question, answers: answers}
+  }
+  let checkboxes = $("input[type='checkbox']")
+  let checkboxCount = 0
+  for (let k = 0; k<checkboxes.length; k++ ){
+    if(checkboxes[k].checked) { checkboxCount++ }
+  }
+  if(examQuestions.length != checkboxCount) {
+    alert("Please select right number of correct answers.")
+    return
+    // correct answer count should be equal to number of questions
+  }
+  apiRequest(examData)
 }
