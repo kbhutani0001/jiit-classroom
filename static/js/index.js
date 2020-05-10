@@ -6,14 +6,14 @@
     ZoomMtg.prepareJssdk();
   })();
 
-function startMeeting (API_KEY, meetingNumber, joinName) {
+function startMeeting (API_KEY, meetingNumber, meetingPassword,  joinName) {
     var API_SECRET = 'zslKUlVBF0sxlZ3LDsnbBo65HOoP8tlBXxYl';
     var meetConfig = {
         apiKey: API_KEY,
         apiSecret: API_SECRET,
         meetingNumber: meetingNumber,
         userName: joinName,
-        passWord: '',
+        passWord: meetingPassword,
         leaveUrl: "https://jiitclassroom.herokuapp.com/",
         role: parseInt(0, 10)
     };

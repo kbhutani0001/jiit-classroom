@@ -37,7 +37,7 @@
 <script src="{{ url_for('static',filename='js/index.js')}}"></script>
 <div id="backgroundColor">
   <script>
-    startMeeting('{{API_KEY}}', '{{convertedClassroomId}}' , '{{joinName}}')
+    startMeeting('{{API_KEY}}', '{{convertedClassroomId}}' , '{{meetingPassword}}',  '{{joinName}}')
     document.getElementById("backgroundColor").remove()
     checkAndRemove()
     $.getJSON('https://api.ipify.org?format=json', function(data){
