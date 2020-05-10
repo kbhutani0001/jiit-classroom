@@ -24,7 +24,8 @@ from dbCheck import (
   getSurvey,
   setSurvey,
   addMeeting,
-  setFeatureOpen
+  setFeatureOpen,
+  getMeetingPassword
   )
 from datetime import timedelta
 import pymongo
@@ -111,12 +112,13 @@ def create():
       return render_template('create.html', classroomId = None)
     else:
       zoomId = request.form['zoomId']
+      meetingPassword = request.form['meetingPassword']
       if(len(zoomId)<8):
         flash("Invalid Zoom ID")
         return render_template('create.html', classroomId = None, flashType='warning')
       classroomId = int(zoomId) + 6201280
       facultyId = session['facultyId']
-      addMeetingRes = addMeeting(client, facultyId, classroomId)
+      addMeetingRes = addMeeting(client, facultyId, classroomId, meetingPassword)
       if(addMeetingRes[0]):
         return render_template('create.html', classroomId = classroomId)
       else:
@@ -171,6 +173,8 @@ def joinClass(classroomId):
     if(webkioskLogin[0]):
       studentName = webkioskLogin[1]
       markAttendance(client, classroomId, rollNo, studentName, loginTime)
+      meetingPassword = getMeetingPassword(client, classroomId)
+      print(meetingPassword)
       joinName = rollNo + '_' + studentName.replace(' ', '_')
       session['studentName'] = joinName
       API_KEY = 'bbggBIchTf2B67Oue2QgFg'
