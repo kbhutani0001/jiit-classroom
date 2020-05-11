@@ -53,6 +53,7 @@ apiRequest = (examData) => {
   axios.post(`/create/test/make/${examData.testId}/`, { examData: examData })
   .then(function (response) {
     console.log(response);
+    window.alert(response.data)
   })
   .catch(function (error) {
     window.alert('Some error occurred while creating Exam.')
@@ -94,8 +95,8 @@ createTest = () => {
       answerOptions = answersDiv.getElementsByClassName(`answerOption`)
       answers = []
       for( let j =0 ; j< answerOptions.length ; j++){
-        let answerText = answerOptions[i].getElementsByTagName('textarea').value
-        let flag = answerOptions[i].getElementsByTagName('input')[0].checked //check if answer right or wrong
+        let answerText = answerOptions[j].getElementsByTagName('textarea')[0].value
+        let flag = answerOptions[j].getElementsByTagName('input')[0].checked //check if answer right or wrong
         answers.push([answerText, flag])
       }
       examData.exam[`question${i+1}`] = { question: question, answers: answers}
