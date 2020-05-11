@@ -26,7 +26,8 @@ from dbCheck import (
   addMeeting,
   setFeatureOpen,
   getMeetingPassword,
-  addExam
+  addExam,
+  getExamTable
   )
 from datetime import timedelta
 import pymongo
@@ -223,6 +224,17 @@ def attendanceCheck():
       meetings = getAllMeetingsOfFaculty(client, g.facultyId)[::-1]
       return render_template("attendance.html", meetings=meetings, flashType='warning')
     return render_template("meetingAttendance.html")
+
+
+@app.route('/dashboard/exams/', methods = ['GET'])
+def examDashboard():
+  if not g.facultyId:
+    flash("You need to Log In to view this page")
+    return render_template('facultyLogin.html', flashType='warning')
+  else:
+    examTable = getExamTable(client, g.facultyId)
+    return render_template("examDashboard.html", examTable=examTable)
+
 
 if(__name__=='__main__'):
 	app.run(debug=True,use_reloader=True)
