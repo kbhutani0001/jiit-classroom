@@ -25,7 +25,8 @@ from dbCheck import (
   setSurvey,
   addMeeting,
   setFeatureOpen,
-  getMeetingPassword
+  getMeetingPassword,
+  addExam
   )
 from datetime import timedelta
 import pymongo
@@ -144,10 +145,13 @@ def saveTest(testId):
     flash("You need to Log In to view this page")
     return render_template('facultyLogin.html', flashType='warning')
   else:
-    print(request.get_json())
-    print(testId)
-    print(type(request.get_json()))
-    return 'successful'
+    examData = request.get_json()['examData']
+    print(examData)
+    addExamRes = addExam(client, g.facultyId, examData)
+    if addExamRes[0]:
+      return 'Successfully added exam. Redirecting to Dashboard'
+    else:
+      return addExamRes[1]
 
 @app.route('/signup/faculty/<inviteCode>', methods=['GET', 'POST'])
 def facultySignup(inviteCode):

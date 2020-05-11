@@ -55,20 +55,20 @@ apiRequest = (examData) => {
     console.log(response);
   })
   .catch(function (error) {
-    window.alert('Some error occurred while creating test.')
+    window.alert('Some error occurred while creating Exam.')
   });
 
 }
 
 createTest = () => {
   examData = {
-    "testId": "12345678910",
-    "testName": "ABC QUIZ",
+    "examId": "12345678910",
+    "examName": "ABC QUIZ",
     "subjectCode": "12ABC34",
-    "testDescription": "Any description",
-    "testDate": "dd/mm/yyyy",
-    "testStartTime": "12345678910",
-    "testEndTime": "12345678910",
+    "examDescription": "Any description",
+    "examDate": "dd/mm/yyyy",
+    "examStartTime": "12345678910",
+    "examEndTime": "12345678910",
     "facultyId": "test@test.com",
     "exam": {
 

@@ -155,8 +155,33 @@ def getMeetingPassword(client, classroomId):
 
 def getExamDetails(client, examId):
   db = client.jiitclassroom
-  col = db["meetingPassword"]
-  data = col.find_one({"classroomId": classroomId})
+  col = db["examDetails"]
+  data = col.find_one({"examId": examId})
   if(data):
-    return data["meetingPassword"]
-  return ""
+    return [True, data]
+  return [False, "Exam ID Doesn't Exist"]
+
+def addExam(client, facultyId, examData):
+  db = client.jiitclassroom
+  col = db["facultyLogin"]
+  data = col.find_one({'id': facultyId})
+  if(data):
+    exams = data["exams"].copy()     
+    if(str(examData["examId"]) in data["exams"]):
+      return [False, "Exam with same Exam ID already exists"]
+    exams.append(str(examData["examId"]))
+    updatedData = { "$set": {
+        "id": data["id"],
+        "exams": exams,
+        "meetings": data["meetings"],
+        "meetingPassword": data["meetingPassword"],
+        "name": data["name"],
+        "password": data["password"]
+        }
+      }
+    col.update_one(data,updatedData)
+    getExamDetailsDb = db["examDetails"]
+    getExamDetailsDb.insert_one(examData)
+    return [True]
+  else:
+    return [False, "Some error occurred. Couldn't create Exam."]
