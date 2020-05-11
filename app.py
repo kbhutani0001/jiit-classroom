@@ -139,7 +139,21 @@ def createTest():
     return render_template('facultyLogin.html', flashType='warning')
   return render_template('createTest.html')
 
+@app.route('/create/test/make/')
+def makeTest():
+  return render_template('makeTest.html')
 
+@app.route('/create/test/make/<testId>/', methods=['POST'])
+def saveTest(testId):
+  print('recieved')
+  if not g.facultyId:
+    flash("You need to Log In to view this page")
+    return render_template('facultyLogin.html', flashType='warning')
+  else:
+    print(request.get_json())
+    print(testId)
+    print(type(request.get_json()))
+    return 'successful'
 
 @app.route('/signup/faculty/<inviteCode>', methods=['GET', 'POST'])
 def facultySignup(inviteCode):

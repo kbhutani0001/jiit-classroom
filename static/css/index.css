@@ -3,6 +3,10 @@
 
 }
 
+.form-control {
+  max-width: 500px;
+}
+
 @media screen and (max-width: 650px) {
   .mainDiv{
     margin: 30px 50px;
@@ -40,4 +44,45 @@ input[type=number] {
 .intro {
   text-align: center;
   margin-bottom: 50px;
+}
+
+.inlineBlock {
+  display: inline-block;
+}
+
+.grayText {
+  color: rgba(0,0,0,0.6)
+}
+
+.grayRedText{
+  color: rgba(0,0,0,0.6)
+}
+
+.answerDiv {
+  margin-left:20px;
+}
+
+.loadingDiv {
+  background-color: rgba(0,0,0,0.7);
+  height: 100%;
+  left: 0px;
+  display: none;
+  margin: 0px;
+  padding: 0px;
+  position: fixed;
+  text-align: center;
+  top: 0px;
+  width: 100%;
+  z-index: 1000;
+}
+.loadingDiv img {
+  border-color: gray;
+  border-top-color: white;
+  width: 10em;
+  margin-top: 200px;
+}
+.loadingDiv h4 {
+  color: white;
+  margin: 20px 0px;
+
 }

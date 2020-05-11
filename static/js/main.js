@@ -60,3 +60,7 @@ const removeBtn = () => {
   }
   catch(err) {console.log(err)}
   }
+
+hideLoading = () => {
+  document.getElementsByClassName(`loadingDiv`)[0].style.display = `None`
+}
