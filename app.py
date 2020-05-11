@@ -143,6 +143,7 @@ def makeTest():
 
 @app.route('/create/test/make/<testId>/', methods=['POST'])
 def saveTest(testId):
+  print('recieved')
   if not g.facultyId:
     flash("You need to Log In to view this page")
     return render_template('facultyLogin.html', flashType='warning')

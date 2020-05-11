@@ -61,3 +61,28 @@ input[type=number] {
 .answerDiv {
   margin-left:20px;
 }
+
+.loadingDiv {
+  background-color: rgba(0,0,0,0.7);
+  height: 100%;
+  left: 0px;
+  display: none;
+  margin: 0px;
+  padding: 0px;
+  position: fixed;
+  text-align: center;
+  top: 0px;
+  width: 100%;
+  z-index: 1000;
+}
+.loadingDiv img {
+  border-color: gray;
+  border-top-color: white;
+  width: 10em;
+  margin-top: 200px;
+}
+.loadingDiv h4 {
+  color: white;
+  margin: 20px 0px;
+
+}

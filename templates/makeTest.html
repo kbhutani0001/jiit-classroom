@@ -1,6 +1,8 @@
 {% extends 'components/base.html' %}
 
 {% block body %}
+{% include 'components/loading.html' %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
 <script src="{{ url_for('static',filename='js/exam.js')}}"></script>
 <body>  
   <div class="mainDiv">
@@ -15,4 +17,5 @@
   <button style="display: none;" id="createTestBtn" class="btn btn-primary" onclick="createTest()">Create Test</button>
   </div>
 </body>
+
 {% endblock %}

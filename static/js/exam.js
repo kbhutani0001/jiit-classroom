@@ -50,30 +50,13 @@ addQuestion = () => {
   document.getElementById('createTestBtn').style.display = `inline`
 }
 apiRequest = (examData) => {
-  // $.ajax(
-  //   { url: `/create/test/make/${examData.testId}`,
-  //     data: {examData: examData},
-  //     contentType: 'application/json',
-  //     type: 'POST',
-  //     success: function(data, status){
-  //     window.alert('succesfully created test')
-  //     return
-  //     }
-  //     });
-  //     window.alert('Some error occurred while creating Test')
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-  if (this.readyState == 4 && this.status == 200) {
-      console.log('Connection Successful')
-      xhttp.open("POST", `/create/test/make/${examData.testId}/`, true)
-      xhttp.setRequestHeader("Content-type", "application/json")
-      xhttp.send(JSON.stringify(examData))
-    }
-  else {
-    window.alert(`Some error occurred while creating Test`)
-  }
-  }
-  
+  axios.post(`/create/test/make/${examData.testId}/`, { examData: examData })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    window.alert('Some error occurred while creating test.')
+  });
 
 }
 
@@ -93,27 +76,30 @@ createTest = () => {
   }
   examData.formHtml = document.getElementsByClassName(`mainDiv`)[0].innerHTML
   examQuestions = $('.question')
-  for (let i=0; i<examQuestions.length; i++){
-    let question = examQuestions[i].getElementsByClassName('questionDiv')[0].getElementsByTagName('textarea')[0].value
-    let answersDiv = examQuestions[i].getElementsByClassName('answerDiv')[0]
-    answerOptions = answersDiv.getElementsByClassName(`answerOption`)
-    answers = []
-    for( let j =0 ; j< answerOptions.length ; j++){
-      let answerText = answerOptions[i].getElementsByTagName('textarea').value
-      let flag = answerOptions[i].getElementsByTagName('input')[0].checked //check if answer right or wrong
-      answers.push([answerText, flag])
-    }
-    examData.exam[`question${i+1}`] = { question: question, answers: answers}
-  }
   let checkboxes = $("input[type='checkbox']")
   let checkboxCount = 0
   for (let k = 0; k<checkboxes.length; k++ ){
     if(checkboxes[k].checked) { checkboxCount++ }
-  }
+  } // see how many answers have been checked
   if(examQuestions.length != checkboxCount) {
     alert("Please select right number of correct answers.")
     return
     // correct answer count should be equal to number of questions
   }
-  apiRequest(examData)
+  else {
+    document.getElementsByClassName(`loadingDiv`)[0].style.display = `Block`
+    for (let i=0; i<examQuestions.length; i++){
+      let question = examQuestions[i].getElementsByClassName('questionDiv')[0].getElementsByTagName('textarea')[0].value
+      let answersDiv = examQuestions[i].getElementsByClassName('answerDiv')[0]
+      answerOptions = answersDiv.getElementsByClassName(`answerOption`)
+      answers = []
+      for( let j =0 ; j< answerOptions.length ; j++){
+        let answerText = answerOptions[i].getElementsByTagName('textarea').value
+        let flag = answerOptions[i].getElementsByTagName('input')[0].checked //check if answer right or wrong
+        answers.push([answerText, flag])
+      }
+      examData.exam[`question${i+1}`] = { question: question, answers: answers}
+    }
+    apiRequest(examData)
+  }
 }
