@@ -152,3 +152,11 @@ def getMeetingPassword(client, classroomId):
   if(data):
     return data["meetingPassword"]
   return ""
+
+def getExamDetails(client, examId):
+  db = client.jiitclassroom
+  col = db["meetingPassword"]
+  data = col.find_one({"classroomId": classroomId})
+  if(data):
+    return data["meetingPassword"]
+  return ""

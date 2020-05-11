@@ -51,15 +51,15 @@ def before_request():
     else:
       g.facultyId = session['facultyId']
       g.facultyName = session['facultyName']
-      g.survey = getSurvey(client, g.facultyId)
+      # g.survey = getSurvey(client, g.facultyId)
 
-@app.context_processor
-def my_utility_processor():
-  def setSurveyStatus():
-    setSurvey(client, g.facultyId)
-    session['survey'] = True
-    g.survey = True
-  return dict(setSurveyStatus=setSurveyStatus)
+# @app.context_processor
+# def my_utility_processor():
+#   def setSurveyStatus():
+#     setSurvey(client, g.facultyId)
+#     session['survey'] = True
+#     g.survey = True
+#   return dict(setSurveyStatus=setSurveyStatus)
 
 @app.route('/', methods=['GET'])
 def home():
@@ -128,12 +128,6 @@ def create():
 
 @app.route('/create/test/', methods=['GET'] )
 def createTest():
-  if 'facultyName' in session:
-    setFeatureOpen(client, session['facultyName'])
-  elif 'studentName' in session:
-    setFeatureOpen(client, session['studentName'])
-  else:
-    setFeatureOpen(client, request.remote_addr)
   if not g.facultyId:
     flash("You need to Log In to view this page")
     return render_template('facultyLogin.html', flashType='warning')
