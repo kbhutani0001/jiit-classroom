@@ -24,7 +24,8 @@ from dbCheck import (
   getSurvey,
   setSurvey,
   addMeeting,
-  setFeatureOpen
+  setFeatureOpen,
+  getMeetingPassword
   )
 from datetime import timedelta
 import pymongo
@@ -50,15 +51,15 @@ def before_request():
     else:
       g.facultyId = session['facultyId']
       g.facultyName = session['facultyName']
-      g.survey = getSurvey(client, g.facultyId)
+      # g.survey = getSurvey(client, g.facultyId)
 
-@app.context_processor
-def my_utility_processor():
-  def setSurveyStatus():
-    setSurvey(client, g.facultyId)
-    session['survey'] = True
-    g.survey = True
-  return dict(setSurveyStatus=setSurveyStatus)
+# @app.context_processor
+# def my_utility_processor():
+#   def setSurveyStatus():
+#     setSurvey(client, g.facultyId)
+#     session['survey'] = True
+#     g.survey = True
+#   return dict(setSurveyStatus=setSurveyStatus)
 
 @app.route('/', methods=['GET'])
 def home():
@@ -70,7 +71,7 @@ def home():
 @app.route('/join/', methods=['GET'])
 def join():
   print(request.remote_addr, request.remote_user)
-  return render_template('join.html') 
+  return render_template('join.html')
 
 @app.route('/faculty/login/logout/', methods=['GET'] )
 def facultyLogout():
@@ -101,7 +102,7 @@ def facultyLogin():
       flash('Wrong ID or Password, Please try again.')
       return render_template('facultyLogin.html', flashType="danger")
 
-@app.route('/create/', methods=['GET', 'POST'])
+@app.route('/create/', methods=['POST'])
 def create():
   if not g.facultyId:
     flash("You need to Log In to view this page")
@@ -111,12 +112,13 @@ def create():
       return render_template('create.html', classroomId = None)
     else:
       zoomId = request.form['zoomId']
+      meetingPassword = request.form['meetingPassword']
       if(len(zoomId)<8):
         flash("Invalid Zoom ID")
         return render_template('create.html', classroomId = None, flashType='warning')
       classroomId = int(zoomId) + 6201280
       facultyId = session['facultyId']
-      addMeetingRes = addMeeting(client, facultyId, classroomId)
+      addMeetingRes = addMeeting(client, facultyId, classroomId, meetingPassword)
       if(addMeetingRes[0]):
         return render_template('create.html', classroomId = classroomId)
       else:
@@ -126,18 +128,64 @@ def create():
 
 @app.route('/create/test/', methods=['GET'] )
 def createTest():
-  if 'facultyName' in session:
-    setFeatureOpen(client, session['facultyName'])
-  elif 'studentName' in session:
-    setFeatureOpen(client, session['studentName'])
-  else:
-    setFeatureOpen(client, request.remote_addr)
   if not g.facultyId:
     flash("You need to Log In to view this page")
     return render_template('facultyLogin.html', flashType='warning')
   return render_template('createTest.html')
 
+@app.route('/create/test/make/')
+def makeTest():
+  return render_template('makeTest.html')
 
+@app.route('/create/test/make/<testId>/', methods=['POST'])
+def saveTest(testId):
+  print('recieved')
+  if not g.facultyId:
+    flash("You need to Log In to view this page")
+    return render_template('facultyLogin.html', flashType='warning')
+  else:
+    print(request.get_json())
+    print(testId)
+    print(type(request.get_json()))
+    return 'successful'
+
+d={"testId": "12345678910",
+  "testName": "ABC QUIZ",
+  "subjectCode": "12ABC34",
+  "testDescription": "Any description",
+  "testDate": "dd/mm/yyyy",
+  "testStartTime": "12345678910",
+  "testEndTime": "12345678910",
+  "facultyId": "test@test.com",
+  "exam": {
+    "question1": {
+      "question": "question1 text here",
+      "answers": [ ["optionValu1e", False], ["optionVa2lue", False], ["optionValue", True], ["option4Value", False] ]
+    },
+    "question2": {
+      "question": "question2 text here",
+      "answers": [ ["optionVa1lue", False], ["optionVa2lue", False], ["option3Value", True], ["optionVa4lue", False] ]
+    },
+    "question3": {
+      "question": "question3 text here",
+      "answers": [ ["optionValue", True], ["optionValue", False], ["optionValue", False], ["optionValue", False] ]
+    },
+    "question4": {
+      "question": "question4 text here",
+      "answers": [ ["optionValue", False], ["optionValue", False], ["optionValue", True], ["optionValue", False] ]
+    },
+    "question5": {
+      "question": "question text here",
+      "answers": [ ["optionValue", False], ["optionValue", True], ["optionValue", False], ["optionValue", False] ]
+  }
+}
+}
+
+@app.route('/create/generate', methods=['GET','POST'])
+def func():
+    dic1=d
+    nae=d['exam']
+    return render_template('test.html', dic1=dic1,nae=nae)
 
 @app.route('/signup/faculty/<inviteCode>', methods=['GET', 'POST'])
 def facultySignup(inviteCode):
@@ -171,11 +219,13 @@ def joinClass(classroomId):
     if(webkioskLogin[0]):
       studentName = webkioskLogin[1]
       markAttendance(client, classroomId, rollNo, studentName, loginTime)
+      meetingPassword = getMeetingPassword(client, classroomId)
+      print(meetingPassword)
       joinName = rollNo + '_' + studentName.replace(' ', '_')
       session['studentName'] = joinName
       API_KEY = 'bbggBIchTf2B67Oue2QgFg'
       convertedClassroomId = int(classroomId) - 6201280
-      return render_template('meeting.html', API_KEY=API_KEY, convertedClassroomId=convertedClassroomId, rollNo=rollNo, studentName=studentName, joinName=joinName)
+      return render_template('meeting.html', API_KEY=API_KEY, convertedClassroomId=convertedClassroomId, meetingPassword=meetingPassword, rollNo=rollNo, studentName=studentName, joinName=joinName)
     else:
       flash('Wrong DOB or Password, Please try again or reset it on webkiosk. Trying more than 3 times might lock your webkiosk temporarily.')
       return render_template('studentLogin.html', classroomId=classroomId, flashType="danger")
