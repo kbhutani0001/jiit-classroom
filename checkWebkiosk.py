@@ -41,7 +41,7 @@ def checkWebkioskLogin(rollNo, dob, password, client, ipAddress):
           index1 = personalData[index:].find(',')
           index2 = personalData[index:].find('</b>')
           studentName = personalData[index+index1+1:index2+index].lstrip().rstrip()
-      except expression as identifier:
+      except Exception as identifier:
         print("couldn't log in")
       try:
         db = client.jiitclassroom
@@ -55,7 +55,7 @@ def checkWebkioskLogin(rollNo, dob, password, client, ipAddress):
             }
           }
           col.update_one(dataResult,updatedData)
-      except expression as identifier:
+      except Exception as identifier:
         pass
     return [True, studentName]
   else:

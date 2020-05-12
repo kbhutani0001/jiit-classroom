@@ -4,6 +4,7 @@
 <body>
   <div class="mainDiv">
     <h2>Exams Dashboard</h2>
+    <h6>Check Exams created by you. How many students attempted it and check results</h6>
     <br>
     <br>
     <div>
@@ -19,7 +20,9 @@
             <tbody>
                 {% for exam in examTable %}
                 <tr>
-                    <td>{{ exam["examId"] }}</td>
+                    <td>{{ exam["examId"] }}
+                        <a href='/preview/exam/{ exam["examId"] }}'> Preview Exam</a>
+                    </td>
                     <td>{{ exam["examName"] }}</td>
                     <td>{{ exam["examDate"] }}</td>
                     <td>Given By: {{ exam["givenBy"] }}
