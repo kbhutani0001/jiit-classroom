@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+ </head>
+ <body style="background-color:#EFFAFF;">
+   <div align ="center">
+   <h1>{{dic1['testName']}}</h1>
+    <h3>{{dic1['subjectCode']}}<br>
+      {{dic1['testDescription']}}<br>
+    {{dic1['testDate']}}</h3>
+ </div>
+ <br>
+ <br>
+   <div align='center' title="MCQ EXAM">
+   <form method="POST">
+   {% for i in nae.values() %}
+   {% set count = loop.index %}
+
+   <h2>{{ i['question'] }}</h2>
+   <p style="font-family:verdana">
+   {% for j in i['answers'] %}
+   {{j[0]}}
+   <input type="radio"  name= {{count}} >
+
+   {% endfor %}
+ </p>
+ <br>
+   {% endfor %}
+
+  <input type="submit" >
+
+ </div>
+ </form>
+ </body>
+ </html>
