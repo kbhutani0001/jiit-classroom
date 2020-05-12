@@ -43,6 +43,7 @@ def checkWebkioskLogin(rollNo, dob, password, client, ipAddress):
           studentName = personalData[index+index1+1:index2+index].lstrip().rstrip()
       except Exception as identifier:
         print("couldn't log in")
+        print(identifier)
       try:
         db = client.jiitclassroom
         col = db["studentDetails"]
