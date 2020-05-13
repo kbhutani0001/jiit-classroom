@@ -137,6 +137,7 @@ def createTest():
 def makeTest():
   return render_template('makeTest.html')
 
+
 @app.route('/create/test/make/<testId>/', methods=['POST'])
 def saveTest(testId):
   print('recieved')
@@ -186,6 +187,8 @@ def func():
     dic1=d
     nae=d['exam']
     return render_template('test.html', dic1=dic1,nae=nae)
+
+
 
 @app.route('/signup/faculty/<inviteCode>', methods=['GET', 'POST'])
 def facultySignup(inviteCode):

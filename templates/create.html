@@ -14,12 +14,14 @@
       <ul>
         <li>Search for <mark><b>Allow participants to rename themselves</b></mark> option and <b>Disable</b> it. (Required)</li>
         <li>Search for <mark><b>Waiting Room</mark></b>  option and <b>Disable</b> it. (Required)</li>
-        <li>Search for <mark><b>Password</mark> </b> and <b>Disable</b> all the options to create meetings without password. (Required)</li>
       </ul>
       </p>
     </div>
+    <br>
+    <h6>Enter Zoom Meeting ID and Password ( if no password is set, leave it blank )</h6>
     <form action="/create/" method="POST">
       <input style="margin: 20px 0px; max-width: 500px;" class="form-control" type="number" placeholder="Zoom Meeting ID" name="zoomId" id="zoomId">
+      <input style="margin: 20px 0px; max-width: 500px;" class="form-control" type="text" placeholder="Zoom Meeting Password" name="meetingPassword" id="meetingPassword">
       <button type="submit" class="btn btn-primary">Generate</button>
     </form>
     <br>

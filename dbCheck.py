@@ -32,24 +32,30 @@ def markAttendance(client, classroomId, rollNo, studentName, loginTime):
     print(e)
     None
 
-def addMeeting(client, facultyId, classroomId):
+def addMeeting(client, facultyId, classroomId, meetingPassword):
   db = client.jiitclassroom
   col = db["facultyLogin"]
   data = col.find_one({'id': facultyId})
   if(data):
     if "meetings" in data:
       meetings = data["meetings"].copy()
+      meetingPasswordData = data["meetingPassword"].copy()
+      meetingPasswordData[str(classroomId)] = meetingPassword      
       if(str(classroomId) in meetings):
         return [False, "Meeting with same ID already Exists"]
       meetings.append(str(classroomId))
       updatedData = { "$set": {
           "id": data["id"],
           "meetings": meetings,
+          "meetingPassword": meetingPasswordData,
           "name": data["name"],
           "password": data["password"]
         }
       }
       col.update_one(data,updatedData)
+      meetingPasswordCol = db["meetingPassword"]
+      meetingPasswordData = {"classroomId": str(classroomId), "meetingPassword": meetingPassword}
+      meetingPasswordCol.insert_one(meetingPasswordData)
     return [True]
   else:
     return [False, "Some error occurred. Couldn't create meeting."]
@@ -87,6 +93,7 @@ def createAccount(client, facultyName, facultyId, facultyPassword):
   else:
     data = {"id": facultyId,
             "meetings": [],
+            "meetingPassword": {},
             "name": facultyName,
             "password": facultyPassword
       }
@@ -137,3 +144,19 @@ def setFeatureOpen(client, name):
   data = col.find_one({"name" : name})
   if not data:
     col.insert_one({"name": name})
+  
+def getMeetingPassword(client, classroomId):
+  db = client.jiitclassroom
+  col = db["meetingPassword"]
+  data = col.find_one({"classroomId": classroomId})
+  if(data):
+    return data["meetingPassword"]
+  return ""
+
+def getExamDetails(client, examId):
+  db = client.jiitclassroom
+  col = db["meetingPassword"]
+  data = col.find_one({"classroomId": classroomId})
+  if(data):
+    return data["meetingPassword"]
+  return ""
