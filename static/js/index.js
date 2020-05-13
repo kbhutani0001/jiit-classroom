@@ -7,7 +7,7 @@
   })();
 
 function startMeeting (API_KEY, meetingNumber, meetingPassword,  joinName) {
-    var API_SECRET = 's5dL1Bfw9M82l1OXw8E04BWI0BQ17r0t4Cso';
+    var API_SECRET = '2panFGLxPRYE6SjWjPVjvbV4N5sivTonJaCn';
     var meetConfig = {
         apiKey: API_KEY,
         apiSecret: API_SECRET,
