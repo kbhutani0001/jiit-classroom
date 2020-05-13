@@ -71,7 +71,7 @@ def home():
 @app.route('/join/', methods=['GET'])
 def join():
   print(request.remote_addr, request.remote_user)
-  return render_template('join.html') 
+  return render_template('join.html')
 
 @app.route('/faculty/login/logout/', methods=['GET'] )
 def facultyLogout():
@@ -102,7 +102,7 @@ def facultyLogin():
       flash('Wrong ID or Password, Please try again.')
       return render_template('facultyLogin.html', flashType="danger")
 
-@app.route('/create/', methods=['GET', 'POST'])
+@app.route('/create/', methods=['GET','POST'])
 def create():
   if not g.facultyId:
     flash("You need to Log In to view this page")
@@ -137,6 +137,7 @@ def createTest():
 def makeTest():
   return render_template('makeTest.html')
 
+
 @app.route('/create/test/make/<testId>/', methods=['POST'])
 def saveTest(testId):
   print('recieved')
@@ -148,6 +149,46 @@ def saveTest(testId):
     print(testId)
     print(type(request.get_json()))
     return 'successful'
+
+d={"testId": "12345678910",
+  "testName": "ABC QUIZ",
+  "subjectCode": "12ABC34",
+  "testDescription": "Any description",
+  "testDate": "dd/mm/yyyy",
+  "testStartTime": "12345678910",
+  "testEndTime": "12345678910",
+  "facultyId": "test@test.com",
+  "exam": {
+    "question1": {
+      "question": "question1 text here",
+      "answers": [ ["optionValu1e", False], ["optionVa2lue", False], ["optionValue", True], ["option4Value", False] ]
+    },
+    "question2": {
+      "question": "question2 text here",
+      "answers": [ ["optionVa1lue", False], ["optionVa2lue", False], ["option3Value", True], ["optionVa4lue", False] ]
+    },
+    "question3": {
+      "question": "question3 text here",
+      "answers": [ ["optionValue", True], ["optionValue", False], ["optionValue", False], ["optionValue", False] ]
+    },
+    "question4": {
+      "question": "question4 text here",
+      "answers": [ ["optionValue", False], ["optionValue", False], ["optionValue", True], ["optionValue", False] ]
+    },
+    "question5": {
+      "question": "question text here",
+      "answers": [ ["optionValue", False], ["optionValue", True], ["optionValue", False], ["optionValue", False] ]
+  }
+}
+}
+
+@app.route('/create/generate', methods=['GET','POST'])
+def func():
+    dic1=d
+    nae=d['exam']
+    return render_template('test.html', dic1=dic1,nae=nae)
+
+
 
 @app.route('/signup/faculty/<inviteCode>', methods=['GET', 'POST'])
 def facultySignup(inviteCode):
