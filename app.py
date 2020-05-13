@@ -102,7 +102,7 @@ def facultyLogin():
       flash('Wrong ID or Password, Please try again.')
       return render_template('facultyLogin.html', flashType="danger")
 
-@app.route('/create/', methods=['POST'])
+@app.route('/create/', methods=['GET','POST'])
 def create():
   if not g.facultyId:
     flash("You need to Log In to view this page")
