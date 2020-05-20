@@ -3,15 +3,32 @@
 {% block body %}
 <body>  
   <div class="mainDiv">
-  <h2>Create Test Coming Soon!</h2>
-  <h6>This feature will help teachers to create online Tests</h6>
-  <p>As suggested by UGC, and many colleges like IIIT Hyderabad, DTU, IGDTU, Amity, etc have decided to take examinations online and prepared their own sites for the same ( Example: <span><a href=" http://e-exam.igdtuw.ac.in/exam/" target="_blank"> http://e-exam.igdtuw.ac.in/exam/</a></span>)</p>
-  <p>This feature aims to provide teachers a platform to take secured online tests/Quiz for internal marking.</p>
-  <ul>
-    <li>Students can only Log in through Webkiosk</li>
-    <li>Students can only start test after time decided by teacher</li>
-    <li>Random questions to avoid cheating (For example there is a quiz of 10 questions, teachers can submit 20 questions so that each student get randomly different questions)</li>
-  </ul>
+    {% include 'components/flashMessage.html' %}
+    <h2>Create Test</h2>
+    <h5>JIIT Classroom provides a cheating proof system to take online Exams (MCQ Quizes only for now). Some of the key features are:</h5>
+    <ul>
+      <li>Random Questions</li>
+      <li>Shuffled Answer Options</li>
+      <li>Students can only Log in Through WebKiosk Details</li>
+      <li>Auto Result checker: Immediately shows marks of each student in Dashboard</li>
+    </ul>
+    <h5>Enter Exam Details below to start creating a Test.</h5>
+    <br><br>  
+    <form action="/create/test/" method="POST">
+      <label for="testName">Test Name</label>
+      <input style="margin-bottom: 10px; max-width: 500px;" class="form-control" type="text" placeholder="Example: Data Structures and Algo Quiz T2" name="examName" id="examName">
+      <label for="testName">Subject Code</label>
+      <input style="margin-bottom: 10px; max-width: 500px;" class="form-control" type="text" placeholder="Example: 15B11E11" name="subjectCode" id="subjectCode">
+      <label for="testName">Test Date (DD/MM/YYYY)</label>
+      <input style="margin-bottom: 10px; max-width: 500px;" class="form-control" type="text" placeholder="Example: 25/05/2020" name="examDate" id="examDate">
+      <label for="testName">Test Start Time (24 Hour Format)</label>
+      <input style="margin-bottom: 10px; max-width: 500px;" class="form-control" type="time" placeholder="Example: 02:00" name="examStartTime" id="examStartTime">
+      <label for="testName">Test End Time (24 Hour Format)</label>
+      <input style="margin-bottom: 10px; max-width: 500px;" class="form-control" type="time" placeholder="Example: 03:00" name="examEndTime" id="examEndTime">
+      <label for="testName">Test Desciption</label>
+      <input style="margin-bottom: 10px; max-width: 500px;" class="form-control" type="text" placeholder="Any Info you want students to know. (Could be a drive link of images) " name="examDescription" id="examDescription">
+      <button type="submit" class="btn btn-primary">Proceed</button>
+    </form>
   </div>
 </body>
 {% endblock %}

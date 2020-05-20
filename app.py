@@ -32,7 +32,10 @@ from dbCheck import (
 from datetime import timedelta
 import pymongo
 import config
-
+from methods import (
+  createExamId,
+  getTimeStampFromDT
+)
 app = Flask(__name__)
 app.secret_key = "jiit128jiitclassroomforonlineclasses"
 app.permanent_session_lifetime = timedelta(days=5)
@@ -54,7 +57,8 @@ def before_request():
       g.facultyId = session['facultyId']
       g.facultyName = session['facultyName']
       # g.survey = getSurvey(client, g.facultyId)
-
+  if not 'examData' in g:
+    g.examData = None
 # @app.context_processor
 # def my_utility_processor():
 #   def setSurveyStatus():
@@ -128,20 +132,33 @@ def create():
         flash(error)
         return render_template('create.html', classroomId = None, flashType="warning")
 
-@app.route('/create/test/', methods=['GET'] )
+@app.route('/create/test/', methods=['GET', 'POST'] )
 def createTest():
   if not g.facultyId:
     flash("You need to Log In to view this page")
     return render_template('facultyLogin.html', flashType='warning')
-  return render_template('createTest.html')
-
-@app.route('/create/test/make/')
-def makeTest():
-  return render_template('makeTest.html')
+  else:
+    if request.method == 'GET':
+      return render_template('createTest.html')
+    else:
+      data = request.form
+      examId = createExamId()
+      examStartTime = getTimeStampFromDT(data['examDate'], data['examStartTime'] )
+      examEndTime = getTimeStampFromDT(data['examDate'], data['examEndTime'] )
+      examDuration = examEndTime - examStartTime
+      examData = {
+        'examId': examId,
+        'examName': data['examName'],
+        'subjectCode': data['subjectCode'],
+        'examDate': data['examDate'],
+        'examStartTime': examStartTime,
+        'examEndTime': examEndTime,
+        'examDescription': data['examDescription']
+      }
+      return render_template('makeTest.html', examData = examData, examDuration = examDuration, facultyId = g.facultyId)
 
 @app.route('/create/test/make/<testId>/', methods=['POST'])
 def saveTest(testId):
-  print('recieved')
   if not g.facultyId:
     flash("You need to Log In to view this page")
     return render_template('facultyLogin.html', flashType='warning')

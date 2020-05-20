@@ -6,15 +6,26 @@
 <script src="{{ url_for('static',filename='js/exam.js')}}"></script>
 <body>  
   <div class="mainDiv">
-    <h4>Test ID: 123456789 <br>
-      Test Name: Data Structures and Algorithim Quiz<br>
-      Subject Code: 1511ABCD
-    </h4>
+    <h2>Create Exam</h2>
+    <h6>Exam ID: {{examData['examId']}}<br>
+      Exam Name: {{examData['examName']}}<br>
+      Subject Code: {{examData['subjectCode']}} <br>
+      Exam Date: {{examData['examDate']}} <br>
+      Exam Duration: {{ examDuration }} Minutes <br>
+      Exam Description: {{examData['examDescription']}} <br>
+    </h6>
+    <br>
+    <p><b>Instructions:</b>
+      <ul>
+        <li>You can add 4 options for a question</li>
+        <li>You can select only one correct option</li>
+      </ul>
+    Start adding questions by clicking the button below</p>
     <br>
     <div id="examQuestions">
     </div>
   <button class="btn btn-secondary" onclick="addQuestion()">Add question</button>
-  <button style="display: none;" id="createTestBtn" class="btn btn-primary" onclick="createTest()">Create Test</button>
+  <button style="display: none;" id="createTestBtn" class="btn btn-primary" onclick="createTest(examId = '{{examData['examId']}}' , examName = '{{examData['examName']}}', subjectCode = '{{examData['subjectCode']}}', examDate = '{{examData['examDate']}}', examStartTime = '{{examData['examStartTime']}}', examEndTime = '{{examData['examEndTime']}}', facultyId = '{{ facultyId }}', examDescription = '{{examData['examDescription']}}'  )">Create Test</button>
   </div>
 </body>
 

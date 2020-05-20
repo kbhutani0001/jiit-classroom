@@ -61,16 +61,16 @@ apiRequest = (examData) => {
 
 }
 
-createTest = () => {
+createTest = (examId, examName, subjectCode, examDate, examStartTime, examEndTime, facultyId, examDescription) => {
   examData = {
-    "examId": "12345678910",
-    "examName": "ABC QUIZ",
-    "subjectCode": "12ABC34",
-    "examDescription": "Any description",
-    "examDate": "dd/mm/yyyy",
-    "examStartTime": "12345678910",
-    "examEndTime": "12345678910",
-    "facultyId": "test@test.com",
+    "examId": examId,
+    "examName": examName,
+    "subjectCode": subjectCode,
+    "examDescription": examDescription,
+    "examDate": examDate,
+    "examStartTime": examStartTime,
+    "examEndTime": examEndTime,
+    "facultyId": facultyId,
     "exam": {
 
     }
