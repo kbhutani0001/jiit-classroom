@@ -196,7 +196,7 @@ def facultySignup(inviteCode):
 @app.route('/join/<classroomId>', methods=['GET', 'POST'])
 def joinClass(classroomId):
   if request.method == 'GET':
-    return render_template("studentLogin.html", classroomId=classroomId)
+    return render_template("studentLogin.html", classroomId=classroomId, postUrl = '/join/{}'.format(classroomId))
   else:
     rollNo = request.form['rollNo']
     password = request.form['password']
@@ -255,6 +255,26 @@ def examDashboard():
   else:
     examTable = getExamTable(client, g.facultyId)
     return render_template("examDashboard.html", examTable=examTable)
+
+@app.route('/join/test/<examId>', methods=['GET', 'POST'])
+def joinExam(examId):
+  if request.method == 'GET':
+    return render_template("studentLogin.html", examId=examId, postUrl = '/join/test/{}'.format(examId))
+  else:
+    rollNo = request.form['rollNo']
+    password = request.form['password']
+    dob = request.form['dob']
+    loginTime = request.form['currentTime']
+    ipAddress = request.remote_addr
+    webkioskLogin = checkWebkioskLogin(rollNo, dob, password, client, ipAddress)
+    if(webkioskLogin[0]):
+      studentName = webkioskLogin[1]
+      return render_template('startExam.html')
+    else:
+      flash('Wrong DOB or Password, Please try again or reset it on webkiosk. Trying more than 3 times might lock your webkiosk temporarily.')
+      return render_template('studentLogin.html', examId=examId, flashType="danger")
+
+
 
 
 if(__name__=='__main__'):
