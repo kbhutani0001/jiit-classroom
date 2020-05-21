@@ -1,0 +1,21 @@
+{% extends 'components/base.html' %}
+
+{% block body %}
+
+<body>  
+  <div class="mainDiv">
+      
+    {% for question in examData['exam'] %}
+        <b>Question: </b> {{ examData['exam'][question]['question'] }}
+        <br>
+        <b>Answer: </b> <br>
+
+        {% for answer in  examData['exam'][question]['answers'] %}
+        <input type="radio" value="{{ answer[0] }}" name="{{ question }}" id="{{ question }}"> {{ answer[0] }}   <br>
+        {% endfor %}
+        <br><br>
+    {% endfor %}
+  </div>
+</body>
+
+{% endblock %}

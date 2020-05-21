@@ -27,7 +27,8 @@ from dbCheck import (
   setFeatureOpen,
   getMeetingPassword,
   addExam,
-  getExamTable
+  getExamTable,
+  getExamDetails
   )
 from datetime import timedelta
 import pymongo
@@ -269,7 +270,8 @@ def joinExam(examId):
     webkioskLogin = checkWebkioskLogin(rollNo, dob, password, client, ipAddress)
     if(webkioskLogin[0]):
       studentName = webkioskLogin[1]
-      return render_template('startExam.html')
+      examData = getExamDetails(client, examId)[1]
+      return render_template('startExam.html', examData = examData)
     else:
       flash('Wrong DOB or Password, Please try again or reset it on webkiosk. Trying more than 3 times might lock your webkiosk temporarily.')
       return render_template('studentLogin.html', examId=examId, flashType="danger")

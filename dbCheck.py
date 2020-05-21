@@ -206,4 +206,3 @@ def getExamTable(client, facultyId):
         "givenBy": len(givenBy)
         })
     return tableData
-
