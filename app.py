@@ -39,6 +39,8 @@ from methods import (
 app = Flask(__name__)
 app.secret_key = "jiit128jiitclassroomforonlineclasses"
 app.permanent_session_lifetime = timedelta(days=5)
+
+
 client = pymongo.MongoClient(config.mlabURI, connectTimeoutMS=50000)
 
 
@@ -146,6 +148,7 @@ def createTest():
       examStartTime = getTimeStampFromDT(data['examDate'], data['examStartTime'] )
       examEndTime = getTimeStampFromDT(data['examDate'], data['examEndTime'] )
       examDuration = examEndTime - examStartTime
+      randomQuestions = True if 'randomQuestions' in data else False
       examData = {
         'examId': examId,
         'examName': data['examName'],
@@ -153,7 +156,8 @@ def createTest():
         'examDate': data['examDate'],
         'examStartTime': examStartTime,
         'examEndTime': examEndTime,
-        'examDescription': data['examDescription']
+        'examDescription': data['examDescription'],
+        'randomQuestions': randomQuestions
       }
       return render_template('makeTest.html', examData = examData, examDuration = examDuration, facultyId = g.facultyId)
 

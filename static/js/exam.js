@@ -62,7 +62,7 @@ apiRequest = (examData) => {
 
 }
 
-createTest = (examId, examName, subjectCode, examDate, examStartTime, examEndTime, facultyId, examDescription) => {
+createTest = (examId, examName, subjectCode, examDate, examStartTime, examEndTime, facultyId, examDescription, randomQuestions) => {
   examData = {
     "examId": examId,
     "examName": examName,
@@ -72,6 +72,7 @@ createTest = (examId, examName, subjectCode, examDate, examStartTime, examEndTim
     "examStartTime": examStartTime,
     "examEndTime": examEndTime,
     "facultyId": facultyId,
+    "randomQuestions": randomQuestions,
     "exam": {
 
     }
