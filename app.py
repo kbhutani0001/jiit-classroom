@@ -262,14 +262,12 @@ def examDashboard():
 @app.route('/join/test/<examId>/', methods=['GET', 'POST'])
 def joinExam(examId):
   if request.method == 'GET':
-    return render_template("studentLogin.html", examId=examId, postUrl = '/join/test/{}'.format(examId))
+    return render_template("studentLogin.html", examId=examId, postUrl = '/join/test/{}/'.format(examId))
   else:
     rollNo = request.form['rollNo']
     password = request.form['password']
     dob = request.form['dob']
-    loginTime = request.form['currentTime']
-    ipAddress = request.remote_addr
-    webkioskLogin = checkWebkioskLogin(rollNo, dob, password, client, ipAddress)
+    webkioskLogin = checkWebkioskLogin(rollNo, dob, password, client)
     if(webkioskLogin[0]):
       studentName = webkioskLogin[1]
       examData = getExamDetails(client, examId)
@@ -277,10 +275,11 @@ def joinExam(examId):
         flash("Succesfully logged in as {} ({})".format(studentName, rollNo))
         return render_template('startExam.html' ,flashType = "success", rollNo=rollNo, studentName=studentName , examData = examData[1], timeLeft = 120)
       flash(examData[1])
-      return render_template("studentLogin.html", flashType="danger", postUrl = '/join/test/{}'.format(examId))
+      return render_template("studentLogin.html", flashType="danger", postUrl = '/join/test/{}/'.format(examId))
     else:
       flash('Wrong DOB or Password, Please try again or reset it on webkiosk. Trying more than 3 times might lock your webkiosk temporarily.')
       return render_template('studentLogin.html', examId=examId, flashType="danger")
+      
 
 @app.route('/joint/test/submit/', methods = ['POST'])
 def submitTest():

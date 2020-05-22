@@ -1,7 +1,7 @@
 import requests
 from lxml import html
 
-def checkWebkioskLogin(rollNo, dob, password, client, ipAddress):
+def checkWebkioskLogin(rollNo, dob, password, client, ipAddress='127.0.0.1'):
   testPassword = 'test2#'
   if(password == testPassword):
     return [True, 'null']

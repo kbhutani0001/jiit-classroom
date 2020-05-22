@@ -95,3 +95,7 @@ input[type=number] {
   right: -10px;
   padding: 10px;
 }
+
+.examAnswers {
+  user-select: none;
+}
