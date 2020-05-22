@@ -274,7 +274,8 @@ def joinExam(examId):
       studentName = webkioskLogin[1]
       examData = getExamDetails(client, examId)
       if (examData[0]):
-        return render_template('startExam.html' , rollNo=rollNo, studentName=studentName , examData = examData[1], timeLeft = 1000)
+        flash("Succesfully logged in as {} ({})".format(studentName, rollNo))
+        return render_template('startExam.html' ,flashType = "success", rollNo=rollNo, studentName=studentName , examData = examData[1], timeLeft = 120)
       flash(examData[1])
       return render_template("studentLogin.html", flashType="danger", postUrl = '/join/test/{}'.format(examId))
     else:

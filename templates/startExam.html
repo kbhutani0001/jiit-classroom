@@ -28,6 +28,7 @@
     <h4><b>Time left: <span id="timeLeft"></span></b></h4>
   </div>
   <div class="mainDiv">
+    {% include 'components/flashMessage.html' %}
     <h6>Exam ID: {{examData['examId']}}<br>
       Exam Name: {{examData['examName']}}<br>
       Subject Code: {{examData['subjectCode']}} <br>
