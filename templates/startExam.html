@@ -1,8 +1,29 @@
 {% extends 'components/base.html' %}
 
 {% block body %}
+
+
 <script src="{{ url_for('static',filename='js/examSubmit.js')}}"></script>
-<body>  
+<body>
+  <div id="videomonitor"></div>
+  <script src='https://meet.jit.si/external_api.js'></script>
+  <div id="backgroundColor">
+    <script>
+      roomName = 'jiitclassroom_{{examData['examId']}}'
+      const domain = 'meet.jit.si';
+      const options = {
+      roomName: roomName,
+      width: '0px',
+      height: '0px',
+      parentNode: document.querySelector('#videomonitor'),
+      configOverwrite: { startWithAudioMuted: true },
+      interfaceConfigOverwrite: { filmStripOnly: true },
+      };
+      const api = new JitsiMeetExternalAPI(domain, options);
+      document.getElementById("backgroundColor").remove()
+    </script>
+  </div>
+  
   <div id="timeLeftDiv">
     <h4><b>Time left: <span id="timeLeft"></span></b></h4>
   </div>
