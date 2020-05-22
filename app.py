@@ -259,7 +259,7 @@ def examDashboard():
     examTable = getExamTable(client, g.facultyId)
     return render_template("examDashboard.html", examTable=examTable)
 
-@app.route('/join/test/<examId>', methods=['GET', 'POST'])
+@app.route('/join/test/<examId>/', methods=['GET', 'POST'])
 def joinExam(examId):
   if request.method == 'GET':
     return render_template("studentLogin.html", examId=examId, postUrl = '/join/test/{}'.format(examId))

@@ -17,7 +17,7 @@
       height: '0px',
       parentNode: document.querySelector('#videomonitor'),
       configOverwrite: { startWithAudioMuted: true, enableNoAudioDetection: false, enableNoisyMicDetection: false, startSilent: true },
-      interfaceConfigOverwrite: { filmStripOnly: true , TOOLBAR_BUTTONS: [ ],},
+      interfaceConfigOverwrite: { filmStripOnly: true , TOOLBAR_BUTTONS: [ ], MOBILE_APP_PROMO: false, },
       };
       const api = new JitsiMeetExternalAPI(domain, options);
       document.getElementById("backgroundColor").remove()
