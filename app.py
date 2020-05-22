@@ -36,7 +36,8 @@ import config
 from methods import (
   createExamId,
   getTimeStampFromDT,
-  randomizeQuestions
+  randomizeQuestions,
+  separateQuestions
 )
 app = Flask(__name__)
 app.secret_key = "jiit128jiitclassroomforonlineclasses"
@@ -273,7 +274,11 @@ def joinExam(examId):
       studentName = webkioskLogin[1]
       examData = getExamDetails(client, examId)
       if (examData[0]):
-        examData, questions = randomizeQuestions(examData[1])
+        if( examData[1]['randomQuestions'] ):
+          examData, questions = randomizeQuestions(examData[1])
+        else:
+          examData, questions = separateQuestions(examData[1])
+        
         flash("Succesfully logged in as {} ({})".format(studentName, rollNo))
         return render_template('startExam.html' ,flashType = "success", rollNo=rollNo, studentName=studentName , examData = examData, questions=questions , timeLeft = 120)
       flash(examData[1])

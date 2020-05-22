@@ -23,4 +23,15 @@ def randomizeQuestions(examData):
                     })
     random.shuffle(questions)
     return [examData, questions]
+
+def separateQuestions(examData):
+    questions = []
+    for question in examData['exam']:
+        answers = examData['exam'][question]['answers']
+        questions.append({
+            question: { 'question':  examData['exam'][question]['question'], 
+                        'answers': answers
+                        }
+                    })
+    return [examData, questions]
         
