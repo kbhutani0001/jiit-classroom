@@ -5,6 +5,7 @@
 
 <script src="{{ url_for('static',filename='js/examSubmit.js')}}"></script>
 <body>
+  {% if examData['videoMonitoring'] %}
   <div id="videomonitor"></div>
   <script src='https://meet.jit.si/external_api.js'></script>
   <div id="backgroundColor">
@@ -23,7 +24,9 @@
       document.getElementById("backgroundColor").remove()
     </script>
   </div>
-  
+  {% endif %}
+
+  <!-- Hi there, {{ studentName }}  PS DONT TRY TO PLAY WITH CODE, EXAM WONT SUBMIT AFTER TIME IS OVER (POST REQ FAIL) -->
   <div id="timeLeftDiv">
     <h4><b>Time left: <span id="timeLeft"></span></b></h4>
   </div>
