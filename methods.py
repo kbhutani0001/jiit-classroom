@@ -34,4 +34,15 @@ def separateQuestions(examData):
                         }
                     })
     return [examData, questions]
-        
+
+def computeResults(examData, studentExamData):
+    score = 0
+    questions = examData['exam']
+    for ans in studentExamData:
+        if ans in questions:
+            answers = questions[ans]['answers']
+            for i in answers:
+                if studentExamData[ans] == i[0] and i[1] ==True:
+                    score+=1
+    print("Score computed")
+    return score

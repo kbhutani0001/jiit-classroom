@@ -38,7 +38,8 @@ from methods import (
   createExamId,
   getTimeStampFromDT,
   randomizeQuestions,
-  separateQuestions
+  separateQuestions,
+  computeResults
 )
 app = Flask(__name__)
 app.secret_key = "jiit128jiitclassroomforonlineclasses"
@@ -291,7 +292,10 @@ def joinExam(examId):
 @app.route('/join/test/submit/', methods = ['POST'])
 def submitTest():
   studentExamData = request.form.to_dict()
-  response = submitExam(client, studentExamData)
+  examId = studentExamData['examId']
+  examData = getExamDetails(client, examId)[1]
+  score = computeResults(examData, studentExamData)
+  response = submitExam(client, studentExamData, score)
   if(response[0]):
     flash('Successfully submitted your exam!')
     return render_template('index.html', flashType="success")

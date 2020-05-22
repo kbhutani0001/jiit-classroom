@@ -185,7 +185,7 @@ def addExam(client, facultyId, examData):
     examResultsDb = db["examResults"]
     examResultsDb.insert_one({
       'examId': examData['examId'],
-      'results': {}
+      'examResults': {}
     })
     return [True]
   else:
@@ -227,7 +227,7 @@ def submitExam(client, studentExamData, examScore):
   db = client.jiitclassroom
   col = db["examResults"]
   examIdData = col.find_one({'examId': examId})
-  examIdResults = examIdData['results']
+  examIdResults = examIdData['examResults']
   newExamIdResults = examIdResults.copy()
   newExamIdResults[rollNo] = data
   updatedData = { "$set": {
@@ -235,5 +235,5 @@ def submitExam(client, studentExamData, examScore):
                   "examResults": newExamIdResults
         }
       }
-  col.update_one(data,updatedData)
+  col.update_one(examIdData,updatedData)
   return [True]
