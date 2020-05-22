@@ -285,7 +285,8 @@ def submitTest():
   print(data)
   for i in data:
     print(i, data[i])
-  return "ok"
+  flash('Successfully submitted your exam!')
+  return render_template('index.html', flashType="success")
 
 if(__name__=='__main__'):
 	app.run(debug=True,use_reloader=True)
