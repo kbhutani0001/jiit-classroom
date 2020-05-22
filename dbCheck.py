@@ -206,3 +206,17 @@ def getExamTable(client, facultyId):
         "givenBy": len(givenBy)
         })
     return tableData
+
+def submitExam(client, studentExamData):
+  rollNo = studentExamData['rollNo']
+  studentName = studentExamData['studentName']
+  del studentExamData['rollNo']
+  del studentExamData['studentName']
+  data = {
+    'rollNo': rollNo,
+    'studentName': studentName,
+    'examData': studentExamData
+  }
+  db = client.jiitclassroom
+  col = db["examResults"]
+  return [True]
