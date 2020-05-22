@@ -86,3 +86,12 @@ input[type=number] {
   margin: 20px 0px;
 
 }
+
+#timeLeftDiv {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 60px;
+  float: right;
+  right: -10px;
+  padding: 10px;
+}
