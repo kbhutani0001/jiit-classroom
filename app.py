@@ -150,6 +150,7 @@ def createTest():
       examEndTime = getTimeStampFromDT(data['examDate'], data['examEndTime'] )
       examDuration = examEndTime - examStartTime
       randomQuestions = True if 'randomQuestions' in data else False
+      videoMonitoring = True if 'videoMonitoring' in data else False
       examData = {
         'examId': examId,
         'examName': data['examName'],
@@ -158,7 +159,8 @@ def createTest():
         'examStartTime': examStartTime,
         'examEndTime': examEndTime,
         'examDescription': data['examDescription'],
-        'randomQuestions': randomQuestions
+        'randomQuestions': randomQuestions,
+        'videoMonitoring': videoMonitoring
       }
       return render_template('makeTest.html', examData = examData, examDuration = examDuration, facultyId = g.facultyId)
 
