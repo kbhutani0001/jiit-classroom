@@ -185,7 +185,7 @@ def addExam(client, facultyId, examData):
     examResultsDb = db["examResults"]
     examResultsDb.insert_one({
       'examId': examData['examId'],
-      'results': []
+      'results': {}
     })
     return [True]
   else:
