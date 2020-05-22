@@ -5,7 +5,9 @@
 
 <script src="{{ url_for('static',filename='js/examSubmit.js')}}"></script>
 <body>
+  
   <div id="videomonitor"></div>
+  {% if examData['videoMonitoring'] %}
   <script src='https://meet.jit.si/external_api.js'></script>
   <div id="backgroundColor">
     <script>
@@ -23,12 +25,16 @@
       document.getElementById("backgroundColor").remove()
     </script>
   </div>
-  
+  {% endif %}
+
+  <!-- Hi there, {{ studentName }}  PS DONT TRY TO PLAY WITH CODE, EXAM WONT SUBMIT AFTER TIME IS OVER (POST REQ FAIL) -->
   <div id="timeLeftDiv">
     <h4><b>Time left: <span id="timeLeft"></span></b></h4>
   </div>
   <div class="mainDiv">
+
     {% include 'components/flashMessage.html' %}
+    
     <h6>Exam ID: {{examData['examId']}}<br>
       Exam Name: {{examData['examName']}}<br>
       Subject Code: {{examData['subjectCode']}} <br>
@@ -37,18 +43,20 @@
     </h6>
 
 
-    <form action="/joint/test/submit/" method="POST">
+    <form class="examAnswers" action="/join/test/submit/" method="POST">
       <input type="number" value="{{ rollNo }}" hidden name="rollNo" id="rollNo">
       <input type="text" value="{{ studentName }}" hidden name="studentName" name="studentName">
-    {% for question in examData['exam'] %}
-        <b>Question: </b> {{ examData['exam'][question]['question'] }}
-        <br>
-        <b>Answer: </b> <br>
+    {% for element in questions %}
+        {% for question in element %}
+          <b>Question: </b> {{ element[question]['question'] }}
+          <br>
+          <b>Answer: </b> <br>
 
-        {% for answer in  examData['exam'][question]['answers'] %}
-        <input type="radio" value="{{ answer[0] }}" name="{{ question }}" id="{{ question }}"> {{ answer[0] }}   <br>
+          {% for answer in  element[question]['answers'] %}
+          <input type="radio" value="{{ answer[0] }}" name="{{ question }}" id="{{ question }}"> {{ answer[0] }}   <br>
+          {% endfor %}
+          <br><br>
         {% endfor %}
-        <br><br>
     {% endfor %}
     <button id="submitExam" class="btn btn-primary" type="Submit">Submit Test</button>
   </form>
