@@ -35,7 +35,8 @@ import pymongo
 import config
 from methods import (
   createExamId,
-  getTimeStampFromDT
+  getTimeStampFromDT,
+  randomizeQuestions
 )
 app = Flask(__name__)
 app.secret_key = "jiit128jiitclassroomforonlineclasses"
@@ -272,8 +273,9 @@ def joinExam(examId):
       studentName = webkioskLogin[1]
       examData = getExamDetails(client, examId)
       if (examData[0]):
+        examData, questions = randomizeQuestions(examData[1])
         flash("Succesfully logged in as {} ({})".format(studentName, rollNo))
-        return render_template('startExam.html' ,flashType = "success", rollNo=rollNo, studentName=studentName , examData = examData[1], timeLeft = 120)
+        return render_template('startExam.html' ,flashType = "success", rollNo=rollNo, studentName=studentName , examData = examData, questions=questions , timeLeft = 120)
       flash(examData[1])
       return render_template("studentLogin.html", flashType="danger", postUrl = '/join/test/{}/'.format(examId))
     else:
@@ -281,7 +283,7 @@ def joinExam(examId):
       return render_template('studentLogin.html', examId=examId, flashType="danger")
       
 
-@app.route('/joint/test/submit/', methods = ['POST'])
+@app.route('/join/test/submit/', methods = ['POST'])
 def submitTest():
   data = request.form
   print(data)
