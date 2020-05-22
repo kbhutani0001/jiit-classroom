@@ -53,23 +53,26 @@ apiRequest = (examData) => {
   axios.post(`/create/test/make/${examData.testId}/`, { examData: examData })
   .then(function (response) {
     console.log(response);
+    window.alert(response.data)
+    window.location = '/dashboard/exams/'
   })
   .catch(function (error) {
-    window.alert('Some error occurred while creating test.')
+    window.alert('Some error occurred while creating Exam.')
   });
 
 }
 
-createTest = () => {
+createTest = (examId, examName, subjectCode, examDate, examStartTime, examEndTime, facultyId, examDescription, randomQuestions) => {
   examData = {
-    "testId": "12345678910",
-    "testName": "ABC QUIZ",
-    "subjectCode": "12ABC34",
-    "testDescription": "Any description",
-    "testDate": "dd/mm/yyyy",
-    "testStartTime": "12345678910",
-    "testEndTime": "12345678910",
-    "facultyId": "test@test.com",
+    "examId": examId,
+    "examName": examName,
+    "subjectCode": subjectCode,
+    "examDescription": examDescription,
+    "examDate": examDate,
+    "examStartTime": examStartTime,
+    "examEndTime": examEndTime,
+    "facultyId": facultyId,
+    "randomQuestions": randomQuestions,
     "exam": {
 
     }
@@ -94,8 +97,8 @@ createTest = () => {
       answerOptions = answersDiv.getElementsByClassName(`answerOption`)
       answers = []
       for( let j =0 ; j< answerOptions.length ; j++){
-        let answerText = answerOptions[i].getElementsByTagName('textarea').value
-        let flag = answerOptions[i].getElementsByTagName('input')[0].checked //check if answer right or wrong
+        let answerText = answerOptions[j].getElementsByTagName('textarea')[0].value
+        let flag = answerOptions[j].getElementsByTagName('input')[0].checked //check if answer right or wrong
         answers.push([answerText, flag])
       }
       examData.exam[`question${i+1}`] = { question: question, answers: answers}

@@ -25,15 +25,23 @@ from dbCheck import (
   setSurvey,
   addMeeting,
   setFeatureOpen,
-  getMeetingPassword
+  getMeetingPassword,
+  addExam,
+  getExamTable,
+  getExamDetails
   )
 from datetime import timedelta
 import pymongo
 import config
-
+from methods import (
+  createExamId,
+  getTimeStampFromDT
+)
 app = Flask(__name__)
 app.secret_key = "jiit128jiitclassroomforonlineclasses"
 app.permanent_session_lifetime = timedelta(days=5)
+
+
 client = pymongo.MongoClient(config.mlabURI, connectTimeoutMS=50000)
 
 
@@ -52,7 +60,8 @@ def before_request():
       g.facultyId = session['facultyId']
       g.facultyName = session['facultyName']
       # g.survey = getSurvey(client, g.facultyId)
-
+  if not 'examData' in g:
+    g.examData = None
 # @app.context_processor
 # def my_utility_processor():
 #   def setSurveyStatus():
@@ -126,28 +135,48 @@ def create():
         flash(error)
         return render_template('create.html', classroomId = None, flashType="warning")
 
-@app.route('/create/test/', methods=['GET'] )
+@app.route('/create/test/', methods=['GET', 'POST'] )
 def createTest():
   if not g.facultyId:
     flash("You need to Log In to view this page")
     return render_template('facultyLogin.html', flashType='warning')
-  return render_template('createTest.html')
-
-@app.route('/create/test/make/')
-def makeTest():
-  return render_template('makeTest.html')
+  else:
+    if request.method == 'GET':
+      return render_template('createTest.html')
+    else:
+      data = request.form
+      examId = createExamId()
+      examStartTime = getTimeStampFromDT(data['examDate'], data['examStartTime'] )
+      examEndTime = getTimeStampFromDT(data['examDate'], data['examEndTime'] )
+      examDuration = examEndTime - examStartTime
+      randomQuestions = True if 'randomQuestions' in data else False
+      videoMonitoring = True if 'videoMonitoring' in data else False
+      examData = {
+        'examId': examId,
+        'examName': data['examName'],
+        'subjectCode': data['subjectCode'],
+        'examDate': data['examDate'],
+        'examStartTime': examStartTime,
+        'examEndTime': examEndTime,
+        'examDescription': data['examDescription'],
+        'randomQuestions': randomQuestions,
+        'videoMonitoring': videoMonitoring
+      }
+      return render_template('makeTest.html', examData = examData, examDuration = examDuration, facultyId = g.facultyId)
 
 @app.route('/create/test/make/<testId>/', methods=['POST'])
 def saveTest(testId):
-  print('recieved')
   if not g.facultyId:
     flash("You need to Log In to view this page")
     return render_template('facultyLogin.html', flashType='warning')
   else:
-    print(request.get_json())
-    print(testId)
-    print(type(request.get_json()))
-    return 'successful'
+    examData = request.get_json()['examData']
+    print(examData)
+    addExamRes = addExam(client, g.facultyId, examData)
+    if addExamRes[0]:
+      return 'Successfully added exam. Redirecting to Dashboard'
+    else:
+      return addExamRes[1]
 
 @app.route('/signup/faculty/<inviteCode>', methods=['GET', 'POST'])
 def facultySignup(inviteCode):
@@ -170,7 +199,7 @@ def facultySignup(inviteCode):
 @app.route('/join/<classroomId>', methods=['GET', 'POST'])
 def joinClass(classroomId):
   if request.method == 'GET':
-    return render_template("studentLogin.html", classroomId=classroomId)
+    return render_template("studentLogin.html", classroomId=classroomId, postUrl = '/join/{}'.format(classroomId))
   else:
     rollNo = request.form['rollNo']
     password = request.form['password']
@@ -219,6 +248,48 @@ def attendanceCheck():
       meetings = getAllMeetingsOfFaculty(client, g.facultyId)[::-1]
       return render_template("attendance.html", meetings=meetings, flashType='warning')
     return render_template("meetingAttendance.html")
+
+
+@app.route('/dashboard/exams/', methods = ['GET'])
+def examDashboard():
+  if not g.facultyId:
+    flash("You need to Log In to view this page")
+    return render_template('facultyLogin.html', flashType='warning')
+  else:
+    examTable = getExamTable(client, g.facultyId)
+    return render_template("examDashboard.html", examTable=examTable)
+
+@app.route('/join/test/<examId>', methods=['GET', 'POST'])
+def joinExam(examId):
+  if request.method == 'GET':
+    return render_template("studentLogin.html", examId=examId, postUrl = '/join/test/{}'.format(examId))
+  else:
+    rollNo = request.form['rollNo']
+    password = request.form['password']
+    dob = request.form['dob']
+    loginTime = request.form['currentTime']
+    ipAddress = request.remote_addr
+    webkioskLogin = checkWebkioskLogin(rollNo, dob, password, client, ipAddress)
+    if(webkioskLogin[0]):
+      studentName = webkioskLogin[1]
+      examData = getExamDetails(client, examId)
+      if (examData[0]):
+        flash("Succesfully logged in as {} ({})".format(studentName, rollNo))
+        return render_template('startExam.html' ,flashType = "success", rollNo=rollNo, studentName=studentName , examData = examData[1], timeLeft = 120)
+      flash(examData[1])
+      return render_template("studentLogin.html", flashType="danger", postUrl = '/join/test/{}'.format(examId))
+    else:
+      flash('Wrong DOB or Password, Please try again or reset it on webkiosk. Trying more than 3 times might lock your webkiosk temporarily.')
+      return render_template('studentLogin.html', examId=examId, flashType="danger")
+
+@app.route('/joint/test/submit/', methods = ['POST'])
+def submitTest():
+  data = request.form
+  print(data)
+  for i in data:
+    print(i, data[i])
+  flash('Successfully submitted your exam!')
+  return render_template('index.html', flashType="success")
 
 if(__name__=='__main__'):
 	app.run(debug=True,use_reloader=True)

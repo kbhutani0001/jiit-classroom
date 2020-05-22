@@ -1,0 +1,61 @@
+{% extends 'components/base.html' %}
+
+{% block body %}
+
+
+<script src="{{ url_for('static',filename='js/examSubmit.js')}}"></script>
+<body>
+  <div id="videomonitor"></div>
+  <script src='https://meet.jit.si/external_api.js'></script>
+  <div id="backgroundColor">
+    <script>
+      roomName = 'jiitclassroom_{{examData['examId']}}'
+      const domain = 'meet.jit.si';
+      const options = {
+      roomName: roomName,
+      width: '0px',
+      height: '0px',
+      parentNode: document.querySelector('#videomonitor'),
+      configOverwrite: { startWithAudioMuted: true, enableNoAudioDetection: false, enableNoisyMicDetection: false, startSilent: true },
+      interfaceConfigOverwrite: { filmStripOnly: true , TOOLBAR_BUTTONS: [ ],},
+      };
+      const api = new JitsiMeetExternalAPI(domain, options);
+      document.getElementById("backgroundColor").remove()
+    </script>
+  </div>
+  
+  <div id="timeLeftDiv">
+    <h4><b>Time left: <span id="timeLeft"></span></b></h4>
+  </div>
+  <div class="mainDiv">
+    {% include 'components/flashMessage.html' %}
+    <h6>Exam ID: {{examData['examId']}}<br>
+      Exam Name: {{examData['examName']}}<br>
+      Subject Code: {{examData['subjectCode']}} <br>
+      Exam Duration: {{ examDuration }} Minutes <br>
+      Exam Description: {{examData['examDescription']}} <br><br><br>
+    </h6>
+
+
+    <form action="/joint/test/submit/" method="POST">
+      <input type="number" value="{{ rollNo }}" hidden name="rollNo" id="rollNo">
+      <input type="text" value="{{ studentName }}" hidden name="studentName" name="studentName">
+    {% for question in examData['exam'] %}
+        <b>Question: </b> {{ examData['exam'][question]['question'] }}
+        <br>
+        <b>Answer: </b> <br>
+
+        {% for answer in  examData['exam'][question]['answers'] %}
+        <input type="radio" value="{{ answer[0] }}" name="{{ question }}" id="{{ question }}"> {{ answer[0] }}   <br>
+        {% endfor %}
+        <br><br>
+    {% endfor %}
+    <button id="submitExam" class="btn btn-primary" type="Submit">Submit Test</button>
+  </form>
+  </div>
+  <script>
+    startTime( {{ timeLeft }})
+  </script>
+</body>
+
+{% endblock %}  

@@ -1,0 +1,39 @@
+{% extends 'components/base.html' %}
+
+{% block body %}
+<body>
+  <div class="mainDiv">
+    <h2>Exams Dashboard</h2>
+    <h6>Check Exams created by you. How many students attempted it and check results</h6>
+    <br>
+    <br>
+    <div>
+        <table class = "table table-striped" >
+            <thead>
+                <tr>
+                    <th scope = 'col'>Exam ID</th>
+                    <th scope = 'col'>Title</th>
+                    <th scope = 'col'>Exam Date</th>
+                    <th scope = 'col'>Results</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for exam in examTable %}
+                <tr>
+                    <td>{{ exam["examId"] }}
+                        <a href='/preview/exam/{ exam["examId"] }}'> Preview Exam</a>
+                    </td>
+                    <td>{{ exam["examName"] }}</td>
+                    <td>{{ exam["examDate"] }}</td>
+                    <td>Given By: {{ exam["givenBy"] }}
+                    {% if exam["givenBy"] != 0 %}
+                     <a href='/check/exam/results/{{ exam["examId"] }}'> Check Results</a>
+                    {% endif %}
+                    </td>
+                </tr>
+                {% endfor %} 
+            </tbody>
+        </table>    
+    </div>
+</body>
+{% endblock %}

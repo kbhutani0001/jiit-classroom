@@ -11,7 +11,7 @@
     {% include 'components/flashMessage.html' %}
       
     </div>
-  <form style="margin-top: 20px;" action="/join/{{classroomId}}" style="margin: auto;" method="POST">
+  <form style="margin-top: 20px;" action="{{postUrl}}" style="margin: auto;" method="POST">
     <div class="form-group">
       <label for="exampleInputEmail1">Enrollment No.</label>
       <input style="max-width: 500px;" type="number" class="form-control" name="rollNo" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Enrollment No">
