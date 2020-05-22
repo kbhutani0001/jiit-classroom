@@ -212,7 +212,7 @@ def getExamTable(client, facultyId):
         })
     return tableData
 
-def submitExam(client, studentExamData):
+def submitExam(client, studentExamData, examScore):
   rollNo = studentExamData['rollNo']
   studentName = studentExamData['studentName']
   examId = studentExamData['examId']
@@ -220,11 +220,20 @@ def submitExam(client, studentExamData):
   del studentExamData['studentName']
   del studentExamData['examId']
   data = {
-    'rollNo': rollNo,
     'studentName': studentName,
-    'examData': studentExamData
+    'examData': studentExamData,
+    'examScore': examScore
   }
   db = client.jiitclassroom
   col = db["examResults"]
-  col.find_one({'examId': examId})
+  examIdData = col.find_one({'examId': examId})
+  examIdResults = examIdData['results']
+  newExamIdResults = examIdResults.copy()
+  newExamIdResults[rollNo] = data
+  updatedData = { "$set": {
+                  "examId": examId,
+                  "examResults": newExamIdResults
+        }
+      }
+  col.update_one(data,updatedData)
   return [True]
