@@ -28,7 +28,8 @@ from dbCheck import (
   getMeetingPassword,
   addExam,
   getExamTable,
-  getExamDetails
+  getExamDetails,
+  submitExam
   )
 from datetime import timedelta
 import pymongo
@@ -37,7 +38,8 @@ from methods import (
   createExamId,
   getTimeStampFromDT,
   randomizeQuestions,
-  separateQuestions
+  separateQuestions,
+  computeResults
 )
 app = Flask(__name__)
 app.secret_key = "jiit128jiitclassroomforonlineclasses"
@@ -278,7 +280,6 @@ def joinExam(examId):
           examData, questions = randomizeQuestions(examData[1])
         else:
           examData, questions = separateQuestions(examData[1])
-        
         flash("Succesfully logged in as {} ({})".format(studentName, rollNo))
         return render_template('startExam.html' ,flashType = "success", rollNo=rollNo, studentName=studentName , examData = examData, questions=questions , timeLeft = 120)
       flash(examData[1])
@@ -290,12 +291,16 @@ def joinExam(examId):
 
 @app.route('/join/test/submit/', methods = ['POST'])
 def submitTest():
-  data = request.form
-  print(data)
-  for i in data:
-    print(i, data[i])
-  flash('Successfully submitted your exam!')
-  return render_template('index.html', flashType="success")
+  studentExamData = request.form.to_dict()
+  examId = studentExamData['examId']
+  examData = getExamDetails(client, examId)[1]
+  score = computeResults(examData, studentExamData)
+  response = submitExam(client, studentExamData, score)
+  if(response[0]):
+    flash('Successfully submitted your exam!')
+    return render_template('index.html', flashType="success")
+  flash(response[1])
+  return render_template('index.html', flashType="danger")
 
 if(__name__=='__main__'):
 	app.run(debug=True,use_reloader=True)

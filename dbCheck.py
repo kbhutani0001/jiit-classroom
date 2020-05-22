@@ -182,6 +182,11 @@ def addExam(client, facultyId, examData):
     col.update_one(data,updatedData)
     getExamDetailsDb = db["examDetails"]
     getExamDetailsDb.insert_one(examData)
+    examResultsDb = db["examResults"]
+    examResultsDb.insert_one({
+      'examId': examData['examId'],
+      'examResults': {}
+    })
     return [True]
   else:
     return [False, "Some error occurred. Couldn't create Exam."]
@@ -206,3 +211,29 @@ def getExamTable(client, facultyId):
         "givenBy": len(givenBy)
         })
     return tableData
+
+def submitExam(client, studentExamData, examScore):
+  rollNo = studentExamData['rollNo']
+  studentName = studentExamData['studentName']
+  examId = studentExamData['examId']
+  del studentExamData['rollNo']
+  del studentExamData['studentName']
+  del studentExamData['examId']
+  data = {
+    'studentName': studentName,
+    'examData': studentExamData,
+    'examScore': examScore
+  }
+  db = client.jiitclassroom
+  col = db["examResults"]
+  examIdData = col.find_one({'examId': examId})
+  examIdResults = examIdData['examResults']
+  newExamIdResults = examIdResults.copy()
+  newExamIdResults[rollNo] = data
+  updatedData = { "$set": {
+                  "examId": examId,
+                  "examResults": newExamIdResults
+        }
+      }
+  col.update_one(examIdData,updatedData)
+  return [True]
