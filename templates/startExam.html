@@ -4,7 +4,9 @@
 
 <body>  
   <div class="mainDiv">
-      
+    <form action="/joint/test/submit/" method="POST">
+      <input type="number" value="{{ rollNo }}" hidden name="rollNo" id="rollNo">
+      <input type="text" value="{{ studentName }}" hidden name="studentName" name="studentName">
     {% for question in examData['exam'] %}
         <b>Question: </b> {{ examData['exam'][question]['question'] }}
         <br>
@@ -15,6 +17,8 @@
         {% endfor %}
         <br><br>
     {% endfor %}
+    <button class="btn btn-primary" type="Submit">Submit Test</button>
+  </form>
   </div>
 </body>
 
