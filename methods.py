@@ -25,9 +25,9 @@ def checkIfExamExist(examStartTime, examEndTime):
     if(examStartTime <= currentIST and currentIST <= examEndTime):
         timeLeft = examEndTime - currentIST
         return [True, timeLeft]
-    elif (currentIST <= examEndTime):
+    elif (currentIST < examStartTime):
         return [False, 'Test has not started yet.']
-    elif (examStartTime >= currentIST):
+    elif (examEndTime < currentIST):
         return [False, 'Test has been ended.']
 
 
