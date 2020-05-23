@@ -170,7 +170,9 @@ def createTest():
         'randomQuestions': randomQuestions,
         'videoMonitoring': videoMonitoring
       }
-      return render_template('makeTest.html', examData = examData, facultyId = g.facultyId)
+      examData['examStartTime'] = stringTimeToISTTimestamp(examData['examDate'] , examData['examStartTime'])
+      examData['examEndTime'] = stringTimeToISTTimestamp(examData['examDate'] , examData['examEndTime'])
+      return render_template('makeTest.html', examData = examData, facultyId = g.facultyId, examDuration = examData['examEndTime']-examData['examStartTime'])
 
 @app.route('/create/test/make/<testId>/', methods=['POST'])
 def saveTest(testId):
@@ -183,8 +185,6 @@ def saveTest(testId):
     # re assigning some values, converting time into timestamps
     examData['randomQuestions'] = True if examData['randomQuestions'] == "True" else False
     examData['videoMonitoring'] = True if examData['videoMonitoring'] == "True" else False
-    examData['examStartTime'] = stringTimeToISTTimestamp(examData['examDate'] , examData['examStartTime'])
-    examData['examEndTime'] = stringTimeToISTTimestamp(examData['examDate'] , examData['examEndTime'])
     addExamRes = addExam(client, g.facultyId, examData)
     if addExamRes[0]:
       return 'Successfully added exam. Redirecting to Dashboard'
