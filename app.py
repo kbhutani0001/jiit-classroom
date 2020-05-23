@@ -41,7 +41,8 @@ from methods import (
   randomizeQuestions,
   separateQuestions,
   computeResults,
-  stringTimeToISTTimestamp
+  stringTimeToISTTimestamp,
+  checkIfExamExist
 )
 app = Flask(__name__)
 app.secret_key = "jiit128jiitclassroomforonlineclasses"
@@ -298,13 +299,18 @@ def joinExam(examId):
     if(webkioskLogin[0]):
       studentName = webkioskLogin[1]
       examData = getExamDetails(client, examId)
+      response = checkIfExamExist(examData['examStartTime'], examData['examEndTime'])
+      if (not response[0]):
+        flash(response[1])
+        return render_template("studentLogin.html", flashType="danger", postUrl = '/join/test/{}/'.format(examId)) 
+      timeLeft = response[1]
       if (examData[0]):
         if( examData[1]['randomQuestions'] ):
           examData, questions = randomizeQuestions(examData[1])
         else:
           examData, questions = separateQuestions(examData[1])
         flash("Succesfully logged in as {} ({})".format(studentName, rollNo))
-        return render_template('startExam.html' ,flashType = "success", rollNo=rollNo, studentName=studentName , examData = examData, questions=questions , timeLeft = 120)
+        return render_template('startExam.html' ,flashType = "success", rollNo=rollNo, studentName=studentName , examData = examData, questions=questions , timeLeft = timeLeft)
       flash(examData[1])
       return render_template("studentLogin.html", flashType="danger", postUrl = '/join/test/{}/'.format(examId))
     else:

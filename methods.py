@@ -20,8 +20,14 @@ def stringTimeToISTTimestamp(date, time):
     timestamp = int(datetime.datetime.timestamp(dateTimeObjectIST)) -19800
     return timestamp
 
-def checkIfExamStarted(examStartTime, examEndTime1):
-    pass
+def checkIfExamExist(examStartTime, examEndTime):
+    currentIST = currentTimeIST()
+    if(examStartTime >= currentIST and currentIST <= examEndTime):
+        timeLeft = examEndTime - currentIST
+        return [True, timeLeft]
+    elif (examStartTime <= currentIST):
+        return [False, 'Test has not started yet.']
+    return [False, 'Test has been ended.']
 
 
 
