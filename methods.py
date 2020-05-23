@@ -1,4 +1,6 @@
 import datetime
+import time
+from dateutil import tz
 import random
 
 def currentTimeIST(): #returns current time in Indian standard time
@@ -8,8 +10,20 @@ def currentTimeIST(): #returns current time in Indian standard time
 def createExamId():
     return int(datetime.datetime.utcnow().timestamp())
 
-def getTimeStampFromDT(date, time): #dd/mm/yyyy and 24 hour format
-    return int(datetime.datetime.now().timestamp()) # temporary
+def stringTimeToISTTimestamp(date, time):
+    dateTimeStr = "{} {}".format(date, time)
+    from_zone = tz.gettz('UTC')
+    to_zone = tz.gettz("Asia/Kolkata")
+    dateTimeObject = datetime.datetime.strptime(dateTimeStr, '%d/%m/%Y %H:%M')
+    dateTimeObjectUTC = dateTimeObject.replace(tzinfo = from_zone)
+    dateTimeObjectIST = dateTimeObjectUTC.astimezone(to_zone)
+    timestamp = int(datetime.datetime.timestamp(dateTimeObjectIST)) -19800
+    return timestamp
+
+def checkIfExamStarted(examStartTime, examEndTime1):
+    pass
+
+
 
 def randomizeQuestions(examData):
     questions = []

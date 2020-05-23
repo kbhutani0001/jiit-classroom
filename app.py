@@ -40,7 +40,8 @@ from methods import (
   getTimeStampFromDT,
   randomizeQuestions,
   separateQuestions,
-  computeResults
+  computeResults,
+  stringTimeToISTTimestamp
 )
 app = Flask(__name__)
 app.secret_key = "jiit128jiitclassroomforonlineclasses"
@@ -182,11 +183,11 @@ def saveTest(testId):
   else:
     examData = request.get_json()['examData']
     print(examData)
-    randomQuestions = True if examData['randomQuestions'] == "True" else False
-    videoMonitoring = True if examData['videoMonitoring'] == "True" else False
-    examData['randomQuestions'] = randomQuestions
-    examData['videoMonitoring'] = videoMonitoring
-
+    # re assigning some values, converting time into timestamps
+    examData['randomQuestions'] = True if examData['randomQuestions'] == "True" else False
+    examData['videoMonitoring'] = True if examData['videoMonitoring'] == "True" else False
+    examData['examStartTime'] = stringTimeToISTTimestamp(examData['examDate'] , examData['examStartTime'])
+    examData['examEndTime'] = stringTimeToISTTimestamp(examData['examDate'] , examData['examEndTime'])
     addExamRes = addExam(client, g.facultyId, examData)
     if addExamRes[0]:
       return 'Successfully added exam. Redirecting to Dashboard'
