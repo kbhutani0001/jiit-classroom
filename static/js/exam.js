@@ -49,12 +49,13 @@ addQuestion = () => {
   window.scroll(0, window.scrollY + 50)
   document.getElementById('createTestBtn').style.display = `inline`
 }
+
 apiRequest = (examData) => {
-  axios.post(`/create/test/make/${examData.testId}/`, { examData: examData })
+  axios.post(`/create/test/make/${examData.examId}/`, { examData: examData })
   .then(function (response) {
     console.log(response);
     window.alert(response.data)
-    window.location = '/dashboard/exams/'
+    window.location = `/dashboard/exams/${examData.examId}/`
   })
   .catch(function (error) {
     window.alert('Some error occurred while creating Exam.')

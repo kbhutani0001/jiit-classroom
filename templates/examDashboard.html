@@ -7,6 +7,30 @@
     <h6>Check Exams created by you. How many students attempted it and check results</h6>
     <br>
     {% include 'components/flashMessage.html' %}
+
+    <div id="inviteForTest">
+        <div class="alert alert-success" role="alert"> Exam Generated Successfully
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div>
+                <p style="margin-top: 20px;">Exam Invite Link</p>
+                <input value="https://jiitclassroom.herokuapp.com/join/test/"  style="display: inline;" placeholder="Exam ID" class="form-control"  type="text" name="meetingUrl" id="meetingUrl" >
+                <button style="margin: 0px 10px;" class="btn btn-secondary" onclick="copyToClipboard(2)">Copy</button>
+            </div>
+            </div>
+            <script>
+                url = window.location.href
+                urlObject = new URL(url)
+                examId = urlObject.searchParams.get("examId")
+                if (examId != null){
+                    document.getElementById("meetingUrl").value += `${examId}/`
+                }
+                else {
+                    document.getElementById("inviteForTest").remove()
+                }
+            </script>
+    </div>
     <br>
     <div>
         <table class = "table table-striped" >
