@@ -170,7 +170,7 @@ def createTest():
         'randomQuestions': randomQuestions,
         'videoMonitoring': videoMonitoring
       }
-      return render_template('makeTest.html', examData = examData, examDuration = examDuration, facultyId = g.facultyId)
+      return render_template('makeTest.html', examData = examData, facultyId = g.facultyId)
 
 @app.route('/create/test/make/<testId>/', methods=['POST'])
 def saveTest(testId):
