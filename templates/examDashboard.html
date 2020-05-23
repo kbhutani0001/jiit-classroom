@@ -6,6 +6,7 @@
     <h2>Exams Dashboard</h2>
     <h6>Check Exams created by you. How many students attempted it and check results</h6>
     <br>
+    {% include 'components/flashMessage.html' %}
     <br>
     <div>
         <table class = "table table-striped" >
@@ -21,7 +22,7 @@
                 {% for exam in examTable %}
                 <tr>
                     <td>{{ exam["examId"] }}
-                        <a href='/preview/exam/{ exam["examId"] }}'> Preview Exam</a>
+                        <a href='/preview/exam/{{exam["examId"] }}'> Preview Exam</a>
                     </td>
                     <td>{{ exam["examName"] }}</td>
                     <td>{{ exam["examDate"] }}</td>

@@ -19,6 +19,10 @@ else if(loc.includes("create")){
   var temp = document.getElementById('createNav')
   temp.classList.add('active')
 }
+else if(loc.includes("dashboard")){
+  var temp = document.getElementById('dashboardNav')
+  temp.classList.add('active')
+}
 
 $('.carousel').carousel({
   interval: 2000

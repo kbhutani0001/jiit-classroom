@@ -324,5 +324,25 @@ def submitTest():
   flash(response[1])
   return render_template('index.html', flashType="danger")
 
+@app.route('/preview/exam/<examId>/', methods=['GET'])
+def previewExam(examId):
+  if not g.facultyId:
+    flash("You need to Log In to view this page")
+    return render_template('facultyLogin.html', flashType='warning')
+  else:
+    examData = getExamDetails(client, examId)
+    if (examData[0]):
+      if( examData[1]['randomQuestions'] ):
+        examData, questions = randomizeQuestions(examData[1])
+      else:
+        examData, questions = separateQuestions(examData[1])
+      studentName = 'Test_{}'.format(g.facultyId)
+      rollNo = 'Test'
+      flash("Succesfully logged in as {} ({}).".format(studentName, rollNo))
+      flash("Time duration for preview: 2 mins")
+      return render_template('startExam.html' ,flashType = "success", rollNo=rollNo, studentName=studentName , examData = examData, questions=questions , timeLeft = 120)
+    flash(examData[1])
+    return redirect(url_for('examDashboard'))
+
 if(__name__=='__main__'):
 	app.run(debug=True,use_reloader=True)
