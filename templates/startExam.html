@@ -22,6 +22,12 @@
       interfaceConfigOverwrite: { filmStripOnly: true , TOOLBAR_BUTTONS: [ ], MOBILE_APP_PROMO: false, },
       };
       const api = new JitsiMeetExternalAPI(domain, options);
+      try {
+        api.executeCommand('displayName', '{{ studentName }}');
+      } catch (error) {
+        console.log("error")
+      }
+
       document.getElementById("backgroundColor").remove()
     </script>
   </div>
