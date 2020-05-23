@@ -22,10 +22,10 @@ def stringTimeToISTTimestamp(date, time):
 
 def checkIfExamExist(examStartTime, examEndTime):
     currentIST = currentTimeIST()
-    if(examStartTime >= currentIST and currentIST <= examEndTime):
+    if(examStartTime <= currentIST and currentIST <= examEndTime):
         timeLeft = examEndTime - currentIST
         return [True, timeLeft]
-    elif (examStartTime <= currentIST):
+    elif (examStartTime >= currentIST):
         return [False, 'Test has not started yet.']
     return [False, 'Test has been ended.']
 

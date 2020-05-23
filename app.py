@@ -37,7 +37,6 @@ import pymongo
 import config
 from methods import (
   createExamId,
-  getTimeStampFromDT,
   randomizeQuestions,
   separateQuestions,
   computeResults,
@@ -158,9 +157,6 @@ def createTest():
     else:
       data = request.form
       examId = createExamId()
-      examStartTime = getTimeStampFromDT(data['examDate'], data['examStartTime'] )
-      examEndTime = getTimeStampFromDT(data['examDate'], data['examEndTime'] )
-      examDuration = examEndTime - examStartTime
       randomQuestions = True if 'randomQuestions' in data else False
       videoMonitoring = True if 'videoMonitoring' in data else False
       examData = {
@@ -168,8 +164,8 @@ def createTest():
         'examName': data['examName'],
         'subjectCode': data['subjectCode'],
         'examDate': data['examDate'],
-        'examStartTime': examStartTime,
-        'examEndTime': examEndTime,
+        'examStartTime': data['examStartTime'],
+        'examEndTime': data['examEndTime'],
         'examDescription': data['examDescription'],
         'randomQuestions': randomQuestions,
         'videoMonitoring': videoMonitoring
@@ -299,12 +295,12 @@ def joinExam(examId):
     if(webkioskLogin[0]):
       studentName = webkioskLogin[1]
       examData = getExamDetails(client, examId)
-      response = checkIfExamExist(examData['examStartTime'], examData['examEndTime'])
-      if (not response[0]):
-        flash(response[1])
-        return render_template("studentLogin.html", flashType="danger", postUrl = '/join/test/{}/'.format(examId)) 
-      timeLeft = response[1]
       if (examData[0]):
+        response = checkIfExamExist(int(examData[1]['examStartTime']), int(examData[1]['examEndTime']))
+        if (not response[0]):
+          flash(response[1])
+          return render_template("studentLogin.html", flashType="danger", postUrl = '/join/test/{}/'.format(examId)) 
+        timeLeft = response[1]
         if( examData[1]['randomQuestions'] ):
           examData, questions = randomizeQuestions(examData[1])
         else:
