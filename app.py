@@ -29,7 +29,8 @@ from dbCheck import (
   addExam,
   getExamTable,
   getExamDetails,
-  submitExam
+  submitExam,
+  getExamResults
   )
 from datetime import timedelta
 import pymongo
@@ -267,6 +268,17 @@ def examDashboard():
   else:
     examTable = getExamTable(client, g.facultyId)
     return render_template("examDashboard.html", examTable=examTable)
+
+@app.route('/check/exams/<examId>', methods = ['GET'])
+def examResults(examId):
+  if not g.facultyId:
+    flash("You need to Log In to view this page")
+    return render_template('facultyLogin.html', flashType='warning')
+  else:
+    examResults = getExamResults(client, examId)
+    return render_template("results.html", examId=examId,  examResults=examResults, studentCount = len(examResults))
+
+
 
 @app.route('/join/test/<examId>/', methods=['GET', 'POST'])
 def joinExam(examId):

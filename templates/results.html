@@ -1,0 +1,36 @@
+{% extends 'components/base.html' %}
+
+{% block body %}
+<body>
+  <div class="mainDiv">
+    <h2>Exam Results</h2>
+    <br>
+    <h3>Exam ID: {{ examId }} </h3>
+    <h5>Given by {{studentCount}} students</h5>
+    <br>
+    <div>
+        <table class = "table table-striped table-dark" >
+
+            <thead>
+                <tr>
+                    <th scope = 'col'>Enrollment no.</th>
+                    <th scope = 'col'>Name</th>
+                    <th scope = 'col'>Questions Attemted</th>
+                    <th scope = 'col'>Marks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rollNo in examResults %}
+                <tr>
+                    <td>{{ rollNo }}</td>
+                    <td>{{ examResults[rollNo]['studentName'] }}</td>
+                    <td>{{ examResults[rollNo]['examData']|length  }}</td>
+                    <td>{{ examResults[rollNo]['examScore'] }}</td>
+                  </tr>
+                {% endfor %} 
+            </tbody>
+           
+        </table>    
+    </div>
+</body>
+{% endblock %}
