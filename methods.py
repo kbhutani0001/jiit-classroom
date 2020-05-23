@@ -5,7 +5,7 @@ import random
 
 def currentTimeIST(): #returns current time in Indian standard time
     utcTime =  int(datetime.datetime.utcnow().timestamp())
-    istTime = utcTime + 19800
+    istTime = utcTime
     return istTime
 def createExamId():
     return int(datetime.datetime.utcnow().timestamp())
@@ -25,8 +25,9 @@ def checkIfExamExist(examStartTime, examEndTime):
     if(examStartTime <= currentIST and currentIST <= examEndTime):
         timeLeft = examEndTime - currentIST
         return [True, timeLeft]
-    elif (examStartTime >= currentIST):
+    elif (currentIST <= examEndTime):
         return [False, 'Test has not started yet.']
+    elif (examStartTime >= currentIST):
     return [False, 'Test has been ended.']
 
 
