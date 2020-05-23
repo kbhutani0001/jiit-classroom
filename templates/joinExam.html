@@ -1,0 +1,15 @@
+{% extends 'components/base.html' %}
+
+{% block body %}
+<body>
+  <div class="mainDiv">
+    <h2>Join Class</h2>
+    <h4 style="margin: 20px 0px 12px 0px;">Enter Exam ID provided by your teacher to join the exam.</h4>
+    <div style="margin-top: 20px;" class="form-group">
+      <label for="exampleInputEmail1">Exam ID</label>
+      <input required style="max-width: 500px;" type="number" class="form-control" name="examId" id="examId" aria-describedby="emailHelp" placeholder="Enter Classroom ID (Example 8788953661)">
+    </div>
+    <button onclick="redirectToExam()" type="button" class="btn btn-primary">Join Exam</button>
+  </div>
+</body>
+{% endblock %}

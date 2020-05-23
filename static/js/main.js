@@ -26,6 +26,16 @@ const redirectToClass = () => {
   }
 }
 
+const redirectToExam = () => {
+  examId = document.getElementById('examId').value
+  if(examId.length >= 5){
+    window.location = `https://jiitclassroom.herokuapp.com/join/test/${examId}`
+  }
+  else {
+    window.alert("Please enter a valid Exam ID")
+  }
+}
+
 const validateSignup = () => {
   if(document.getElementById('facultyPassword').value!=document.getElementById('facultyPassword2').value) {
     alert('Please enter same password again')

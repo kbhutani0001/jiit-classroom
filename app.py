@@ -87,6 +87,11 @@ def join():
   print(request.remote_addr, request.remote_user)
   return render_template('join.html') 
 
+@app.route('/join/test/', methods=['GET'])
+def joinExamHome():
+  return render_template('joinExam.html') 
+
+
 @app.route('/faculty/login/logout/', methods=['GET'] )
 def facultyLogout():
   session.pop('facultyId', None)
