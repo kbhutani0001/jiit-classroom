@@ -312,13 +312,16 @@ def joinExam(examId):
     else:
       flash('Wrong DOB or Password, Please try again or reset it on webkiosk. Trying more than 3 times might lock your webkiosk temporarily.')
       return render_template('studentLogin.html', examId=examId, flashType="danger")
-      
 
 @app.route('/join/test/submit/', methods = ['POST'])
 def submitTest():
   studentExamData = request.form.to_dict()
   examId = studentExamData['examId']
   examData = getExamDetails(client, examId)[1]
+  response = checkIfExamExist(int(examData['examStartTime']), int(examData['examEndTime'])+60) #60 seconds grace
+  if (not response[0]):
+    flash(response[1])
+    return render_template("studentLogin.html", flashType="danger", postUrl = '/join/test/{}/'.format(examId)) 
   score = computeResults(examData, studentExamData)
   response = submitExam(client, studentExamData, score)
   if(response[0]):
