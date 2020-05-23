@@ -176,6 +176,8 @@ def saveTest(testId):
   else:
     examData = request.get_json()['examData']
     print(examData)
+    randomQuestions = True if examData['randomQuestions'] == "True" else False
+    videoMonitoring = True if examData['videoMonitoring'] == "True" else False
     addExamRes = addExam(client, g.facultyId, examData)
     if addExamRes[0]:
       return 'Successfully added exam. Redirecting to Dashboard'
