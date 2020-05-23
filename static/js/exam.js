@@ -55,7 +55,7 @@ apiRequest = (examData) => {
   .then(function (response) {
     console.log(response);
     window.alert(response.data)
-    window.location = `/dashboard/exams/${examData.examId}/`
+    window.location = `/dashboard/exams/?examId=${examData.examId}`
   })
   .catch(function (error) {
     window.alert('Some error occurred while creating Exam.')
