@@ -192,7 +192,11 @@ def addExam(client, facultyId, examData):
     return [False, "Some error occurred. Couldn't create Exam."]
 
 def getExamResults(client, examId):
-  return {'a': 1}
+  db = client.jiitclassroom
+  col = db["examResults"]
+  examIdData = col.find_one({'examId': examId})
+  examIdResults = examIdData['examResults']
+  return examIdResults
 
 def getExamTable(client, facultyId):
   db = client.jiitclassroom
@@ -203,13 +207,17 @@ def getExamTable(client, facultyId):
     if "exams" in data:
       exams = data["exams"]
       for examId in exams:
-        examData = getExamDetails(client, examId)[1]
-        givenBy = getExamResults(client, examId)
-        tableData.append({"examId": examId,
-        "examName": examData["examName"],
-        "examDate": examData["examDate"],
-        "givenBy": len(givenBy)
-        })
+        try:
+          examData = getExamDetails(client, examId)[1]
+          givenBy = getExamResults(client, examId)
+          tableData.append({"examId": examId,
+          "examName": examData["examName"],
+          "examDate": examData["examDate"],
+          "givenBy": len(givenBy)
+          })
+        except Exception as e:
+          print(e)
+          pass
     return tableData
 
 def submitExam(client, studentExamData, examScore):
