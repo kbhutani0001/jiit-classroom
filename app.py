@@ -269,7 +269,7 @@ def examDashboard():
     examTable = getExamTable(client, g.facultyId)
     return render_template("examDashboard.html", examTable=examTable)
 
-@app.route('/check/exams/<examId>', methods = ['GET'])
+@app.route('/check/exams/results/<examId>', methods = ['GET'])
 def examResults(examId):
   if not g.facultyId:
     flash("You need to Log In to view this page")
