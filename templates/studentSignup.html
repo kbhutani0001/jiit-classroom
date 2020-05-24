@@ -1,0 +1,41 @@
+{% extends 'components/base.html' %}
+
+{% block body %}
+<body>
+  <div class="mainDiv">
+    <h2>Create Student Account</h2>
+    
+    <h4>Enter your details below to Create a Student account
+      <br>
+      <h6>Invite Code: {{inviteCode}}</h6>
+    </h4>
+  
+  {% include 'components/flashMessage.html' %}
+  
+  <form style="margin-top: 20px;" action="/signup/faculty/{{inviteCode}}" style="margin: auto;" method="POST">
+    <div class="form-group">
+      <label for="studentName">Name</label>
+      <input style="max-width: 500px;" type="text" class="form-control" required name="studentName" id="studentName" aria-describedby="emailHelp" placeholder="Enter your Name">
+    </div> 
+    <div class="form-group">
+      <label for="rollNo">Enrollment Number</label>
+      <input style="max-width: 500px;" type="number" class="form-control" required name="rollNo" id="rollNo" aria-describedby="emailHelp" placeholder="Enter Enrollment Number">
+    </div> 
+    <div class="form-group">
+      <label for="dob">Date of Birth</label>
+      <input style="max-width: 500px;" type="date" class="form-control" required name="dob" id="dob" placeholder="Date of Birth">
+    </div>
+    <div class="form-group">
+      <label for="facultyPassword">Password</label>
+      <input style="max-width: 500px;" type="password" class="form-control" required name="facultyPassword" id="facultyPassword" placeholder="Password">
+    </div>
+    <div class="form-group">
+      <label for="facultyPassword2">Re-type Password</label>
+      <input style="max-width: 500px;" type="password" class="form-control" required name="facultyPassword2" id="facultyPassword2" placeholder="Retype Password">
+    </div>
+     <button onclick="validateSignup()" type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+</body>
+
+{% endblock %}

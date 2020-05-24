@@ -30,7 +30,8 @@ from dbCheck import (
   getExamTable,
   getExamDetails,
   submitExam,
-  getExamResults
+  getExamResults,
+  createStudentAccount
   )
 from datetime import timedelta
 import pymongo
@@ -203,6 +204,22 @@ def facultySignup(inviteCode):
       facultyPassword = request.form['facultyPassword']
       if(createAccount(client, facultyName, facultyId, facultyPassword)):
         return "Account Successfully Created. Redirecting to Login Page. <script> setTimeout(function() { window.location = '/faculty/login/'}, 2000);</script>"
+      else:
+        return "Email ID already Exists. Redirecting Back. <script> setTimeout(function() { window.history.back()}, 2000);</script>"
+  else:
+    return "Invalid URL. Invite code does not exist."
+
+@app.route('/signup/student/<inviteCode>', methods=['GET', 'POST'])
+def facultySignup(inviteCode):
+  if(len(inviteCode)==8 and (int(inviteCode[2:4]) + int(inviteCode[4:6]))==128):
+    if request.method == 'GET':
+      return render_template('facultySignup.html', inviteCode=inviteCode)
+    elif request.method == 'POST':
+      studentName = request.form['studentName']
+      studentRollNo = request.form['rollNo']
+      studentPassword = request.form['facultyPassword']
+      if(createStudentAccount(client, studentName, studentRollNo, studentPassword)):
+        return "Account Successfully Created. Redirecting to Home Page. <script> setTimeout(function() { window.location = '/'}, 2000);</script>"
       else:
         return "Email ID already Exists. Redirecting Back. <script> setTimeout(function() { window.history.back()}, 2000);</script>"
   else:

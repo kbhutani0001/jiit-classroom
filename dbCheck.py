@@ -93,9 +93,23 @@ def createAccount(client, facultyName, facultyId, facultyPassword):
   else:
     data = {"id": facultyId,
             "meetings": [],
+            "exams": [],
             "meetingPassword": {},
             "name": facultyName,
             "password": facultyPassword
+      }
+    col.insert_one(data)
+    return True
+
+def createStudentAccount(client, studentName, studentRollNo, studentPassword):
+  db = client.jiitclassroom
+  col = db["studentLogin"]
+  if(col.find_one({'rollNo': studentRollNo})):
+    return False
+  else:
+    data = {"rollNo": studentRollNo,
+            "name": studentName,
+            "password": studentPassword
       }
     col.insert_one(data)
     return True
