@@ -85,6 +85,14 @@ def checkFacultyLogin(client, facultyId, facultyPassword):
     return [True, data]
   return [False]
 
+def checkStudentLogin(client, rollNo, password):
+  db = client.jiitclassroom
+  col = db["studentLogin"]
+  data = col.find_one({'rollNo': rollNo, 'password': password})
+  if(data):
+    return [True, data['name']]
+  return [False]
+
 def createAccount(client, facultyName, facultyId, facultyPassword):
   db = client.jiitclassroom
   col = db["facultyLogin"]
@@ -122,6 +130,7 @@ def checkIfFacultyExists(client, facultyId):
     return True
   else:
     return False
+
 
 def getSurvey(client, facultyId):
   db = client.jiitclassroom

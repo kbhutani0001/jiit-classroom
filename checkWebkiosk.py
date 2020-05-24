@@ -1,5 +1,6 @@
 import requests
 from lxml import html
+from dbCheck import checkStudentLogin
 
 def checkWebkioskLogin(rollNo, dob, password, client, ipAddress='127.0.0.1'):
   testPassword = 'test2#'
@@ -62,4 +63,7 @@ def checkWebkioskLogin(rollNo, dob, password, client, ipAddress='127.0.0.1'):
       pass
     return [True, studentName]
   else:
+    response = checkStudentLogin(rollNo, password)
+    if (response[0]):
+      return [True, response[1]]
     return [False]
