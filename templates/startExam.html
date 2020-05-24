@@ -2,7 +2,15 @@
 
 {% block body %}
 
-
+<style>
+  pre {
+  display: block;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  white-space: pre;
+  margin: 1em 0;
+  font-size: 1em;;
+} 
+</style>
 <script src="{{ url_for('static',filename='js/examSubmit.js')}}"></script>
 <body>
   
@@ -55,7 +63,10 @@
       <input type="text" value="{{ studentName }}" hidden name="studentName" name="studentName">
     {% for element in questions %}
         {% for question in element %}
-          <b>Question: </b> {{ element[question]['question'] }}
+          <b>Question: </b><br>
+          <pre>
+            {{ element[question]['question'] }}
+          </pre> 
           <br>
           <b>Answer: </b> <br>
 
