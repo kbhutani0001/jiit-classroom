@@ -210,10 +210,10 @@ def facultySignup(inviteCode):
     return "Invalid URL. Invite code does not exist."
 
 @app.route('/signup/student/<inviteCode>', methods=['GET', 'POST'])
-def facultySignup(inviteCode):
+def studentSignup(inviteCode):
   if(len(inviteCode)==8 and (int(inviteCode[2:4]) + int(inviteCode[4:6]))==128):
     if request.method == 'GET':
-      return render_template('facultySignup.html', inviteCode=inviteCode)
+      return render_template('studentSignup.html', inviteCode=inviteCode)
     elif request.method == 'POST':
       studentName = request.form['studentName']
       studentRollNo = request.form['rollNo']
