@@ -172,7 +172,8 @@ def createTest():
       }
       examData['examStartTime'] = stringTimeToISTTimestamp(examData['examDate'] , examData['examStartTime'])
       examData['examEndTime'] = stringTimeToISTTimestamp(examData['examDate'] , examData['examEndTime'])
-      return render_template('makeTest.html', examData = examData, facultyId = g.facultyId, examDuration = examData['examEndTime']-examData['examStartTime'])
+      examDuration = (int(examData['examEndTime'])-int(examData['examStartTime']))/60
+      return render_template('makeTest.html', examData = examData, facultyId = g.facultyId, examDuration = examDuration)
 
 @app.route('/create/test/make/<testId>/', methods=['POST'])
 def saveTest(testId):
