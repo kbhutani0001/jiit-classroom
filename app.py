@@ -302,12 +302,13 @@ def joinExam(examId):
           flash(response[1])
           return render_template("studentLogin.html", flashType="danger", postUrl = '/join/test/{}/'.format(examId)) 
         timeLeft = response[1]
+        examDuration = int((int(examData[1]['examEndTime'])-int(examData[1]['examStartTime']))/60)
         if( examData[1]['randomQuestions'] ):
           examData, questions = randomizeQuestions(examData[1])
         else:
           examData, questions = separateQuestions(examData[1])
         flash("Succesfully logged in as {} ({})".format(studentName, rollNo))
-        return render_template('startExam.html' ,flashType = "success", rollNo=rollNo, studentName=studentName , examData = examData, questions=questions , timeLeft = timeLeft)
+        return render_template('startExam.html' ,flashType = "success", rollNo=rollNo, studentName=studentName , examData = examData, questions=questions , timeLeft = timeLeft, examDuration=examDuration)
       flash(examData[1])
       return render_template("studentLogin.html", flashType="danger", postUrl = '/join/test/{}/'.format(examId))
     else:
