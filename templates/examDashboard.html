@@ -4,7 +4,7 @@
 <body>
   <div class="mainDiv">
     <h2>Exams Dashboard</h2>
-    <h6>Check Exams created by you. How many students attempted it and check results</h6>
+    <h6>All exams created by you, preview, monitor students, check results and more...</h6>
     <br>
     {% include 'components/flashMessage.html' %}
 
@@ -46,7 +46,8 @@
                 {% for exam in examTable %}
                 <tr>
                     <td>{{ exam["examId"] }}
-                        <a href='/preview/exam/{{exam["examId"] }}'> Preview Exam</a>
+                        <a href='/preview/exam/{{exam["examId"] }}'>Preview Exam</a> | 
+                        <a href='/monitorStudents/{{exam["examId"] }}'> Monitor Students</a>
                     </td>
                     <td>{{ exam["examName"] }}</td>
                     <td>{{ exam["examDate"] }}</td>
