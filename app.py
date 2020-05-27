@@ -369,5 +369,13 @@ def previewExam(examId):
     flash(examData[1])
     return redirect(url_for('examDashboard'))
 
+@app.route('/monitorStudents/<examId>/', methods=['GET'])
+def monitorStudents(examId):
+  if not g.facultyId:
+    flash("You need to Log In to view this page")
+    return render_template('facultyLogin.html', flashType='warning')
+  else:
+    return render_template("monitorStudents.html", examId = examId)
+
 if(__name__=='__main__'):
 	app.run(debug=True,use_reloader=True)
