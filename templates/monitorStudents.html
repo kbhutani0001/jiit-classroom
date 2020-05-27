@@ -6,7 +6,7 @@
     <h2>Monitor Students</h2>
     <h4>Exam ID - {{ examId }}</h4>
     
-    <div id="videomonitor"></div>
+    <div id="videomonitor" style="height: 750px;"></div>
 
   <script src='https://meet.jit.si/external_api.js'></script>
   <div id="backgroundColor">
@@ -16,10 +16,10 @@
       const options = {
       roomName: roomName,
     //   width: '0px',
-    //   height: '0px',
+      height: '80%',
       parentNode: document.querySelector('#videomonitor'),
       configOverwrite: { startWithAudioMuted: false,disableDeepLinking: true, enableNoAudioDetection: false, enableNoisyMicDetection: false, startSilent: false },
-      interfaceConfigOverwrite: { filmStripOnly: true , TOOLBAR_BUTTONS: [ ], MOBILE_APP_PROMO: false, },
+      interfaceConfigOverwrite: { filmStripOnly: false , MOBILE_APP_PROMO: false, },
       };
       const api = new JitsiMeetExternalAPI(domain, options);
       try {
