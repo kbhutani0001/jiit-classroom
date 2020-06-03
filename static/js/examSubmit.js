@@ -16,9 +16,11 @@ const sleep = (milliseconds) => {
 startTime = async (timeLeft) => {
     for(let i = 0; i<=timeLeft; i++){
         await sleep(1000)
-        console.log("ok")
         let t = timeLeft-i
         document.getElementById('timeLeft').innerText = timeLeftString(t)
+        if(timeLeft-i<60){
+            document.getElementById('timeLeftDiv').style.color = "red"
+        }
         if(i===timeLeft){
             submitExam()
             break
