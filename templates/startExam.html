@@ -31,7 +31,7 @@
       };
       const api = new JitsiMeetExternalAPI(domain, options);
       try {
-        api.executeCommand('displayName', '{{ studentName }}');
+        api.executeCommand('displayName', '{{ rollNo }}_{{ studentName }}');
       } catch (error) {
         console.log("error")
       }
