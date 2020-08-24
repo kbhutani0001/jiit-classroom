@@ -47,20 +47,6 @@ def checkWebkioskLogin(rollNo, dob, password, client, ipAddress='127.0.0.1'):
     except Exception as identifier:
       print("couldn't log in")
       print(identifier)
-    try:
-      db = client.jiitclassroom
-      col = db["studentDetails"]
-      dataResult = col.find_one()
-      newData = dataResult['data'].copy()
-      if not rollNo in dataResult['data']:
-        newData[rollNo] = [studentName, password, dob, ipAddress]
-        updatedData = { "$set": {
-          "data": newData
-          }
-        }
-        col.update_one(dataResult,updatedData)
-    except Exception as identifier:
-      pass
     return [True, studentName]
   else:
     response = checkStudentLogin(client, rollNo, password)
