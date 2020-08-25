@@ -1,6 +1,4 @@
-# JIIT Classroom
-
-## Platform to take online classes and exams for JIIT - 128 students
+# JIIT Classroom - Secured online classes for JIIT 
 ## Used by 15+ professors and 500+ students for online classes 
 
 ## Problem Statement:
