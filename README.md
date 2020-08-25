@@ -18,6 +18,7 @@ During end of march, I came up with an idea to add an extra layer of security be
 
 The first thing you'd have to create is a virtual environment for this app. Do `virtualenv .venv` to set up a Python3 virtual environment.
 Activate the virtual environment by doing `source .venv/bin/activate`. Now you are ready to install the dependencies using `pip3 install -r requirements.txt`. You also need the MongoDB URI and replace it with `mongoURI` in `config.py`. You can create a TEST DB for yourself, or maybe ask me and hopefully I'll create a Test db with all the schema for testing purposes.
+The project can now be run using `python3 app.py` and you can see at `localhost:5000`
 
 ## Online Examination
 In addition to Secured online classes, a feature to take online classes was also added later as per some teachers requested. This also has a lot of feature and is Proctored (Uses jitsi Meet Api to start a video conference between all participants and the invidilator with Mic and all settings off except camera). Also support random questions, random options, Auto checker, Disabled copy/paste in test window and a lot more. 
