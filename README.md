@@ -16,8 +16,8 @@ During end of march, I came up with an idea to add an extra layer of security be
 
 ## How to Run JIIT Classroom locally and Contribute
 
-The first thing you'd have to create is a virtual environment for this app. Do `virtualenv .venv` to set up a Python3 virtual environment.
-Activate the virtual environment by doing `source .venv/bin/activate`. Now you are ready to install the dependencies using `pip3 install -r requirements.txt`. You also need the MongoDB URI and replace it with `mongoURI` in `config.py`. You can create a TEST DB for yourself, or maybe ask me and hopefully I'll create a Test db with all the schema for testing purposes.
+The first thing you'd have to create is a virtual environment for this app. Do `virtualenv .venv` to set up a Python3 virtual environment. \
+Activate the virtual environment by doing `source .venv/bin/activate`.\ Now you are ready to install the dependencies using `pip3 install -r requirements.txt`.\  You also need the MongoDB URI and replace it with `mongoURI` in `config.py`.\  You can create a TEST DB for yourself, or maybe ask me and hopefully I'll create a Test db with all the schema for testing purposes.\ 
 The project can now be run using `python3 app.py` and you can see at `localhost:5000`
 
 ## Online Examination
