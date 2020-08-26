@@ -1,7 +1,7 @@
-{% extends 'components/base.html' %}
+{% extends 'components/base.jinja' %}
 
 {% block body %}
-{% include 'components/loading.html' %}
+{% include 'components/loading.jinja' %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
 <script src="{{ url_for('static',filename='js/exam.js')}}"></script>
 <body>  

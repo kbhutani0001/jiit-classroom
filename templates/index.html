@@ -1,16 +1,16 @@
-{% extends 'components/base.html' %}
+{% extends 'components/base.jinja' %}
 
 {% block body %}
 <body>
   <div class="intro">
 <div class="mainDiv">
-  {% include 'components/flashMessage.html' %}
+  {% include 'components/flashMessage.jinja' %}
   <h2>JIIT Classroom</h2>
   <h4>Online classes made easy for JIIT-128 Students</h4>
   <h6>Easy, Reliable and Secure video communication for your zoom meetings</h6>
 </div>
 
-{% include 'components/carousel.html' %}
+{% include 'components/carousel.jinja' %}
 
 <a href="/create" class="btn btn-primary">Create Class</a>
 <a href="/join" class="btn btn-primary"  >Join Class</a>

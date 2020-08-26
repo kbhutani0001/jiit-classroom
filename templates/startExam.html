@@ -1,4 +1,4 @@
-{% extends 'components/base.html' %}
+{% extends 'components/base.jinja' %}
 
 {% block body %}
 
@@ -47,7 +47,7 @@
   </div>
   <div class="mainDiv">
 
-    {% include 'components/flashMessage.html' %}
+    {% include 'components/flashMessage.jinja' %}
     
     <h6>Exam ID: {{examData['examId']}}<br>
       Exam Name: {{examData['examName']}}<br>

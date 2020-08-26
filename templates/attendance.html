@@ -1,4 +1,4 @@
-{% extends 'components/base.html' %}
+{% extends 'components/base.jinja' %}
 
 {% block body %}
 <body>
@@ -7,7 +7,7 @@
     <h4>Enter Classroom ID or choose from previous meetings to check their attendance.</h4>
     <br>
     <h6>Check attendance by Entering Classroom ID</h6>
-    {% include 'components/flashMessage.html' %}
+    {% include 'components/flashMessage.jinja' %}
     <form style="margin-top: 10px;" action="/attendance/check/" style="margin: auto;" method="POST">
       <div class="form-group">
         <label for="exampleInputEmail1">Classroom ID</label>

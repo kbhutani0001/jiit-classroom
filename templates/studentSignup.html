@@ -1,4 +1,4 @@
-{% extends 'components/base.html' %}
+{% extends 'components/base.jinja' %}
 
 {% block body %}
 <body>
@@ -10,7 +10,7 @@
       <h6>Invite Code: {{inviteCode}}</h6>
     </h4>
   
-  {% include 'components/flashMessage.html' %}
+  {% include 'components/flashMessage.jinja' %}
   
   <form style="margin-top: 20px;" action="/signup/student/{{inviteCode}}" style="margin: auto;" method="POST">
     <div class="form-group">

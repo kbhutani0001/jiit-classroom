@@ -1,4 +1,4 @@
-{% extends 'components/base.html' %}
+{% extends 'components/base.jinja' %}
 
 {% block body %}
 <body>
@@ -6,7 +6,7 @@
   <h2>Faculty Login</h2>
   <h4>Enter your details below to access the dashboard.</h4>
   
-  {% include 'components/flashMessage.html' %}
+  {% include 'components/flashMessage.jinja' %}
   
   <form style="margin-top: 20px;" action="/faculty/login/" style="margin: auto;" method="POST">
     <div class="form-group">
